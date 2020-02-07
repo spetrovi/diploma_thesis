@@ -1,0 +1,119 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% I, the copyright holder of this work, release this work into the
+%% public domain. This applies worldwide. In some countries this may
+%% not be legally possible; if so: I grant anyone the right to use
+%% this work for any purpose, without any conditions, unless such
+%% conditions are required by law.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+  color, %% This option enables colorful typesetting. Replace with
+         %% `monochrome`, if you are going to print the thesis on
+         %% a monochromatic printer.
+  table, %% Causes the coloring of tables. Replace with `notable`
+         %% to restore plain tables.
+  lof,   %% Prints the List of Figures. Replace with `nolof` to
+         %% hide the List of Figures.
+  lot,   %% Prints the List of Tables. Replace with `nolot` to
+         %% hide the List of Tables.
+  %% More options are listed in the class documentation at
+  %% <http://mirrors.ctan.org/macros/latex/contrib/fithesis/fithesis/guide/mu/fi.pdf>.
+]{fithesis3}
+%% The following section sets up the locales used in the thesis.
+\usepackage[resetfonts]{cmap} %% We need to load the T2A font encoding
+\usepackage[T1,T2A]{fontenc}  %% to use the Cyrillic fonts with Russian texts.
+
+\usepackage[
+  main=english, %% By using `czech` or `slovak` as the main locale
+                %% instead of `english`, you can typeset the thesis
+                %% in either Czech or Slovak, respectively.
+  german, russian, czech, slovak %% The additional keys allow
+]{babel}        %% foreign texts to be typeset as follows:
+%%
+%%   \begin{otherlanguage}{german}  ... \end{otherlanguage}
+%%   \begin{otherlanguage}{russian} ... \end{otherlanguage}
+%%   \begin{otherlanguage}{czech}   ... \end{otherlanguage}
+%%   \begin{otherlanguage}{slovak}  ... \end{otherlanguage}
+%%
+%% For non-Latin scripts, it may be necessary to load additional
+%% fonts:
+%%\usepackage{paratype}
+%%\def\textrussian#1{{\usefont{T2A}{PTSerif-TLF}{m}{rm}#1}}
+\usepackage{xcolor} 
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{#1}}}
+\usepackage{listings}
+\usepackage[binary-units=true]{siunitx}
+%%
+%% The following section sets up the metadata of the thesis.
+\thesissetup{
+    university    = mu,
+    faculty       = fi,
+    type          = mgr,
+    author        = Samuel Petrovič,
+    gender        = m,
+    advisor       = Adam Rambousek,
+    title         = {Performance testing of Virtual Data Optimizer storage layer},
+    TeXtitle      = {Performance testing of Virtual Data Optimizer storage layer},
+    keywords      = {file system, performance, aging, benchmarking, fragmentation, storage, trim, fs-drift, XFS, VDO},
+    TeXkeywords   = {file system, performance, aging, benchmarking, fragmentation, storage, trim, fs-drift, XFS, VDO},
+assignment = {}
+}
+\thesislong{abstract}{
+Abstrakt sa pise nakoniec
+}
+\thesislong{thanks}{
+I would like to thank my self for tremendous help and guidance during writing of this thesis. I would also like to thank Red Hat for collaboration and provision of necessary testing equipment. 
+}
+%% The following section sets up the bibliography.
+
+
+\usepackage{csquotes}
+\usepackage[              %% When typesetting the bibliography, the
+  backend=bibtex,          %% `numeric` style will be used for the
+  style=numeric,          %% entries and the `numeric-comp` style
+  citestyle=numeric-comp, %% for the references to the entries. The
+  sorting=none,           %% entries will be sorted in cite order.
+  sortlocale=auto         %% For more unformation about the available
+]{biblatex}               %% `style`s and `citestyles`, see:
+%% <http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf>.
+\addbibresource{citations2.bib} %% The bibliograpic database within
+
+                          %% the file `example.bib` will be used.
+\usepackage{makeidx}      %% The `makeidx` package contains
+\makeindex                %% helper commands for index typesetting.
+%% These additional packages are used within the document:
+\usepackage{paralist}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{url}
+\usepackage{menukeys}
+\usepackage{pdfpages}
+
+\renewcommand{\lstlistingname}{Example}
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s}
+
+
+
+\begin{document}
+\chapter{Introduction}
+File systems remain an important part of modern storage solutions. Large, growing databases, multimedia and other storage based applications need to be supported by high-performing infrastructure layer of storing and retrieving information. Such infrastructure have to be provided by the operating systems (OS) in a form of file system.
+
+
+
+
+\chapter{Related work}
+\label{related}
+In this chapter I present different approaches of file system aging and fragmentation research described and implemented in the past. The first section discuss usage of collected data to create aging workload. The second section discuss possibilities of aging the file system artificially, without pre-collected data.
+
+\section{Aging file system using real-life data}
+
+
+\chapter{File system and storage devices}
+\label{fs}
+In this chapter, I present basic information about used file systems, storage devices and its features relevant to performance and aging.
+
+
+
+
+\end{document}

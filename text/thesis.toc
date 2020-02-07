@@ -1,0 +1,7 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\select@language {english}
+\contentsline {chapter}{\numberline {1}\bfseries Introduction}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}\bfseries Related work}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}\slshape Aging file system using real-life data}{3}{section.2.1}
+\contentsline {chapter}{\numberline {3}\bfseries File system and storage devices}{5}{chapter.3}
