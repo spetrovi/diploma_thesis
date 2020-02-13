@@ -228,17 +228,43 @@ While specifying the logical space, user should be aware what kind of data will 
 After succesfull VDO creation, the layer is prepared to be used as an ordinary block device. That means, either file system can be created on top of it, or a more complex structure can be installed above. All within the contstrains specified in section~\ref{stack}.
 
 \subsection{Monitoring VDO}
+VDO works as a thinly provisioned volume. Therefore applications or file systems that use it will only see a logical space that is provided by VDO. To monitor VDO space usage, physical space left or compression ratio and much more, $vdostats$ utility provides neccessary inspection of VDO volume.
 
+\chapter{Fs-drift}
+Fs-drift is a benchmark .... specifically for testing file system aging performance. It is currently developed as an open source project by engineer Ben England and Samuel Petrovič. During the years of collaboration, both sides usually add features that are important for the individuals line of work, therefore there are currently two working branches. One for testing of shared file systems as Ceph and the like and second for testing local layers that require more advanced testig as VDO or Thin Provisioning testing. 
 
+\section{New features}
+Fs-drift was used as a main tool in a previous study of file system aging so only new features will be presented in this thesis.
 
+\subsection{Compressible data generator}
+For testing a compression layer as VDO, completely random data cannot be used. The benchmark needs to be able to shape the incomming data in a way that simulates compressibility that is expected in real-life user data. For this reason, new parameter was added to fs-drift, which specifies what compress ratio will the incomming data have.
 
+The parameter in question works as follows:
+\begin{itemize}
+    \item -c|--compression-ratio, number that is a desired compress ratio, e.g. 4.0 is 1/4.0, therefore compressibility will be 75\% (default 0.0)
+\end{itemize}
 
+This feature was implemented using alternative IO buffer behavior which works with another open source project called $lzdatagen$.
 
+LZ data generator (i.e. lzdatagen) is a simple but powerfull tool for generating data with desired compressibility. In the simples use cases, user only specifies the desired size and compress ration and aquires data with the exact qualities.
 
+Usage is:
+\begin{itemize}
+    \item ./lzdatagen --size SIZE --ratio RATIO
+\end{itemize}
 
+The new approach in the buffer therefore retreives the desired compression ratio, if it's set on 0.0, normal data are generated as in previous versions. If there is a compression ratio set, the buffer is filled using lzdatagen call with the desired compression ratio.
 
+\subsection{Data reporting}
+In previous versions, several problems in measurement reporting had to be addressed.
 
+One of the problems was the data storage. In older versions, data were stored in-memory which posed two problems when running very long tests:
+\begin{itemize}
+    \item RAM consumption
+    \item Lose of data after benchmark failure
+\end{itemize}
 
+The new approach that was installed uses a file predestined on a stable device (i.e. system device). Every time the measurement is made, an entry is appended to the file. This means that even after many days of testing, the memory of a system si not cluttered. On top of that, if the system or benchmark fails, there is still some data to be retreived from the file.
 
 
 

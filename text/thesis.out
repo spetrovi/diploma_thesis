@@ -15,3 +15,8 @@
 \BOOKMARK [1][-]{section.3.3}{\040Administering\040VDO}{chapter.3}% 15
 \BOOKMARK [2][-]{subsection.3.3.1}{\040Installation}{section.3.3}% 16
 \BOOKMARK [2][-]{subsection.3.3.2}{\040Creating\040VDO\040volume}{section.3.3}% 17
+\BOOKMARK [2][-]{subsection.3.3.3}{\040Monitoring\040VDO}{section.3.3}% 18
+\BOOKMARK [0][-]{chapter.4}{Fs-drift}{}% 19
+\BOOKMARK [1][-]{section.4.1}{\040New\040features}{chapter.4}% 20
+\BOOKMARK [2][-]{subsection.4.1.1}{\040Compressible\040data\040generator}{section.4.1}% 21
+\BOOKMARK [2][-]{subsection.4.1.2}{\040Data\040reporting}{section.4.1}% 22

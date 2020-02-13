@@ -18,3 +18,8 @@
 \contentsline {section}{\numberline {3.3}\slshape Administering VDO}{10}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}\rmfamily Installation}{10}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}\rmfamily Creating VDO volume}{10}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}\rmfamily Monitoring VDO}{11}{subsection.3.3.3}
+\contentsline {chapter}{\numberline {4}\bfseries Fs-drift}{13}{chapter.4}
+\contentsline {section}{\numberline {4.1}\slshape New features}{13}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\rmfamily Compressible data generator}{13}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\rmfamily Data reporting}{14}{subsection.4.1.2}
