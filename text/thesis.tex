@@ -97,7 +97,6 @@ I would like to thank my self for tremendous help and guidance during writing of
 
 \begin{document}
 \chapter{Introduction}
-File systems remain an important part of modern storage solutions. Large, growing databases, multimedia and other storage based applications need to be supported by high-performing infrastructure layer of storing and retrieving information. Such infrastructure have to be provided by the operating systems (OS) in a form of file system.
 
 
 
@@ -106,12 +105,8 @@ File systems remain an important part of modern storage solutions. Large, growin
 \label{related}
 In this chapter I present different approaches of file system aging and fragmentation research described and implemented in the past. The first section discuss usage of collected data to create aging workload. The second section discuss possibilities of aging the file system artificially, without pre-collected data.
 
-\section{Aging file system using real-life data}
 
 
-\chapter{File system and storage devices}
-\label{fs}
-In this chapter, I present basic information about used file systems, storage devices and its features relevant to performance and aging.
 
 \chapter{Virtual Data Optimiser}
 \label{VDO}
@@ -128,7 +123,7 @@ The actual VDO technology consists of two kernel modules. First module, called \
 Deduplication in VDO relies on growing UDS index. Any incomming block requested to be written is hashed. The hash is then serached for in the UDS index. In case it is found, reference on the written block is retrieved and returned, succesfully deduplicating the incomming block. The hash entry is then moved to the beginning of the index. In case the hash is not found in the index, the entry with hash is written at the beggining of the index and the block is passed to the compression phase. This index is held in memory to present quick deduplication advice to the VDO volume, therefore there is a minimum requirement of $\SI{250}{\mega\byte}$ of DRAM to be available.
 
 \subsection{Compression}
-
+Compression  is an important part of VDO data processing. By compressig already deduplicated blocks, the volume saves even more space. Compression phase is also importatnt for saving space in case the user data aren't don't deduplicate well.
 
 \section{VDO Layer}
 VDO layer is actually another block device that can aggregate physical storage, partitions etc. On creation of VDO volume, management tool also creates volume for UDS index as well as for the actual VDO. 
@@ -150,6 +145,20 @@ There are two parts to UDS memory usage. First is a compact representation in RA
 
 For better memory usage, UDS's Sparse Indexing feature was introduced to the uds module. This feature further exploits the temporal locality quality by holding only the most revelant index entries in the memory. Using this feature (which is reccomended default for VDO) allows for maintaining up to ten times larger deduplication window whlie maintaining the same memory requirements.
 
+\subsection{VDO kernel module}
+The $kvdo$ module provides mentioned techniques within Linux device mapper level. Device mapper serves as a framevork for storage and block device management. The kvdo module presents itself as a block device that can be accessed directly as a raw device or via installation of supported file systems (XFS/EXT4). 
+
+After receiving read request from an above structure, $kvdo$ maps the requested logical address to the actual physical block and retrieves the data.
+
+When $kvdo$ receives a write reqest, it updates its block map and acknowledges the request. If the received request is either DISCARD, TRIP or a block of only zeroes, $kvdo$ only acllocates a physical block for the request.
+
+\subsection{VDO write policies}
+VDO can operate in either synchronous or asynchronous mode. By default VDO write policy is set to $auto$ which means the the module decides automatically which write policy to enquire. The main difference is in the approach if the block is written immediately or not. The obvious consequence is that if a system fails while VDO performs asynchronous write, user can lose data.
+
+In synchronous mode, the block is temporarily written to an allocated block and acknowledges the request. After completing the acknowledgement, it attempts to deduplciate the block by computing the hash and searching it in the VDO index. In case the index contains an entry with the same hash, $kvdo$ reads the block from physical device and compare it to the requested block byte-by-byte to ensure they are actually identical. In case they are, block map is upadted in a way that the logical block points to the physical block that's already written and releases the physical block allocated at the beginning. If the index doens't contain the computed hash or the block-by-block comparison indetifies a difference in the blocks, $kvdo$ updates the block map to make the temporarily allocated physical block permanent.
+
+In asynchronous mode, instead of writing the data immediately, only physical block allocation and acknowledgement of the request is performed. Next, VDO will attempt to deduplicate the block. If the block is a duplicate, the module only updates it's block map and releases the allocated block. If the block turns out to be unique, it is written to the allocated block and block map is upadted.
+
 \subsection{Storage requirements}
 As mentioned earlier, at least one $slab$ is reserved for VDO metadata and UDS on-disk index.
 
@@ -160,14 +169,65 @@ VDO module keeps two kinds of metadata which differ in the scale of required spa
 \end{compactenum}
 
 \subsection{VDO in Storage Stack}
+\label{stack}
+Generally it is importatnt for users to realise that some of the storage layers work better when above or under the VDO layer in the storage stack.
 
+Technology that is recommended to be installed under VDO layer:
 
+\begin{itemize}
+  \item dm-multipath
+  \item dm-crypt, i.e. layer for data encryption
+  \item mdraid, i.e. software raid
+  \item LVM (as software raid)
+\end{itemize}
 
+Technology that is recommended to be installed above VDO layer:
 
+\begin{itemize}
+  \item LVM cache, i.e. possibility to mark part of a block device as a cache to be used by LVM
+  \item LVM Snapshots
+  \item LVM Thin Provisioning
+\end{itemize}
 
+Unsupported configurations are the ones that break those rules plus a few others:
 
+\begin{itemize}
+  \item VDO on top of VDO colume
+  \item VDO on top of LVM Snapshots
+  \item VDO on top of LVM Cache
+  \item VDO on top of LVM Thin pool
+  \item VDO on top of a loopback device
+  \item VDO under an encrypted device
+  \item Partitions on VDO volume
+  \item RAIDs on top of VDO volume          
+\end{itemize}
 
+\section{Administering VDO}
+\subsection{Installation}
+Since VDO is now part of Kernel, it can be installed usign native packaging system. VDO relies on two RPM packages to be installed:
+\begin{itemize}
+    \item vdo
+    \item kmod-kvdo
+\end{itemize}
+After succesfull installation of these two packages, user can create a VDO volume.
 
+\subsection{Creating VDO volume}
+VDO can be created using VDO manager through command line by invoking $vdo create$.
+The most important parameters are:
+\begin{itemize}
+    \item --name=vdoname
+    \item --device=blockdevice
+    \item --vdoLogicalSize=logicalsize
+    \item --vdoSlabSize=slabsize
+\end{itemize}
+
+When specifying block device, it is reccommended to use persistent device name. Otherwise, VDO might fail to start properly in case the name of the device changes.
+
+While specifying the logical space, user should be aware what kind of data will be written into the VDO block device and set the logical size accordingly. If heavily compressible data are expected, user can specify logical size as large as ten times the physical size. If the data are expected to be less compressible, it is reccomended to lower the ratio accordingly.
+
+After succesfull VDO creation, the layer is prepared to be used as an ordinary block device. That means, either file system can be created on top of it, or a more complex structure can be installed above. All within the contstrains specified in section~\ref{stack}.
+
+\subsection{Monitoring VDO}
 
 
 
