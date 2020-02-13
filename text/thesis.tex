@@ -113,6 +113,77 @@ In this chapter I present different approaches of file system aging and fragment
 \label{fs}
 In this chapter, I present basic information about used file systems, storage devices and its features relevant to performance and aging.
 
+\chapter{Virtual Data Optimiser}
+\label{VDO}
+\section{Introduction}
+Virtual Data Optimizer (VDO) is a compression layer in kernel storage stack. Using block virtualisation, it allows for users to operate with a logic volume much greater than physically available. This sort of overprovision is achieved by using block deduplication an block compression.
+
+Deduplication is a technique that, on a block level, dissalows multiple copies of the same data to be written on physical device. In VDO, duplicate blocks are detected but only one copy is physically written. Subsequent copies then only reference the address of that written block. These blocks are therefore called shared blocks.
+
+Compression is a technique that reduces usage of physical device by identifying and eliminating redundancy in data. In VDO, lossless HIOPS compression, based on a parallelized packaging algorithm is used to handle many compression operations at once. Compressed blocks are stored in a way that allows the most logical blocks to be stored in one physical block.
+
+The actual VDO technology consists of two kernel modules. First module, called \texttt{kvdo}, loads into the Linux Device Mapper layer to provide a deduplicated, compressed, and thinly provisioned block storage volume. Second module called \texttt{uds} communicates with the Universal Deduplication Service (UDS) index on the volume and analyzes data for duplicates.
+
+\subsection{Deduplication}
+Deduplication in VDO relies on growing UDS index. Any incomming block requested to be written is hashed. The hash is then serached for in the UDS index. In case it is found, reference on the written block is retrieved and returned, succesfully deduplicating the incomming block. The hash entry is then moved to the beginning of the index. In case the hash is not found in the index, the entry with hash is written at the beggining of the index and the block is passed to the compression phase. This index is held in memory to present quick deduplication advice to the VDO volume, therefore there is a minimum requirement of $\SI{250}{\mega\byte}$ of DRAM to be available.
+
+\subsection{Compression}
+
+
+\section{VDO Layer}
+VDO layer is actually another block device that can aggregate physical storage, partitions etc. On creation of VDO volume, management tool also creates volume for UDS index as well as for the actual VDO. 
+
+\subsection{Physical Size}
+The VDO volume is divided into continuous regions of physical space of constant size. These regions are called slabs and maybe of size of any power of 2 multiple of $\SI{128}{\mega\byte}$  up to $\SI{32}{\giga\byte}$ . After creating VDO volume, the slab size cannont be changed. However, a single VDO volume contain only up to 8096 slabs, so the configured size of slab at VDO volume creation determines its maximum allowed physical storage. Since the maximum slab size is $\SI{32}{\giga\byte}$ and maximum number of slabs is 8096, the maximum volume of physical storage usable by VDO is therefore $\SI{256}{\tera\byte}$. Important thing to notice is that at least one slab will be reserved for VDO metadata and wouldn't be used for storing data. Slab size does not affect VDO performance.
+
+When trying to examine physical size, two terms are offered. The term Physical size stands for the overall size of undelying device. Available physical size stands for the portion of physical size, that can actually hold user data. The part that does not hold user data is used for storing VDO metadata, f.e. UDS index.
+
+\subsection{Logical Size}
+The concept of VDO offers the user means for overprovisioning the physical volume. During creation of VDO volume, user can specify logical size of volume, which can be much larger than the size of physical underlying storage. The user should be able to predict the compressibility of future incoming data and set the logical volume accordingly. At maximum, VDO suports up to 254 times the size of physical volume which amounts to maximum logical size of $\SI{4}{\peta\byte}$.
+
+\subsection{Memory requirements}
+The VDO module itself requires $\SI{370}{\mega\byte}$ and additional $\SI{268}{\mega\byte}$ per every $\SI{1}{\tera\byte}$ of used physical storage. Users are therefore expected to compute the needed memory volume and act accordingly.
+
+Another module that consumes memory is the UDS index. However, several mechanisms are in place to ensure the memory consumption does not offset the advantages of VDO usage.
+
+There are two parts to UDS memory usage. First is a compact representation in RAM that contains at most one entry per unique block, that is used for deduplication advice. Second is stored on-disk that keeps track of all blocks presented to UDS. The part stored in RAM tracks only most recent blocks and is called $deduplication window$. Despite it being only index of recent data, most datasets with large levels of possible deduplication also show a high degree of temporal locality, according to developers. This allows for having only a fraction of the UDS index in memory, while still mantaining high levels of deduplication. Were not for this fact, memory requirements for UDS index would be so high that it would out-cost the advantages of VDO usage completely.
+
+For better memory usage, UDS's Sparse Indexing feature was introduced to the uds module. This feature further exploits the temporal locality quality by holding only the most revelant index entries in the memory. Using this feature (which is reccomended default for VDO) allows for maintaining up to ten times larger deduplication window whlie maintaining the same memory requirements.
+
+\subsection{Storage requirements}
+As mentioned earlier, at least one $slab$ is reserved for VDO metadata and UDS on-disk index.
+
+VDO module keeps two kinds of metadata which differ in the scale of required space.
+\begin{compactenum}
+\item type scales with physical size and uses about $\SI{1}{\mega\byte}$ per every $\SI{4}{\giga\byte}$ of managed physical storage and also additional $\SI{1}{\mega\byte}$ per $slab$. 
+\item type scales with logical size and uses approximately $\SI{1.25}{\mega\byte}$ for every $\SI{1}{\giga\byte}$ of logical storage, rounded up to the nearest slab.
+\end{compactenum}
+
+\subsection{VDO in Storage Stack}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -5,3 +5,13 @@
 \contentsline {chapter}{\numberline {2}\bfseries Related work}{3}{chapter.2}
 \contentsline {section}{\numberline {2.1}\slshape Aging file system using real-life data}{3}{section.2.1}
 \contentsline {chapter}{\numberline {3}\bfseries File system and storage devices}{5}{chapter.3}
+\contentsline {chapter}{\numberline {4}\bfseries Virtual Data Optimiser}{7}{chapter.4}
+\contentsline {section}{\numberline {4.1}\slshape Introduction}{7}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\rmfamily Deduplication}{7}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\rmfamily Compression}{8}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}\slshape VDO Layer}{8}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\rmfamily Physical Size}{8}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\rmfamily Logical Size}{8}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\rmfamily Memory requirements}{9}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\rmfamily Storage requirements}{9}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\rmfamily VDO in Storage Stack}{10}{subsection.4.2.5}
