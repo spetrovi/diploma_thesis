@@ -97,6 +97,26 @@ I would like to thank my self for tremendous help and guidance during writing of
 
 \begin{document}
 \chapter{Introduction}
+Storage requirements of modern society grows exponentialy, but even while cost of storage devices is decreasing, new solutions for effective data storing need to be implemented. In Linux, large family of storage administration tools called Logical Volume Manager (i.e. LVM) is available to users.
+
+By using LVM tools and other tools available in kernel, users are able to create complex logical structures above physical devices. This complex structure of physical device management is generally called storage stack. In storage stack, different layers represent needed form of abstraction for working with the devices. These layers can have multitude of functions such as software RAID, encrypting, caching, back up, thin provisioning or as of now compression.
+
+Compression is delivered by installing the Virtual Data Optimizer (or VDO) layer. This layer is able to deduplicate and compress user data on the fly, making it possible to create logical volumes larger than available physical space.
+
+This approach seems very advantageous to users, since the cost of installing such layer is much smaller than the cost of buying more physical storage. However, obvious questions arise in terms of performance impact.
+
+In this thesis, such questions will be addresed by thorogh performance testing of VDO layer as well as covering VDO functionality, usage and administration.
+
+This thesis is a follow up on the tesis The Effects of Age on File System Performance and will use similar approaches and testing methods.
+
+In Chapter 3, VDO will be introduced. The reader will get valuable information on VDO terminology, compression and deduplication techniques, device organisation, system requirements, administration, positioning with other layers etc.
+
+In Chapter 4, new features in the benchmark fs-drift will be introduced. The fs-drift benchmark had to undergo some changes so it can be able to test compression layer better. Some changes to data measurements and reporting will also be introduced.
+
+In Chapter 5, proposed testing techniques and configurations will be explained.
+
+In Chapter 6, results and performance impact of administering VDO layeer will be discussed.
+
 
 
 
@@ -192,7 +212,7 @@ Technology that is recommended to be installed above VDO layer:
 Unsupported configurations are the ones that break those rules plus a few others:
 
 \begin{itemize}
-  \item VDO on top of VDO colume
+  \item VDO on top of VDO volume
   \item VDO on top of LVM Snapshots
   \item VDO on top of LVM Cache
   \item VDO on top of LVM Thin pool
@@ -231,7 +251,7 @@ After succesfull VDO creation, the layer is prepared to be used as an ordinary b
 VDO works as a thinly provisioned volume. Therefore applications or file systems that use it will only see a logical space that is provided by VDO. To monitor VDO space usage, physical space left or compression ratio and much more, $vdostats$ utility provides neccessary inspection of VDO volume.
 
 \chapter{Fs-drift}
-Fs-drift is a benchmark .... specifically for testing file system aging performance. It is currently developed as an open source project by engineer Ben England and Samuel Petrovič. During the years of collaboration, both sides usually add features that are important for the individuals line of work, therefore there are currently two working branches. One for testing of shared file systems as Ceph and the like and second for testing local layers that require more advanced testig as VDO or Thin Provisioning testing. 
+Fs-drift is a benchmark developed specifically for testing file system aging performance. It is currently developed as an open source project by engineer Ben England and Samuel Petrovič. During the years of collaboration, both sides usually add features that are important for the individuals line of work, therefore there are currently two working branches. One for testing of shared file systems as Ceph and the like and second for testing local layers that require more advanced testig as VDO or Thin Provisioning testing. 
 
 \section{New features}
 Fs-drift was used as a main tool in a previous study of file system aging so only new features will be presented in this thesis.
@@ -241,7 +261,7 @@ For testing a compression layer as VDO, completely random data cannot be used. T
 
 The parameter in question works as follows:
 \begin{itemize}
-    \item -c|--compression-ratio, number that is a desired compress ratio, e.g. 4.0 is 1/4.0, therefore compressibility will be 75\% (default 0.0)
+    \item -c|--compression-ratio, number that is a desired compress ratio, e.g. 4.0 is 1/4.0, therefore compressibility will be 75\%~(default~0.0)
 \end{itemize}
 
 This feature was implemented using alternative IO buffer behavior which works with another open source project called $lzdatagen$.
@@ -255,6 +275,10 @@ Usage is:
 
 The new approach in the buffer therefore retreives the desired compression ratio, if it's set on 0.0, normal data are generated as in previous versions. If there is a compression ratio set, the buffer is filled using lzdatagen call with the desired compression ratio.
 
+To address concerns of lzdatagen affecting performance measurements, the generator is filled with data before the measurement is started.
+
+This simple but powerfull feature now empowers the benchmark user to specify the compressibility of written data and therefore makes the user able to measure performance of any layer with a compression feature such as ZFS or VDO.
+
 \subsection{Data reporting}
 In previous versions, several problems in measurement reporting had to be addressed.
 
@@ -265,6 +289,10 @@ One of the problems was the data storage. In older versions, data were stored in
 \end{itemize}
 
 The new approach that was installed uses a file predestined on a stable device (i.e. system device). Every time the measurement is made, an entry is appended to the file. This means that even after many days of testing, the memory of a system si not cluttered. On top of that, if the system or benchmark fails, there is still some data to be retreived from the file.
+
+Second problem that caused noisy performance data in the previous versions was the use of units unsuitable for local performance testing. The unit in question was response time which may be important when measuring performance in distributed file systems but in the kind of testing the previous work and this work is trying to ...dosiahnut..., measuring throughtput would yield much more stable data points.
+
+Therefore, the option to store bandwidth was added as a new feature. Bandwidth is measuerd as a size of request divided by the time of request completion. This way, variability of request size will not be affecting the data points as we could see while using response times where usually larger IO requests will take more time to complete.
 
 
 
