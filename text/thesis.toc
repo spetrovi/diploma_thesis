@@ -7,8 +7,9 @@
 \contentsline {section}{\numberline {3.1}\slshape Introduction}{5}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}\rmfamily Deduplication}{5}{subsection.3.1.1}
 \contentsline {subsection}{\numberline {3.1.2}\rmfamily Compression}{6}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}\rmfamily Zero-block elimination}{6}{subsection.3.1.3}
 \contentsline {section}{\numberline {3.2}\slshape VDO Layer}{6}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}\rmfamily Physical Size}{6}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.1}\rmfamily Physical Size}{7}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}\rmfamily Logical Size}{7}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}\rmfamily Memory requirements}{7}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}\rmfamily VDO kernel module}{8}{subsection.3.2.4}
@@ -17,9 +18,23 @@
 \contentsline {subsection}{\numberline {3.2.7}\rmfamily VDO in Storage Stack}{9}{subsection.3.2.7}
 \contentsline {section}{\numberline {3.3}\slshape Administering VDO}{10}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}\rmfamily Installation}{10}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}\rmfamily Creating VDO volume}{10}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.2}\rmfamily Creating VDO volume}{11}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}\rmfamily Monitoring VDO}{11}{subsection.3.3.3}
 \contentsline {chapter}{\numberline {4}\bfseries Fs-drift}{13}{chapter.4}
 \contentsline {section}{\numberline {4.1}\slshape New features}{13}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}\rmfamily Compressible data generator}{13}{subsection.4.1.1}
 \contentsline {subsection}{\numberline {4.1.2}\rmfamily Data reporting}{14}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\rmfamily Performance measurement}{15}{subsection.4.1.3}
+\contentsline {chapter}{\numberline {5}\bfseries Testing hardware}{17}{chapter.5}
+\contentsline {section}{\numberline {5.1}\slshape Supermicro X11SPL-F}{17}{section.5.1}
+\contentsline {section}{\numberline {5.2}\slshape Machine2}{18}{section.5.2}
+\contentsline {chapter}{\numberline {6}\bfseries Tested configurations}{19}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape Baseline configurations}{19}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\rmfamily Striped LV}{19}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\rmfamily Cached LV}{19}{subsection.6.1.2}
+\contentsline {section}{\numberline {6.2}\slshape Configurations with VDO}{20}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\rmfamily VDO over striped LV}{20}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\rmfamily VDO under LVM Cache}{21}{subsection.6.2.2}
+\contentsline {chapter}{\numberline {7}\bfseries Conducted tests}{23}{chapter.7}
+\contentsline {section}{\numberline {7.1}\slshape Different compressibility}{23}{section.7.1}
+\contentsline {section}{\numberline {7.2}\slshape Single vs. Multithread}{23}{section.7.2}

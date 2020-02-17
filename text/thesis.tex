@@ -140,10 +140,29 @@ Compression is a technique that reduces usage of physical device by identifying 
 The actual VDO technology consists of two kernel modules. First module, called \texttt{kvdo}, loads into the Linux Device Mapper layer to provide a deduplicated, compressed, and thinly provisioned block storage volume. Second module called \texttt{uds} communicates with the Universal Deduplication Service (UDS) index on the volume and analyzes data for duplicates.
 
 \subsection{Deduplication}
-Deduplication in VDO relies on growing UDS index. Any incomming block requested to be written is hashed. The hash is then serached for in the UDS index. In case it is found, reference on the written block is retrieved and returned, succesfully deduplicating the incomming block. The hash entry is then moved to the beginning of the index. In case the hash is not found in the index, the entry with hash is written at the beggining of the index and the block is passed to the compression phase. This index is held in memory to present quick deduplication advice to the VDO volume, therefore there is a minimum requirement of $\SI{250}{\mega\byte}$ of DRAM to be available.
+Deduplication in VDO relies on growing UDS index.
+
+Any incomming block requested to be written is hashed using mur-mur hash. Mur-mur hash is not completely collisionless, but it's a trade of for speed, that is much needed for on-the-fly deduplication.
+
+The resulting hash is then searched for in the UDS index. In case the index contains an entry with the same hash, $kvdo$ reads the block from physical device and compare it to the requested block byte-by-byte to ensure they are actually identical.
+
+In case they are, block map is upadted in a way that the logical block points to the physical block that's already written. If the index doens't contain the computed hash or the block-by-block comparison indetifies a difference in the blocks, $kvdo$ updates the block map to make and stores the requested block.
+
+Either way, the block's hash is written to the beginning of the index. This index is held in memory to present quick deduplication advice to the VDO volume, therefore there is a minimum requirement of $\SI{250}{\mega\byte}$ of DRAM to be available.
+
 
 \subsection{Compression}
-Compression  is an important part of VDO data processing. By compressig already deduplicated blocks, the volume saves even more space. Compression phase is also importatnt for saving space in case the user data aren't don't deduplicate well.
+Compression  is an important part of VDO data processing. By compressig already deduplicated blocks, the volume saves even more space. Compression phase is also importatnt for saving space in case the user data don't deduplicate well.
+
+In VDO, lossless HIOPS compression, based on a parallelized packaging algorithm is used to handle many compression operations at once. Compressed blocks are stored in a way that allows the most logical blocks to be stored in one physical block.
+
+\subsection{Zero-block elimination}
+Zero-blocks are blocks that are composed completely of zeroes. These blocks are handled differently that normal and duplicate data blocks.
+
+If the VDO layer detects a zero-block, it will treat it as a discard, thus VDO will not send a write request to the undelying layer. Instead, VDO will mark the block as free on a physical device (if it was not a share block) and updates it's block map.
+
+Because of this, if user wants to manually free some space, they can store a file filled with binary zeroes and deleting it.
+
 
 \section{VDO Layer}
 VDO layer is actually another block device that can aggregate physical storage, partitions etc. On creation of VDO volume, management tool also creates volume for UDS index as well as for the actual VDO. 
@@ -175,9 +194,9 @@ When $kvdo$ receives a write reqest, it updates its block map and acknowledges t
 \subsection{VDO write policies}
 VDO can operate in either synchronous or asynchronous mode. By default VDO write policy is set to $auto$ which means the the module decides automatically which write policy to enquire. The main difference is in the approach if the block is written immediately or not. The obvious consequence is that if a system fails while VDO performs asynchronous write, user can lose data.
 
-In synchronous mode, the block is temporarily written to an allocated block and acknowledges the request. After completing the acknowledgement, it attempts to deduplciate the block by computing the hash and searching it in the VDO index. In case the index contains an entry with the same hash, $kvdo$ reads the block from physical device and compare it to the requested block byte-by-byte to ensure they are actually identical. In case they are, block map is upadted in a way that the logical block points to the physical block that's already written and releases the physical block allocated at the beginning. If the index doens't contain the computed hash or the block-by-block comparison indetifies a difference in the blocks, $kvdo$ updates the block map to make the temporarily allocated physical block permanent.
+In synchronous mode, the block is temporarily written to an allocated block and acknowledges the request. After completing the acknowledgement, it attempts to deduplciate the block. In case it's a duplicate, block map is updated in a way that the logical block points to the physical block that's already written and releases the temporal block. If the block is not a duplicate, $kvdo$ updates the block map to make the temporarily allocated physical block permanent.
 
-In asynchronous mode, instead of writing the data immediately, only physical block allocation and acknowledgement of the request is performed. Next, VDO will attempt to deduplicate the block. If the block is a duplicate, the module only updates it's block map and releases the allocated block. If the block turns out to be unique, it is written to the allocated block and block map is upadted.
+In asynchronous mode, instead of writing the data immediately, only physical block allocation and acknowledgement of the request is performed. Next, VDO will attempt to deduplicate the block. If the block is a duplicate, the module only updates it's block map and releases the allocated block. If the block turns out to be unique, it is then written to the allocated block and the block map is updated.
 
 \subsection{Storage requirements}
 As mentioned earlier, at least one $slab$ is reserved for VDO metadata and UDS on-disk index.
@@ -290,9 +309,211 @@ One of the problems was the data storage. In older versions, data were stored in
 
 The new approach that was installed uses a file predestined on a stable device (i.e. system device). Every time the measurement is made, an entry is appended to the file. This means that even after many days of testing, the memory of a system si not cluttered. On top of that, if the system or benchmark fails, there is still some data to be retreived from the file.
 
-Second problem that caused noisy performance data in the previous versions was the use of units unsuitable for local performance testing. The unit in question was response time which may be important when measuring performance in distributed file systems but in the kind of testing the previous work and this work is trying to ...dosiahnut..., measuring throughtput would yield much more stable data points.
+Second problem that caused noisy performance data in the previous versions was the use of units unsuitable for local performance testing. The unit in question was response time which may be important when measuring performance in distributed file systems but in the kind of testing the previous work and this work is trying to achieve, measuring throughtput would yield much more stable data points.
 
 Therefore, the option to store bandwidth was added as a new feature. Bandwidth is measuerd as a size of request divided by the time of request completion. This way, variability of request size will not be affecting the data points as we could see while using response times where usually larger IO requests will take more time to complete.
+
+
+\subsection{Performance measurement}
+In fs-drift, performance is measured by saving a time stamp before invoking the IO operation and storing the time stamp difference after the operation was finished. However, with this type of measurment, it is important to make sure the time stamping is as close to the actual IO operations as possible. 
+
+In previous versions, the time measurement was the same for every IO operation, which made some of the measurement incosistent, f.e. taking into the measurement the time to fill buffer with lzdatagen.
+
+This problem was removed in the latest versions. Changes to the code were made in a way that for every IO operation, concious desision can be made of where to begin and end the measurement. This feature makes performance readings much more stable and reliable.
+
+
+\chapter{Testing hardware}
+In this chapter, I will introduce testing systems which will be used for multitude of tests with or without the VDO layer installed. These machines were chosen by their computing power, provided memory and by useful storage hardware they are equiped with. These machines are stable systems used by Red Hat Kernel Performance team for regular testing.
+
+\label{machines}
+\section{Supermicro X11SPL-F}
+This machine is used for regular testing of VDO and other complex technologies in Red Hat Kernel Performance team. It's equiped with 4 $\SI{10}{\tera\byte}$ SAS rotational drives and one $\SI{220}{\giga\byte}$ SATA SSD for tests that require LVM Cache. The system is always installed on an additional SSD. This machine is equiped with enough memory to handle large VDO volumes.
+\clearpage
+\begin{tabular}{|l|l|}
+\hline
+   \multicolumn{2}{|l|}{Machine\,1} \\ \hline %draven
+    Model & Supermicro X11SPL-F\\
+    \hline
+    Processor & Intel Xeon Silver 4110  \\
+    \hline
+    Clock speed & $\SI{2.10}{\giga\hertz}$ (8 cores) \\
+    \hline
+    Memory & $\SI{49152}{\mega\byte}$ \\
+
+\hline
+   \multicolumn{2}{|l|}{Testing Hard Drives (4x)} \\ \hline %draven
+    Model & WD HGST Ultrastar\\
+    \hline
+    Capacity & $\SI{1}{\tera\byte}$  \\
+    \hline
+    Interface & SAS $\SI{12}{\giga\byte}$  \\
+    \hline
+    Type & Rotational HDD \\
+    \hline    
+    Logical sector size & $\SI{4096}{\byte}$ \\    
+    \hline    
+    Physical sector size & $\SI{4096}{\byte}$ \\
+    \hline
+    
+   \multicolumn{2}{|l|}{Testiting SSD (for LVM cache)} \\ \hline %draven
+    Model & Micron 5100 MTFD \\
+    \hline
+    Capacity & $\SI{240}{\giga\byte}$  \\
+    \hline
+    Interface & SATA $\SI{6}{\giga\byte}$  \\
+    \hline
+    Type & SSD \\
+    \hline    
+    Logical sector size & $\SI{512}{\byte}$ \\    
+    \hline    
+    Physical sector size & $\SI{4096}{\byte}$ \\
+    \hline
+    
+    \multicolumn{2}{|l|}{System disk} \\ \hline %draven
+    Model & SuperMicro SSD  \\
+    \hline
+    Capacity & $\SI{126}{\giga\byte}$  \\
+    \hline
+    Interface & PCIe Gen3 x4 Lanes  \\
+    \hline
+    Type & SSD \\
+    \hline    
+    Logical sector size & $\SI{512}{\byte}$ \\    
+    \hline    
+    Physical sector size & $\SI{512}{\byte}$ \\
+    \hline   
+\end{tabular}
+
+
+
+
+
+
+\section{Machine2}
+
+\chapter{Tested configurations}
+\label{storageConf}
+In testing of specific storage stack layer, it is important to have performance assesment of a stack without that layer installed. These configurations are called baseline configurations. In this thesis, baseline configurations will used striped LVM to join hard drives as well as LVM cache to simulate real-life usage.
+
+After the baseline testing is finished, tests with VDO layer installed will be run. For non-cached version, only simple VDO layer will be installed with file system on top of it. In the cached version, VDO layer will be installed under the LVM-cache.
+
+
+\section{Baseline configurations}
+Baseline configurations will be storage stacks without the VDO layer installed. Their purpose is to provide a stable testing enviroment to determine performance of undelying hardware and performance of other layers in storage stack.
+
+\subsection{Striped LV}
+This baseline configuration will consist of simple stack built with LVM on top of two rotational hard drives. The striping of 2 will be used to balance the load on both devices equally. The commands to create this simple stack is shown in example~\ref{ex:simpleLV}
+
+\lstset{language=bash, 
+numbers=none, 
+frame=single, 
+commentstyle=\color{dkgreen}, 
+basicstyle={\scriptsize\ttfamily}, 
+keywordstyle=\color{blue}, 
+%identifierstyle=\color{blue}, 
+stringstyle=\color{red},
+captionpos=t,
+showstringspaces=false,
+breaklines=true,
+breakatwhitespace=false,
+tabsize=3,
+caption={sdad},
+}
+
+
+\begin{lstlisting}[language=bash, label={ex:simpleLV}, caption={Creating striped logical volume}][frame=single]
+    $ pvcreate /dev/sd[bc] -y
+    $ vgcreate vg /dev/sd[bc] -y
+    $ lvcreate -n testLV -i2 -l100%vg vg /dev/sd[bc] -y
+    $ mkfs.xfs /dev/mapper/vg-testLV        
+\end{lstlisting}
+
+\subsection{Cached LV}
+This baseline configuration will consist of a striped LV over two rotational hard drives supported with an LVM Cache hosted on a separate solid state device. These devices must belong to the same Volume Group. Creating LVM Cache consist of several steps. First a small part of the SSD needs to be reserved for LVM Cache metadata. This can be done by creating small LV on the device and converting that LV to cache-pool type. Next, we need to mark the portion of SSD we want to use for caching by creating another LV. We'll create another LV to join the two hard drives with striping of 2. At the end, we convert the storage LV to a cached volume. The commands to create this cached volume is shown in example~\ref{ex:cachedLV}
+
+\begin{lstlisting}[language=bash, label={ex:cachedLV}, caption={Creating cached logical volume}][frame=single]
+    $ pvcreate /dev/sd[bce] -y
+    $ vgcreate vg /dev/sd[bce] -y
+    $ lvcreate -n cacheMeta -L 44M vg /dev/sde -y
+    $ lvcreate -n cache -L 200G vg /dev/sde -y
+    $ lvcreate -n testLV -i2 -l100%vg vg /dev/sd[bc]  -y
+    $ lvconvert --type cache-pool --poolmetadata vg/cacheMeta vg/cache -y
+    $ lvconvert --type cache --cachepool vg/cache vg/testLV -y
+    $ mkfs.xfs /dev/mapper/vg-testLV        
+\end{lstlisting}
+
+
+\section{Configurations with VDO}
+After determining the performance without VDO layer installed, we can continue with actual performance testing of VDO. Important thing to notice is that when creating a file system on top of VDO volume, the file system will attempt to discard the whole volume to ensure a clean begining state. While testing this isn't really an important feature and with volumes of tens of tera bytes, it would take quite a long time to discard the whole VDO volume. Therefore mkfs options (-K for XFS) can be used to prevent it.
+
+\subsection{VDO over striped LV}
+This simple configuration will consist of VDO layer on top of two rotational hard drives joined by LV. The striping of 2 will be used to balance the load on both devices equally. The commands to create this stack is shown in example~\ref{ex:VDOLVC}
+
+\begin{lstlisting}[language=bash, label={ex:VDOLV}, caption={Creating VDO over striped LV}][frame=single]
+    $ pvcreate /dev/sd[bc] -y
+    $ vgcreate vg /dev/sd[bc] -y
+    $ lvcreate -n testLV -i2 -l100%vg vg /dev/sd[bc] -y
+    $ vdo create --name=testVDO --device=/dev/mapper/vg-testLV --vdoLogicalSize=60T  --vdoSlabSize=8g --force
+    $ mkfs.xfs -K /dev/mapper/vg-testLV      
+\end{lstlisting}
+
+\subsection{VDO under LVM Cache}
+This configuration will consist of a VDO layer built on top of two rotational hard drives joined by LV. The striping of 2 will be used to balance the load on both devices equally. Sometimes the LVM can have a problem with adding devices with different block size to a single volume group. This can be avoided by allowign mixed block sizes in lvm configuration file. Also, when more complexity needs to be build above the VDO layer, it is important to create a physical volume on a VDO block device. The commands to create this stack is shown in example~\ref{ex:VDOLVCache}
+
+\begin{lstlisting}[language=bash, label={ex:VDOLVCache}, caption={Creating cached VDO volume}][frame=single]
+    $ pvcreate /dev/sd[bce] -y
+    $ vgcreate vg /dev/sd[bc] -y
+    $ lvcreate -n testLV -i2 -l100%vg vg /dev/sd[bc]  -y    
+    $ vdo create --name=testVDO --device=/dev/mapper/vg-testLV --vdoLogicalSize=60T --vdoSlabSize=8g --force    
+    $ sed -i '/devices {/a allow_mixed_block_sizes = 1' /etc/lvm/lvm.conf
+    $ pvcreate /dev/mapper/testVDO -y
+    $ vgcreate VG2 /dev/mapper/testVDO /dev/sde -y -ff
+    $ lvcreate -n cacheMeta -L 44M VG2 /dev/sde -y
+    $ lvcreate -n cache -L 200G VG2 /dev/sde
+    $ lvcreate -n testLV2 -l100%vg VG2 /dev/mapper/testVDO
+    $ lvconvert --type cache-pool --poolmetadata VG2/cacheMeta VG2/cache -y
+    $ lvconvert --type cache --cachepool VG2/cache VG2/testLV2 -y
+    $ mkfs.xfs -K /dev/mapper/VG2-testLV2
+\end{lstlisting}
+
+
+\chapter{Conducted tests}
+For thorough testing of VDO, several types of tests needs to be executed. First section will aim to show differences in performance between loading VDO with heavily compressible data and non-compressible data. Next section will try to show differences in performance of VDO layer when under single threaded load and heavy multithreaded load. These tests will be held on all storage configurations from Chapter~\ref{storageConf}.
+
+\section{Different compressibility}
+The VDO layer can be used in multiple ways, when users want to save physical space. However, the level of compressibility of user data can vary. The aim of this test is to determine, whether compressibility of user data have impact on VDO performance or to what extent.
+
+\section{Single vs. Multithread}
+Since VDO usage is meant for simple users as well as for complex cases, it is important to know the differences between single-user load and heavy multithreaded traffic.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

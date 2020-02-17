@@ -48,8 +48,9 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}\slshape   Introduction}{5}{section.3.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}\rmfamily   Deduplication}{5}{subsection.3.1.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}\rmfamily   Compression}{6}{subsection.3.1.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}\rmfamily   Zero-block elimination}{6}{subsection.3.1.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}\slshape   VDO Layer}{6}{section.3.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}\rmfamily   Physical Size}{6}{subsection.3.2.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}\rmfamily   Physical Size}{7}{subsection.3.2.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}\rmfamily   Logical Size}{7}{subsection.3.2.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}\rmfamily   Memory requirements}{7}{subsection.3.2.3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.4}\rmfamily   VDO kernel module}{8}{subsection.3.2.4}}
@@ -59,16 +60,42 @@
 \newlabel{stack}{{3.2.7}{9}{VDO in Storage Stack}{subsection.3.2.7}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.3}\slshape   Administering VDO}{10}{section.3.3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}\rmfamily   Installation}{10}{subsection.3.3.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}\rmfamily   Creating VDO volume}{10}{subsection.3.3.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}\rmfamily   Creating VDO volume}{11}{subsection.3.3.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}\rmfamily   Monitoring VDO}{11}{subsection.3.3.3}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}\bfseries  Fs-drift}{13}{chapter.4}}
 \@writefile{lof}{\addvspace {4\p@ }}
 \@writefile{lot}{\addvspace {4\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {4.1}\slshape   New features}{13}{section.4.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}\rmfamily   Compressible data generator}{13}{subsection.4.1.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}\rmfamily   Data reporting}{14}{subsection.4.1.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}\rmfamily   Performance measurement}{15}{subsection.4.1.3}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}\bfseries  Testing hardware}{17}{chapter.5}}
+\@writefile{lof}{\addvspace {4\p@ }}
+\@writefile{lot}{\addvspace {4\p@ }}
+\newlabel{machines}{{5}{17}{Testing hardware}{chapter.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}\slshape   Supermicro X11SPL-F}{17}{section.5.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}\slshape   Machine2}{18}{section.5.2}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}\bfseries  Tested configurations}{19}{chapter.6}}
+\@writefile{lof}{\addvspace {4\p@ }}
+\@writefile{lot}{\addvspace {4\p@ }}
+\newlabel{storageConf}{{6}{19}{Tested configurations}{chapter.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}\slshape   Baseline configurations}{19}{section.6.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.1}\rmfamily   Striped LV}{19}{subsection.6.1.1}}
+\newlabel{ex:simpleLV}{{6.1}{19}{Creating striped logical volume}{lstlisting.6.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {6.1}Creating striped logical volume}{19}{lstlisting.6.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.2}\rmfamily   Cached LV}{19}{subsection.6.1.2}}
+\newlabel{ex:cachedLV}{{6.2}{20}{Creating cached logical volume}{lstlisting.6.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}\slshape   Configurations with VDO}{20}{section.6.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.1}\rmfamily   VDO over striped LV}{20}{subsection.6.2.1}}
+\newlabel{ex:VDOLV}{{6.3}{20}{Creating VDO over striped LV}{lstlisting.6.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.2}\rmfamily   VDO under LVM Cache}{21}{subsection.6.2.2}}
+\newlabel{ex:VDOLVCache}{{6.4}{21}{Creating cached VDO volume}{lstlisting.6.4}{}}
 \@ifundefined{unitindent}{\newdimen\unitindent\let \@indentset\relax }{}
 \global \unitindent=30.0pt\relax\@indentset\relax
-\abx@aux@refcontextdefaultsdone
-\gdef \thesis@pages@postamble {14}
-\gdef \thesis@pages {14}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}\rmfamily   Data reporting}{14}{subsection.4.1.2}}
+\gdef \thesis@pages@postamble {23}
+\gdef \thesis@pages {23}
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}\bfseries  Conducted tests}{23}{chapter.7}}
+\@writefile{lof}{\addvspace {4\p@ }}
+\@writefile{lot}{\addvspace {4\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}\slshape   Different compressibility}{23}{section.7.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.2}\slshape   Single vs. Multithread}{23}{section.7.2}}
