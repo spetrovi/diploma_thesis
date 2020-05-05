@@ -97,15 +97,15 @@ I would like to thank my self for tremendous help and guidance during writing of
 
 \begin{document}
 \chapter{Introduction}
-Storage requirements of modern society grows exponentialy, but even while cost of storage devices is decreasing, new solutions for optimal storage utilisation need to be implemented. In Linux there is a large family of storage administration tools called $Logical Volume Manager$ (i.e. $LVM$) that provides users with means of managing storage.
+Storage requirements of modern IT industry grows exponentialy, but even while cost of storage devices is decreasing, new solutions for optimal storage utilisation need to be implemented. In Linux there is a large family of storage administration tools called \emph{Logical Volume Manager} (i.e. LVM) that provides users with means of managing storage.
 
-By using LVM and other tools available in Linux Kernel, users are able to create complex, layered abstraction which helps them utilise physical storage in the way that suits their needs. This complex structure of physical device management is generally called $storage stack$. In storage stack, different layers represent needed form of abstraction for working with the devices. These layers can have multitude of functions such as software RAID, encrypting, caching, back up, thin provisioning or space saving.
+By using LVM and other tools available in Linux Kernel, users are able to create complex, layered abstraction which helps them utilise physical storage in the way that suits their needs. This complex structure of physical device management is generally called storage stack. In storage stack, different layers represent needed form of abstraction for working with the devices. These layers can have multitude of functions such as software RAID, encryption, caching, back up, thin provisioning or space saving.
 
-Space saving is delivered by installing the $Virtual Data Optimizer$ (i.e. $VDO$) layer. This layer is able to deduplicate and compress user data on the fly, making it possible to create logical volumes larger than available physical space. This storage is therefore $thinly provisioned$, however is different from the $thin pool$ technology, because (given the user data are compressible enough), it can actually hold more data.
+Space saving is delivered by installing the \emph{Virtual Data Optimizer} (i.e. VDO) layer. This layer is able to deduplicate and compress user data on the fly, making it possible to create logical volumes larger than available physical space. This storage is therefore \emph{thinly provisioned}, however is different from the thin pool technology, because (given the user data are compressible enough), it can actually hold more data.
 
-There are two main techniques used by VDO to save space. The first one is $deduplication$, which is a way to identify and eliminate multiple copies of the same data, preventing them to occupy physical space. The second technique is $compression$, that shrinks already deduplicated data furthering the space saving ratio.
+There are two main techniques used by VDO to save space. The first one is \emph{deduplication}, which is a way to identify and eliminate multiple copies of the same data, preventing them to occupy physical space. The second technique is \emph{compression}, that shrinks already deduplicated data furthering the space saving ratio.
 
-Space saving gives users serious advantage, since the cost of installing and maintaining a layer like this is much lower than the cost of purchasing more physical storage. However, on the fly manipulations of large quantities of data may seem costly in terms of usage of other resources like memory or CPU.
+Space saving presents users with serious advantage, since the cost of installing and maintaining a layer like this is much lower than the cost of purchasing more physical storage. However, on the fly manipulations of large quantities of data may seem costly in terms of usage of other resources like memory or CPU.
 
 An important part of VDO technology is to make sure the costs of running VDO does not out-cost other approaches like purchasing more resources. VDO includes multitude of internal structures and logic, tunable by users, to ensure its advantages.
 
@@ -115,77 +115,100 @@ However, performance testing of such a complex technlogy requires extended knowl
 
 This thesis aims to lay a foundational work for performance testing of VDO, describing its workings, performance related structures and issues and describing ways of benchmarking VDO. 
 
-Chapter ~\ref{VDO} is an introduction of VDO technology. Space saving mechnaisms will be described as well as VDO terminology, device organisation, system requirements, administration and relation to other layers in storage stack.
+Chapter~\ref{VDO} is an introduction of VDO technology. Space saving mechnaisms will be described as well as VDO terminology, device organisation, system requirements, administration and relation to other layers in storage stack.
 
-Chapter ~\ref{benchmarks} presents used benchmarks, FIO and fs-drift, and their usage in testing VDO technology. New features for testing VDO were implemented for fs-drift and will be described in this chapter.
+Chapter~\ref{benchmarks} presents used benchmarks, FIO and fs-drift, and their usage in testing VDO technology. New features for testing VDO were implemented for fs-drift and will be described in this chapter.
 
-Chapter ~\ref{testing} is focused on performance testing of VDO. The testing is aimed on different VDO components as well as more complex deployment cases. Either way, results of the testing are presented giving recommendation for VDO usage and testin its performance.
+Chapter~\ref{testing} is focused on performance testing of VDO. The testing is aimed on different VDO components as well as more complex deployment cases. Either way, results of the testing are presented giving recommendation for VDO usage and testin its performance.
 
-In Chapter ~\ref{conclusion}, high-level insight on performance testing of VDO is given with recommendation for further work.
+In Chapter~\ref{conclusion}, high-level insight on performance testing of VDO is given with recommendation for further work.
 
 
 \chapter{Virtual Data Optimiser}
 \label{VDO}
 \section{Introduction}
-Virtual Data Optimizer (VDO) is a block layer virtualisation service in kernel storage stack. VDO enables user to operate with greater logical volume than it's physically available. This is achieved by using compression and deduplication.
+Virtual Data Optimizer (VDO) is a block layer virtualisation service in Linux storage stack. VDO enables user to operate with greater logical volume than it's physically available. This is achieved by using compression and deduplication.
 
 Deduplication is a technique that, on a block level, dissalows multiple copies of the same data to be written to physical device. In VDO, duplicate blocks are detected but only one copy is physically stored. Subsequent copies then only reference the address of the stored block. Blocks that are deduplicated therefore share one physical address.
 
-Compression is a technique that reduces usage of physical device by identifying and eliminating redundancy in data. In VDO, lossless HIOPS compression, based on a parallelized packaging algorithm is used to handle many compression operations at once. Compressed blocks are stored in a way that allows the most logical blocks to be stored in one physical block.
+Compression is a technique that reduces usage of physical device by identifying and eliminating redundancy in data. In VDO, lossless compression, based on a parallelized packaging algorithm is used to handle many compression operations at once. Compressed blocks are stored in a way that allows the most logical blocks to be stored in one physical block.
 
 The actual VDO technology consists of two kernel modules. First module, called \texttt{kvdo}, loads into the Linux Device Mapper layer to provide a deduplicated, compressed, and thinly provisioned block storage volume. Second module called \texttt{uds} communicates with the Universal Deduplication Service (UDS) index on the volume and analyzes data for duplicates.
 
 \subsection{Deduplication}
 Deduplicaton limits writing multiple copies of the same data by detecting duplicate blocks. Blocks that are duplicate of a block that VDO has already seen are stored as references for that block, which saves space on the underlying device.
 
-Deduplication in VDO relies on growing UDS index. Hash from any incomming block, requested to be written, is serached for in the UDS index. In case the index contains an entry with the same hash, $kvdo$ reads the block from physical device and compare it to the requested block byte-by-byte to ensure they are actually identical.
+Deduplication in VDO relies on growing UDS index. Hash from any incomming block, requested to be written, is searched for in the UDS index. In case the index contains an entry with the same hash, $kvdo$ reads the block from physical device and compare it to the requested block byte-by-byte to ensure they are actually identical.
 
-In case they are, block map is updated in a way that the logical block points to the block on underlying device that has been already written. If the index doens't contain the computed hash or the block-by-block comparison indetifies a difference in the blocks, $kvdo$ updates the block map and stores the requested block.
+In case they are, block map is updated in a way that the logical block points to the block on underlying device that has been already written. If the index doesn't contain the computed hash or the block-by-block comparison indetifies a difference in the blocks, $kvdo$ updates the block map and stores the requested block.
 
-Either way, the block's hash is written to the beginning of the index. This index is held in memory to present quick deduplication advice to the VDO volume.
+Either way, the blocks hash is written to the beginning of the index. This index is held in memory to present quick deduplication advice to the VDO volume.
 
-Logical blocks that are copies and therefore share one physical block are called shared blocks.
+Logical blocks that are copies and therefore share one physical block are called \emph{shared} blocks.
 
 \subsection{Compression}
-Another part of VDO device optimisation is compression. By compressig already deduplicated blocks, VDO provides one more step to increase utilisation of underlying device. Compression is also importatnt for saving space in case the incoming data are not well deduplicable.
+Another part of VDO optimisation techniques is compression. By compressig already deduplicated blocks, VDO provides one more step to increase utilisation of underlying device. Compression is also importatnt for saving space in case the incoming data are not well deduplicable.
 
-In VDO, lossless HIOPS compression, based on a parallelized packaging algorithm is used to handle many compression operations at once. Compressed blocks are stored in a way that allows the most logical blocks to be stored in one physical block.
+In VDO, lossless compression, based on a parallelized packaging algorithm is used to handle many compression operations at once. Compressed blocks are stored in a way that allows the most logical blocks to be stored in one physical block.
 
 
 \subsection{Zero-block elimination}
-Zero-blocks are blocks that are composed completely of zeroes. These blocks are handled differently that normal and duplicate data blocks.
+Zero-blocks are blocks that are composed entirely of zeroes. These blocks are handled differently that normal data blocks.
 
 If the VDO layer detects a zero-block, it will treat it as a discard, thus VDO will not send a write request to the undelying layer. Instead, it will mark the block as free on a physical device (if it was not a shared block) and updates it's block map.
 
-Because of this, if user wants to manually free some space, they can store a file filled with binary zeroes and deleting it.AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Because of this, if user wants to manually free some space, they can store a file filled with binary zeroes and delete.
 
 
-\section{VDO Layer}
-VDO layer is actually another block device that can aggregate physical storage, partitions etc. On creation of VDO volume, management tool also creates volume for UDS index as well as volume to store actual data.
+\section{Constrains and requirements}
+VDO layer is in fact another block device that can aggregate physical storage, partitions etc. On creation of VDO volume, management tool also creates volume for UDS index as well as volume to store actual data.
 
 \subsection{Physical Size}
-The VDO volume is divided into continuous regions of physical space of constant size. These regions are called $slabs$ and maybe of size of any power of 2 multiple of $\SI{128}{\mega\byte}$  up to $\SI{32}{\giga\byte}$. After creating VDO volume, the slab size cannont be changed. However, a single VDO volume can contain only up to 8096 slabs, so the configured size of slab at VDO volume creation determines its maximum allowed physical size. Since the maximum slab size is $\SI{32}{\giga\byte}$ and maximum number of slabs is 8096, the maximum volume of physical storage usable by VDO is therefore $\SI{256}{\tera\byte}$. Important thing to notice is that at least one slab will be reserved for VDO metadata and wouldn't be used for storing data. Slab size does not affect VDO performance.
+The VDO volume for physically storing date is divided into continuous regions of physical space of constant size. These regions are called $slabs$ and maybe of size of any power of 2 multiple of $\SI{128}{\mega\byte}$  up to $\SI{32}{\giga\byte}$. After creating VDO volume, the slab size cannont be changed. However, a single VDO volume can contain only up to 8096 slabs, so the configured size of slab at VDO volume creation determines its maximum allowed physical size. Since the maximum slab size is $\SI{32}{\giga\byte}$ and maximum number of slabs is 8096, the maximum volume of physical storage usable by VDO is $\SI{256}{\tera\byte}$. Important thing to notice is that at least one slab will be reserved for VDO metadata and wouldn't be used for storing data. Slab size does not affect VDO performance. As mentioned, at least one $slab$ is reserved for VDO metadata and UDS on-disk index.
 
-%When trying to examine physical size, two terms are offered. The term Physical size stands for the overall size of undelying device. Available physical size stands for the portion of physical size, that can actually hold user data. The part that does not hold user data is used for storing VDO metadata, f.e. UDS index.
+VDO module keeps two kinds of metadata which differ in the scale of required space.
+\begin{compactenum}
+\item type scales with physical size and uses about $\SI{1}{\mega\byte}$ per every $\SI{4}{\giga\byte}$ of managed physical storage and also additional $\SI{1}{\mega\byte}$ per $slab$. 
+\item type scales with logical size and uses approximately $\SI{1.25}{\mega\byte}$ for every $\SI{1}{\giga\byte}$ of logical storage, rounded up to the nearest slab.
+\end{compactenum}
+
+When trying to examine physical size, thee term Physical size stands for overall size of undelying device. Available physical size stands for the portion of physical size, that can actually hold user data. The part that does not hold user data is used for storing VDO metadata.
 
 \subsection{Logical Size}
-The concept of VDO offers a way for users to overprovision the underlying volume. At the time of creation of VDO volume, user can specify logical size of volume, which can be much larger than the size of physical underlying storage. The user should be able to predict the compressibility of future incoming data and set the logical volume accordingly. At maximum, VDO suports up to 254 times the size of physical volume which amounts to maximum logical size of $\SI{4}{\peta\byte}$.
+The concept of VDO offers a way for users to overprovision the underlying volume. At the time of creation of VDO volume, user can specify its logical size, which can be much larger than the size of physical underlying storage. The user should be able to predict the compressibility of future incoming data and set the logical volume accordingly. At maximum, VDO suports up to 254 times the size of physical volume which amounts to maximum logical size of $\SI{4}{\peta\byte}$.
 
-\subsection{Memory requirements}
+\subsection{Memory}
 The VDO module itself requires $\SI{370}{\mega\byte}$ and additional $\SI{268}{\mega\byte}$ per every $\SI{1}{\tera\byte}$ of used physical storage. Users are therefore expected to compute the needed memory volume and act accordingly.
 
 Another module that consumes memory is the UDS index. However, several mechanisms are in place to ensure the memory consumption does not offset the advantages of VDO usage.
 
-There are two parts to UDS memory usage. First is a compact representation in RAM that contains at most one entry per unique block, that is used for deduplication advice. Second is stored on-disk that keeps track of all blocks presented to UDS. The part stored in RAM tracks only most recent blocks and is called $deduplication window$. Despite it being only index of recent data, most datasets with large levels of possible deduplication also show a high degree of temporal locality, according to developers. This allows for having only a fraction of the UDS index in memory, while still mantaining high levels of deduplication. Were not for this fact, memory requirements for UDS index would be so high that it would out-cost the advantages of VDO usage completely.
+There are two parts to UDS memory usage. First is a compact representation in RAM that contains at most one entry per unique block, that is used for deduplication advice. Second is stored on-disk that keeps track of all blocks presented to UDS. The part stored in RAM tracks only most recent blocks and is called \emph{deduplication window}. Despite it being only index of recent data, most datasets with large levels of possible deduplication also show a high degree of temporal locality, according to developers. This allows for having only a fraction of the UDS index in memory, while still mantaining high levels of deduplication. Were not for this fact, memory requirements for UDS index would be so high that it would out-cost the advantages of VDO usage completely.
 
 For better memory usage, UDS's Sparse Indexing feature was introduced to the uds module. This feature further exploits the temporal locality quality by holding only the most revelant index entries in the memory. Using this feature (which is recommended default for VDO) allows for maintaining up to ten times larger deduplication window while maintaining the same memory requirements.
 
-\subsection{VDO kernel module}
-The $kvdo$ module provides mentioned techniques within Linux device mapper level. Device mapper serves as a framevork for storage and block device management. The $kvdo$ module presents itself as a block device that can be accessed directly as a raw device or via installation of supported file systems (XFS/EXT4). 
+%\subsection{VDO kernel module}
+%The $kvdo$ module provides mentioned techniques within Linux device mapper level. Device mapper serves as a framevork for storage and block device management. The $kvdo$ module presents itself as a block device that can be accessed directly as a raw device or via installation of supported file systems (XFS/EXT4). 
 
-After receiving read request from an above structure, $kvdo$ maps the requested logical address to the actual physical block and retrieves the data.
+%After receiving read request from an above structure, $kvdo$ maps the requested logical address to the actual physical block and retrieves the data.
 
-When $kvdo$ receives a write reqest, it updates its block map and acknowledges the request. If the received request is either DISCARD, TRIM or a block of only zeroes, $kvdo$ only acllocates a physical block for the request.
+%When $kvdo$ receives a write reqest, it updates its block map and acknowledges the request. If the received request is either DISCARD, TRIM or a block of only zeroes, $kvdo$ only acllocates a physical block for the request.
+
+
+\subsection{CPU}
+
+\section{Internal structures}
+Working VDO instance contains structures that handle the incomming events.
+
+\subsection{Slabs}
+\subsection{Journal}
+
+\subsection{Block map cache}
+
+\subsection{VDO threads}
+
+\subsection{UDS index}
+
+\section{Tunables}
 
 \subsection{VDO write policies}
 VDO can operate in either synchronous or asynchronous mode. By default VDO write policy is set to $auto$ which means the the module decides automatically which write policy to enquire. The main difference is in the approach if the block is written immediately or not. The obvious consequence is that if a system fails while VDO performs asynchronous write, user can lose data.
@@ -194,75 +217,73 @@ In synchronous mode, the block is temporarily written to an allocated block and 
 
 In asynchronous mode, instead of writing the data immediately, only physical block allocation and acknowledgement of the request is performed. Next, VDO will attempt to deduplicate the block. If the block is a duplicate, the module only updates it's block map and releases the allocated block. If the block turns out to be unique, it is then written to the allocated block and the block map is updated.
 
-\subsection{Storage requirements}
-As mentioned earlier, at least one $slab$ is reserved for VDO metadata and UDS on-disk index.
+\subsection{Block map cache size}
 
-VDO module keeps two kinds of metadata which differ in the scale of required space.
-\begin{compactenum}
-\item type scales with physical size and uses about $\SI{1}{\mega\byte}$ per every $\SI{4}{\giga\byte}$ of managed physical storage and also additional $\SI{1}{\mega\byte}$ per $slab$. 
-\item type scales with logical size and uses approximately $\SI{1.25}{\mega\byte}$ for every $\SI{1}{\giga\byte}$ of logical storage, rounded up to the nearest slab.
-\end{compactenum}
+\subsection{VDO threads}
 
-\subsection{VDO in Storage Stack}
-\label{stack}
-Generally it is importatnt for users to realise that some of the storage layers work better when above or under the VDO layer in the storage stack.
+\subsection{Discard size}
 
-Technology that is recommended to be installed under VDO layer:
 
-\begin{itemize}
-  \item dm-multipath
-  \item dm-crypt, i.e. layer for data encryption
-  \item mdraid, i.e. software raid
-  \item LVM (as software raid)
-\end{itemize}
+%\subsection{VDO in Storage Stack}
+%\label{stack}
+%Generally it is importatnt for users to realise that some of the storage layers work better when above or under the VDO layer in the storage stack.
 
-Technology that is recommended to be installed above VDO layer:
+%Technology that is recommended to be installed under VDO layer:
 
-\begin{itemize}
-  \item LVM cache, i.e. possibility to mark part of a block device as a cache to be used by LVM
-  \item LVM Snapshots
-  \item LVM Thin Provisioning
-\end{itemize}
+%\begin{itemize}
+%  \item dm-multipath
+%  \item dm-crypt, i.e. layer for data encryption
+%  \item mdraid, i.e. software raid
+%  \item LVM (as software raid)
+%\end{itemize}
 
-Unsupported configurations are the ones that break those rules plus a few others:
+%Technology that is recommended to be installed above VDO layer:
 
-\begin{itemize}
-  \item VDO on top of VDO volume
-  \item VDO on top of LVM Snapshots
-  \item VDO on top of LVM Cache
-  \item VDO on top of LVM Thin pool
-  \item VDO on top of a loopback device
-  \item VDO under an encrypted device
-  \item Partitions on VDO volume
-  \item RAIDs on top of VDO volume          
-\end{itemize}
+%\begin{itemize}
+%  \item LVM cache, i.e. possibility to mark part of a block device as a cache to be used by LVM
+%  \item LVM Snapshots
+%  \item LVM Thin Provisioning
+%\end{itemize}
 
-\section{Administering VDO}
-\subsection{Installation}
-Since VDO is now part of Kernel, it can be installed usign native packaging system. VDO relies on two RPM packages to be installed:
-\begin{itemize}
-    \item vdo
-    \item kmod-kvdo
-\end{itemize}
-After succesfull installation of these two packages, user can create a VDO volume.
+%Unsupported configurations are the ones that break those rules plus a few others:
 
-\subsection{Creating VDO volume}
-VDO can be created using VDO manager through command line by invoking $vdo create$.
-The required parameters are:
-\begin{itemize}
-    \item --name=vdoname
-    \item --device=blockdevice
-    \item --vdoLogicalSize=logicalsize
-\end{itemize}
+%\begin{itemize}
+%  \item VDO on top of VDO volume
+%  \item VDO on top of LVM Snapshots
+%  \item VDO on top of LVM Cache
+%  \item VDO on top of LVM Thin pool
+%  \item VDO on top of a loopback device
+%  \item VDO under an encrypted device
+%  \item Partitions on VDO volume
+%  \item RAIDs on top of VDO volume          
+%\end{itemize}
 
-When specifying block device, it is reccommended to use persistent device name. Otherwise, VDO might fail to start properly in case the name of the device changes.
+%\section{Administering VDO}
+%\subsection{Installation}
+%Since VDO is now part of Kernel, it can be installed usign native packaging system. VDO relies on two RPM packages to be installed:
+%\begin{itemize}
+%    \item vdo
+%    \item kmod-kvdo
+%\end{itemize}
+%After succesfull installation of these two packages, user can create a VDO volume.
 
-While specifying the logical space, user should be aware what kind of data will be written into the VDO block device and set the logical size accordingly. If heavily compressible data are expected, user can specify logical size as large as ten times the physical size. If the data are expected to be less compressible, it is reccomended to lower the ratio accordingly.
+%\subsection{Creating VDO volume}
+%VDO can be created using VDO manager through command line by executing \texttt{vdo create}.
+%The required parameters are:
+%\begin{itemize}
+%    \item --name=vdoname
+%    \item --device=blockdevice
+%    \item --vdoLogicalSize=logicalsize
+%\end{itemize}
 
-After succesfull VDO creation, the layer is prepared to be used as an ordinary block device. That means, either file system can be created on top of it, or a more complex structure can be installed above. All within the contstrains specified in section~\ref{stack}.
+%When specifying block device, it is reccommended to use persistent device name. Otherwise, VDO might fail to start properly in case the name of the device changes.
 
-\subsection{Monitoring VDO}
-VDO works as a thinly provisioned volume. Therefore applications or file systems that use it will only see a logical space that is provided by VDO. To monitor VDO space usage, physical space left or compression ratio and much more, $vdostats$ utility provides neccessary inspection of VDO volume.
+%While specifying the logical space, user should be aware what kind of data will be written into the VDO block device and set the logical size accordingly. If heavily compressible data are expected, user can specify logical size as large as ten times the physical size. If the data are expected to be less compressible, it is reccomended to lower the ratio accordingly.
+
+%After succesfull VDO creation, the layer is prepared to be used as an ordinary block device. That means, either file system can be created on top of it, or a more complex structure can be installed above. All within the contstrains specified in section~\ref{stack}.
+
+%\subsection{Monitoring VDO}
+%VDO works as a thinly provisioned volume. Therefore applications or file systems that use it will only see a logical space that is provided by VDO. To monitor VDO space usage, physical space left or compression ratio and much more, $vdostats$ utility provides neccessary inspection of VDO volume.
 
 \chapter{Benchmarks}
 \label{benchmarks}
@@ -306,7 +327,7 @@ The system cache considereably affects both writes and reads, and the effect is 
 To battle this effect, option to use direct IO was added. When passing os.O\_DIRECT flag to the os.open() call, the UNIX based systems require memory alignemnt to the underlying device so all the operations had to be refactored into being aligned.
 
 \subsection{Rawdevice}
-While file system can be installed on a VDO layer (and there is an increasing number of users which do), it is important to have an option to test VDO block device also without the file system to get more precise measueremts.
+While file system can be installed on a VDO layer (and there is an increasing number of users which do), it is important to have an option to test VDO block device also without the file system to get more precise measueremts. File systems can have considerable impact on performance and can skew results in ways that make it hard to clearly observe VDO impact on overall performance.
 
 $Rawdevice$ mode was added, that enables fs-drift to run block-wise on a given device instead of working with files on a file system.
 
