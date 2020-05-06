@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2019.9.30)  5 MAY 2020 22:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2019.9.30)  6 MAY 2020 12:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2337,20 +2337,11 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 687.
 (./thesis.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 687.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 687.
+Package rerunfilecheck Info: File `thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 05B94568F7E4F2123329DF783211C5AC;3461.
 
-
-Package rerunfilecheck Warning: File `thesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `thesis.out':
-(rerunfilecheck)             Before: 1B78C89DD35D3175C098AF61F03A2FF6;3461
-(rerunfilecheck)             After:  05B94568F7E4F2123329DF783211C5AC;3461.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 Package logreq Info: Writing requests to 'thesis.run.xml'.
 \openout1 = `thesis.run.xml'.
@@ -2359,7 +2350,7 @@ Package logreq Info: Writing requests to 'thesis.run.xml'.
 Here is how much of TeX's memory you used:
  44640 strings out of 494946
  831356 string characters out of 6180981
- 1232427 words of memory out of 5000000
+ 1232085 words of memory out of 5000000
  47016 multiletter control sequences out of 15000+600000
  83042 words of font info for 127 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -2375,7 +2366,7 @@ xmf-dist/fonts/type1/public/tex-gyre/qplr.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/public/tex-gyre/qplri.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino
 /uplri8a.pfb>
-Output written on thesis.pdf (37 pages, 214774 bytes).
+Output written on thesis.pdf (37 pages, 214436 bytes).
 PDF statistics:
  518 PDF objects out of 1000 (max. 8388607)
  446 compressed objects within 5 object streams
