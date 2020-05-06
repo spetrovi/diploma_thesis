@@ -200,13 +200,36 @@ For better memory usage, UDS's Sparse Indexing feature was introduced to the uds
 Working VDO instance contains structures that handle the incomming events.
 
 \subsection{Slabs}
-\subsection{Journal}
+
+\subsection{Recovery journal}
+Recovery journal provides track of all block changes that has yet to be fully, reliably written to the physical device. It provides performance improvement with bothsynchronous and asynchronous writing policies.
+
+When in synchronous mode, the completion request doesn't wait for the change to be made permanent on the device, it merely waits for the ackowledgement from the journal.
+
+In asynchronous mode, the journal helps providing data loss window by ensuring the user will not lose data if the changes are commited to the journal before the window is expired.
+
+The recovery journal has two parts. One is stored on the physical device and the other in memory to serve as a buffer. When entry is added to the journal, it is processed by the part in memory and is regarded as an active block. An attempt to commit the block to the device is made, however, the device might be locked by another commit thats in progress which makes the commit queue. Every successfull commit will wake others waiting after it is completed.
+
 
 \subsection{Block map cache}
+Block map exists in VDO volume to maintain the mapping of logical blocks to physcial blocks and managed as pages with each page holding 812 entries of logical blocks. The entire block map is kept on disk, since it can be rather large.
+
+Block map cache is a subset of the entire block map that is kept in memory for performance increase. If request to access a block comes to VDO, it will check if that block is in the block map cache. In case it doesn't it needs to read the relevant page and store it in a cache. In case the request was write, it is written in the block map cache and only participates to the on-disk part later.
+
+The block map is a cause of one of the requirements on physical space. It usually consumes about 1.25GB per 1 TB of saved stored physical data. The subset that's kept in memory is much smaller, 128MB by default and is tunable by --vdoBlockMapCacheSize.
+
+The 128MB can cover about 100GB of logical blocks. However if users logical space is larger than 100GB and their workload is so random that it doesn't cached pages, user can observe great preformance hit. In case the block map cache is full, therefore runs out of free pages and a request comes for a page thats not contained in the cache, VDO needs to first discard some page from the cache, write it on disk and just after then load the desired page. It is obvious that this cycle is very time expensive and therefore users are encouraged to increase block map cache size if the precoditions for cache tiering are met.
+
+
+
+
 
 \subsection{VDO threads}
 
 \subsection{UDS index}
+UDS index is a structure designed specifically to indentify duplicate data using hash fingerprints of data blocks. It exists in VDO to provide deduplication advice for effective deduplication. Instance of UDS index is not vital for VDO block handling. In case of losing the index, the VDO still manages blocks and stores and compress data, only without deduplication. Even in the event of index becoming corrupted, there are different mechanisms in place to assure data correctness, so user can discard the index and start bulding a new one.
+
+Also, updating index is costly, so VDO is trying to minimise the updates. That is a reason the index can contain references to blocks that are no longer present in data. Those blocks are called stale blocks.
 
 \section{Tunables}
 
@@ -329,13 +352,13 @@ To battle this effect, option to use direct IO was added. When passing os.O\_DIR
 \subsection{Rawdevice}
 While file system can be installed on a VDO layer (and there is an increasing number of users which do), it is important to have an option to test VDO block device also without the file system to get more precise measueremts. File systems can have considerable impact on performance and can skew results in ways that make it hard to clearly observe VDO impact on overall performance.
 
-$Rawdevice$ mode was added, that enables fs-drift to run block-wise on a given device instead of working with files on a file system.
+Rawdevice mode was added, that enables fs-drift to run block-wise on a given device instead of working with files on a file system.
 
 This option is triggered as follows:
 
 The parameter works as follows:
 \begin{itemize}
-    \item -R|--rawdevice, (default '')
+    \item -R|--rawdevice, set path of the device to use it for rawdevice testing (default '')
 \end{itemize}
 
 
@@ -347,7 +370,27 @@ In Linux, available command for block discard is $blkdiscard$. User can specify 
 If the user of fs-drift wants to test discard speed, he can specify so in the configuration file along with its probability. When the event of discard is triggered, fs-drift works similar as with random writes, but intead of producing buffer and writing, it's using $blkdiscard$ with random offset and specified request size to discard blocks.
 
 \subsection{Random map}
-Sometimes, it is desired to administer IOs only to unused blocks, ensuring no overwriting that could skew results. For this purpose, a feature to keep track of unused blocks was added to fs-drift. To save time, a buffer of possible block offsets is generated and randomised before the test.
+When computing offset for random operations, it might not enough to just generate random number. Sometimes it is benefical to administer IOs only to unused blocks, ensuring no overwriting takes place and all the free blocks will eventually be used.
+
+For this purposes a feature to keep track of unused offests was added to fs-drift. The random map is generated before the test as a shuffled list of possible indices, to save time while the workload is in progress.
+
+The user should be wary of the fact that if the test runs out of the random map, it is recomputed again and will start to overwrite data.
+
+The parameter works as follows:
+\begin{itemize}
+    \item -r|--randommap, if true, use random map to get random offsets (default False)
+\end{itemize}
+
+
+\subsection{Performance measurement}
+In fs-drift, performance is measured by saving a time stamp before invoking the IO operation and storing the time stamp difference after the operation was finished. However, with this type of measurment, it is important to make sure the time stamping is as close to the actual IO operations as possible. 
+
+In previous versions, the time measurement was the same for every IO operation, which made some of the measurement incosistent, e.g. taking into the measurement the time to fill buffer etc.
+
+This problem was removed by moving the time stamps inside the functions, providing more precise control over the timing of events.
+%This problem was removed in the latest versions. Changes to the code were made in a way that for every IO operation, the measurements are taken exactly before and after the operation, making them more precise.
+
+Another small feature added by switching to $perf\_counter()$ as a tool to log time instead of $time()$.
 
 
 \subsection{Data reporting}
@@ -365,15 +408,7 @@ Second problem that caused noisy performance data in the previous versions was t
 
 Therefore, the option to store bandwidth was added as a new feature. Bandwidth is measuerd as a total IO size divided by the time of completion. This way, variability of request size will not be affecting the data points.
 
-\subsection{Performance measurement}
-In fs-drift, performance is measured by saving a time stamp before invoking the IO operation and storing the time stamp difference after the operation was finished. However, with this type of measurment, it is important to make sure the time stamping is as close to the actual IO operations as possible. 
 
-In previous versions, the time measurement was the same for every IO operation, which made some of the measurement incosistent, e.g. taking into the measurement the time to fill buffer etc.
-
-This problem was removed by moving the time stamps inside the functions, providing more precise control over the timing of events.
-%This problem was removed in the latest versions. Changes to the code were made in a way that for every IO operation, the measurements are taken exactly before and after the operation, making them more precise.
-
-Another small feature added by switching to $perf\_counter()$ as a tool to log time instead of $time()$.
 
 \section{FIO}
 Flexible Input/Output tester is a workload generator known for its flexibility and large base of users and contributors. It is an exellent benchmark for testing block devices and file systems since it gives users very precise control over the workload.
