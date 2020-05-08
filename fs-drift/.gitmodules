@@ -1,0 +1,3 @@
+[submodule "lzdatagen"]
+	path = lzdatagen
+	url = https://github.com/jibsen/lzdatagen
