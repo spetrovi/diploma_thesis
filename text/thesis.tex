@@ -127,13 +127,24 @@ In Chapter~\ref{conclusion}, high-level insight on performance testing of VDO is
 \chapter{Virtual Data Optimiser}
 \label{VDO}
 \section{Introduction}
-Virtual Data Optimizer (VDO) is a block layer virtualisation service in Linux storage stack. VDO enables user to operate with greater logical volume than it's physically available. This is achieved by using compression and deduplication.
+Virtual Data Optimizer (VDO) is a block layer virtualisation service in Linux storage stack. VDO enables user to operate with greater logical volume than is physically available. This is achieved by using deduplication, compression and elimination of zero-blocks.
+
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{graphics/diagrams/space_saving.png}
+        \caption[Space saving methods in VDO]{Diagram of space saving methods of VDO. In the first step, duplicate data and zero blocks are eliminated. In the second step, remaining unique blocks are compressed and stored as a single block.}
+\label{fig:space_saving}
+\end{figure}
+
 
 Deduplication is a technique that, on a block level, dissalows multiple copies of the same data to be written to physical device. In VDO, duplicate blocks are detected but only one copy is physically stored. Subsequent copies then only reference the address of the stored block. Blocks that are deduplicated therefore share one physical address.
 
 Compression is a technique that reduces usage of physical device by identifying and eliminating redundancy in data. In VDO, lossless compression, based on a parallelized packaging algorithm is used to handle many compression operations at once. Compressed blocks are stored in a way that allows the most logical blocks to be stored in one physical block.
 
 The actual VDO technology consists of two kernel modules. First module, called \texttt{kvdo}, loads into the Linux Device Mapper layer to provide a deduplicated, compressed, and thinly provisioned block storage volume. Second module called \texttt{uds} communicates with the Universal Deduplication Service (UDS) index on the volume and analyzes data for duplicates.
+
+
+
 
 \subsection{Deduplication}
 Deduplicaton limits writing multiple copies of the same data by detecting duplicate blocks. Blocks that are duplicate of a block that VDO has already seen are stored as references for that block, which saves space on the underlying device.
@@ -321,23 +332,29 @@ For performance testing of VDO, new features and behavior needed to be implement
 \subsection{Compressible data generator}
 While testing compression and deduplication technology as VDO, data generated for testing need to be specificaly shaped. The benchmark needs to be able to generate the testing data in a way that corresponds to examined cases. A restriction for VDO testing is that the repeating patterns in compressible data cannot be composed entirely of zeroes, because the way VDO deals with zero blocks (see, Zero blocks elimination). For this reason, new parameter was added to fs-drift, that enables the user to produce buffers using $lzdatagenerator$ with specified compressibility.
 
-The parameter works as follows:
-\begin{itemize}
-    \item -c|--compression-ratio, number that is a desired compress ratio, e.g. 4.0 is 1/4.0, therefore compressibility will be 75\%~(default~0.0)
-\end{itemize}
-
 This feature was implemented using alternative IO buffer behavior which works with another open source project called $lzdatagen$.
 
-LZ data generator (i.e. lzdatagen) is a simple but powerfull tool for generating data with desired compressibility. In the simplest use cases, user only specifies the desired size and compress ration and obtains data with the exact qualities.
-
-Usage is:
-\begin{itemize}
-    \item ./lzdatagen --size SIZE --ratio RATIO
-\end{itemize}
+LZ data generator (i.e. lzdatagen) is a simple but powerfull tool for generating data with desired compressibility. The user can specify compression ratio, size and output file and obtains data with those qualities. Seed for repeatable output can be also specified, which is useful for producing deduplicable workload.
 
 If there is a compression ratio set other than 0.0, the buffer is filled using lzdatagen call with the desired compression ratio. Otherwise the buffers are filled the same way as in previous versions of fs-drift.
 
 This simple but powerfull feature now empowers the benchmark user to specify the compressibility of written data and therefore makes the user able to measure performance of any technology that deals with compression feature such as ZFS or VDO.
+
+Usage:
+\begin{itemize}
+    \item -c|--compression-ratio, number that is a desired compress ratio, e.g. 4.0 is 1/4.0, therefore compressibility will be 75\%~(default~0.0)
+\end{itemize}
+
+
+\subsection{Deduplication}
+While some of the data from lzdatagen will be naturally deduplicable, more precise control of deduplicibility of the data could result in more precise performance measuerment.
+
+As mentioned in the section above, user can input seed value to lzdatagen to produce the same output. Fs-drift uses this parameter to produce deduplicable data. Based on the inputed probability, fs-drift will either produce new data by obtaining new seed from os.urandom() function and saving it for later. In case fs-drift needs to produce data that will deduplicate, it uses one of the stored seed from the previously generated data.
+
+Usage:
+\begin{itemize}
+    \item -+D|--dedupe-percentage, percentage of data chunks or files that will be deduplicable (default~0)
+\end{itemize}
 
 
 \subsection{DirectIO}
@@ -349,14 +366,17 @@ The system cache considereably affects both writes and reads, and the effect is 
 
 To battle this effect, option to use direct IO was added. When passing os.O\_DIRECT flag to the os.open() call, the UNIX based systems require memory alignemnt to the underlying device so all the operations had to be refactored into being aligned.
 
+Usage:
+\begin{itemize}
+    \item -D|--direct, if true, use os.O\_DIRECT flag when opening files. Data alignment of 4096 bytes will be used. (default False)
+\end{itemize}
+
 \subsection{Rawdevice}
 While file system can be installed on a VDO layer (and there is an increasing number of users which do), it is important to have an option to test VDO block device also without the file system to get more precise measueremts. File systems can have considerable impact on performance and can skew results in ways that make it hard to clearly observe VDO impact on overall performance.
 
 Rawdevice mode was added, that enables fs-drift to run block-wise on a given device instead of working with files on a file system.
 
-This option is triggered as follows:
-
-The parameter works as follows:
+Usage:
 \begin{itemize}
     \item -R|--rawdevice, set path of the device to use it for rawdevice testing (default '')
 \end{itemize}
@@ -367,7 +387,54 @@ With thinly provisioned technology being increasingly relevant, it is interestin
 
 In Linux, available command for block discard is $blkdiscard$. User can specify the offset and length to be discarded, making it very easy to write an operation type for fs-drift.
 
-If the user of fs-drift wants to test discard speed, he can specify so in the configuration file along with its probability. When the event of discard is triggered, fs-drift works similar as with random writes, but intead of producing buffer and writing, it's using $blkdiscard$ with random offset and specified request size to discard blocks.
+The pilot idea was to call blkdiscard command using the subprocess module. However, discard operations are very fast and the speed of calling subprocess module has become a significant bottleneck.
+
+Howver, Python provides a framework to directly call ioctls directly from the Python code. First, the code for BLKDISCARD operation needs to be computed. Parameter for BLKDISCARD ioctl is an array of two u\_int64 numbers which represent the beginning offset and length to discard. This structure can be created by using Pythons module struct.
+
+
+
+\lstset{language=Python, 
+numbers=none, 
+frame=single, 
+commentstyle=\color{blue}, 
+basicstyle={\scriptsize\ttfamily}, 
+keywordstyle=\color{blue}, 
+%identifierstyle=\color{blue}, 
+stringstyle=\color{red},
+captionpos=t,
+showstringspaces=false,
+breaklines=true,
+breakatwhitespace=false,
+tabsize=3,
+caption={sdad},
+}
+
+
+\begin{lstlisting}[language=Python, caption={Using BLKDISCARD ioctl to discard first 4096 bytes from the beginning of the device},label={ex:blkdiscard}][frame=single]
+import os
+import struct
+from fnctl import ioctl
+offset = 0
+length = 4096
+
+#opening a device that supports BLKDISCARD
+fd = os.open('/dev/sde', os.O_WRONLY)    
+
+#computing command for ioctl,
+#the value from documentation is _IO(12, 119)
+BLKDISCARD =  0x12 << (4*2) | 119
+
+#Creating C-like array of two uint_64 numbers
+args = struct.pack('QQ', offset, length)
+
+#Finally, ioctl call with the prepared parameters
+ioctl(fd, BLKDISCARD, args, 0)
+
+os.close(fd)
+\end{lstlisting}
+
+
+If the user of fs-drift wants to test discard speed, he can specify so in the configuration file along with a probability of the event. When the event of discard is triggered, fs-drift works similar as with random writes, but intead of producing buffer and writing data, it's using discards with random offset and specified block size to call BLKDISCARD.
 
 \subsection{Random map}
 When computing offset for random operations, it might not enough to just generate random number. Sometimes it is benefical to administer IOs only to unused blocks, ensuring no overwriting takes place and all the free blocks will eventually be used.
@@ -376,44 +443,45 @@ For this purposes a feature to keep track of unused offests was added to fs-drif
 
 The user should be wary of the fact that if the test runs out of the random map, it is recomputed again and will start to overwrite data.
 
-The parameter works as follows:
+Usage:
 \begin{itemize}
     \item -r|--randommap, if true, use random map to get random offsets (default False)
+\end{itemize}
+
+\subsection{Multithread}
+Multithreaded workloads are essential for researching performance of ------.
+
+Option to run fs-drift a multithreaded bechmark was added. User will just specify the number of threads that is to be used and fs-drift will spawn that many. For this option, large parts of fs-drift needed to be reengineered so the threads are not corrupting eachother data structures, buffers, etc.
+
+Important fact to notice is that every thread is maintaining its own performance throughput report so it is expected that the user will know how to aggregate and interpret the result.
+
+
+\begin{itemize}
+    \item -T|--threads, fs-drift will spawn this many threads to run a workload (default False)
 \end{itemize}
 
 
 \subsection{Performance measurement}
 In fs-drift, performance is measured by saving a time stamp before invoking the IO operation and storing the time stamp difference after the operation was finished. However, with this type of measurment, it is important to make sure the time stamping is as close to the actual IO operations as possible. 
 
-In previous versions, the time measurement was the same for every IO operation, which made some of the measurement incosistent, e.g. taking into the measurement the time to fill buffer etc.
+In previous versions, the time measurement was the same for every IO operation, which made some of the measurement incosistent, e.g. taking into the measurement the time to generate buffers, setting offset to file descriptors. etc.
 
 This problem was removed by moving the time stamps inside the functions, providing more precise control over the timing of events.
-%This problem was removed in the latest versions. Changes to the code were made in a way that for every IO operation, the measurements are taken exactly before and after the operation, making them more precise.
 
 Another small feature added by switching to $perf\_counter()$ as a tool to log time instead of $time()$.
 
 
 \subsection{Data reporting}
-In previous versions, several problems in measurement reporting had to be addressed.
+In previous versions, data was stored in the programs memory which increased RAM consumption during long tests. Also in case of OS or benchmark failure all the results were lost. This problem was removed by having the output files open and continually appending new entries.
 
-One of the problems was the data storage. In older versions, data were stored in-memory which posed two problems when running very long tests:
-\begin{itemize}
-    \item RAM consumption
-    \item Lose of data after benchmark failure
-\end{itemize}
+In fs-drift, gathering only response (completion) times introduced noise to the datapoints, since there can be variability of file or data size, that variability will directly project into the data, since working with larger files can take longer than working with smaller files.
 
-The new approach that was installed uses a file predestined on a stable device (i.e. system device). Every time the measurement is made, an entry is appended to the file. This means that even after many days of testing, the memory of a system si not cluttered. On top of that, if the system or benchmark fails, there is still some data to be retreived from the file.
+With this in mind, an option to store bandwidth was added as a new feature. Bandwidth is measuerd as a total completed size divided by the time of completion. This way, variability of data size is not affecting the measurements.
 
-Second problem that caused noisy performance data in the previous versions was the use of response times as units of performance measurement. However, since there could be a large range of file sizes, this unit introduces noise, because larger files will take longer to process in what could seem like a decreased performance.
+%\section{FIO}
+%Flexible Input/Output tester is a workload generator known for its flexibility and large base of users and contributors. It is an exellent benchmark for testing block devices and file systems since it gives users very precise control over the workload.
 
-Therefore, the option to store bandwidth was added as a new feature. Bandwidth is measuerd as a total IO size divided by the time of completion. This way, variability of request size will not be affecting the data points.
-
-
-
-\section{FIO}
-Flexible Input/Output tester is a workload generator known for its flexibility and large base of users and contributors. It is an exellent benchmark for testing block devices and file systems since it gives users very precise control over the workload.
-
-\subsection{for testing VDO}
+%\subsection{for testing VDO}
 
 
 \chapter{Testing methodology}
@@ -434,21 +502,28 @@ It is important to create a fresh instance of stack before the test to ensure st
 \section{Testing with fs-drift}
 Fs-drift is a powerfull tool for administering IOs, simulating many types of workload. To obtain correct performance measurements, it's important to setup benchmark correctly.
 
-\subsection{Random map}
-Most testing workloads that aim to test limits of VDO technology are random writes. This also excercises the ability of VDO to serialise workload for the device underneath. By default, fs-drift is randomly choosing the offset to write the next block of data.
-
-However, this approach may not be best, since some blocks can be used more than once and some blocks may never be used. The act of overwriting blocks can introduce noise to the results, so in case the test is not specifically aimed at reusing blocks, it is reccomended to use randommap.
+\subsection{File size}
+File size is another parameter that need to be carefully thought of. File size is used both for testing on file system and testing with rawdevice. It represents the size of data that will be administered block by block to the device or file. Again, since there is some delay between actually invoking the writing process, larger file size will mean more aggresive workload for the device or file system. It is also a granularity at which fs-drift collect data, one record for a given file, so seting file size too high can mean lowering the data points in results.
 
 \subsection{Block size}
 Choosing the correct block size for the workload is a very important step. For most cases, the native VDO blocksize of 4k is used. However, it is important to understand what does choosing different blocksize mean for the workload.
 
 The way fs-drift works, block size is the smallest granularity of IOs that will the workload achieve, which means that it is a smallest chunk of data that will be submitted to the device or file. Since there is some work to be done between the subsequent submisions, the device that services the requests can have a small bit of time to process the requests. By choosing larger blocksize the workload becomes more aggressive, since there is more data submited at the same time. 
 
-\subsection{File size}
-File size is another parameter that need to be carefully thought of. File size is used both for testing on file system and testing with rawdevice. It represents the size of data that will be administered block by block to the device or file. Again, since there is some delay between actually invoking the writing process, larger file size will mean more aggresive workload for the device or file system. It is also a granularity at which fs-drift collect data, one record for a given file, so seting file size too high can mean lowering the data points in results.
-
 \subsection{Compress ratio}
-Compress ratio is of course very imporant factor while testing VDO. Generally, it is good to use some compression, so the VDO can excercise all its components. However there can be cases where lowering the compression ratio would benefit the user, f.e. if the goal of a test run is to fill as much of physical space as possible, it would be counter-productive to let a portion of the data be deduplicated and compressed.
+Compress ratio is a very imporant factor while testing VDO. Generally, it is good to use some compression, so the VDO can excercise all its components. However there can be cases where lowering the compression ratio would benefit the user, f.e. if the goal of a test run is to fill as much of physical space as possible, it would be counter-productive to let a portion of the data be deduplicated and compressed.
+
+While testing VDO, it is important to remember that it's using packaging compression and storing compressed fragments in one block. In case the compression ratio of written blocks is lower than 50\%, therefore resulting compressed blocks would occupy more than 50\% of their original size, there will be no apparent compression during the test, because the packaging algorithm would not be able to fit multiple blocks into one.
+
+\subsection{Deduplication}
+
+
+\subsection{Random map}
+Most testing workloads that aim to test limits of VDO technology are random writes. This also excercises the ability of VDO to serialise workload for the device underneath. By default, fs-drift is randomly choosing the offset to write the next block of data.
+
+However, this approach may not be best, since some blocks can be used more than once and some blocks may never be used. The act of overwriting blocks can introduce noise to the results, so in case the test is not specifically aimed at reusing blocks, it is reccomended to use randommap.
+
+
 
 \section{Testing package}
 To manage the test results and metadata as well as testing environment and to be able to include tests in more complex workflows it is beneficial to enclose the benchmark in a testing package. For fs-drift, there is drift\_job package. 
@@ -564,7 +639,7 @@ To obtain fully allocated, but empty VDO volume, it is sufficient to just write 
 \section{Steady state testing}
 
 \section{Block map cache}
-As mentioned in chapter 2, block map cache is an internal VDO structure that keeps part of the journal in memory to provide better performance. Its default size is $\SI{128}{\mega\byte}$, which is XXX pages, that covers about $\SI{100}{\giga\byte}$ worth of data. 
+As mentioned in Chapter 2, block map cache is an internal VDO structure that keeps part of the journal in memory to provide better performance. Its default size is $\SI{128}{\mega\byte}$, which is XXX pages, that covers about $\SI{100}{\giga\byte}$ worth of data. 
 
 This could pose a performance problem in case the logical space is large enough and the workload access the space in a way the block map cache is tired out. If the block map cache fills up, (runs out of free pages), and there is a write request to a non-cached page, the cache is forced to discard one page from its pool to make room for the relevant page. This operation is very costly and this could become a bottleneck for VDO performance.
 
