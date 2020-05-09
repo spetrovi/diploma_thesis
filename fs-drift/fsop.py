@@ -15,6 +15,9 @@ import opts
 import numpy  # for gaussian distribution
 import subprocess
 import mmap
+import struct
+from fcntl import ioctl
+
 
 # operation counters, incremented by op function below
 have_created = 0
@@ -88,7 +91,7 @@ simulated_time = SIMULATED_TIME_UNDEFINED  # initialized later
 time_save_rate = 5
 
 class Result(object):
-    def __init__(self, success, errors, name, time_before, time_after, precise_time, size):
+    def __init__(self, success, errors, name, time_before = 0, time_after = 0, precise_time = 0, size = 0):
         self.success = success
         self.time_before = time_before
         self.time_after = time_after
@@ -109,13 +112,6 @@ def randommap():
     random.shuffle(offset_list)
 
 
-def init_buf():
-    global buf
-    buf = random_buffer.gen_buffer(get_recsz() * BYTES_PER_KB)
-
-def refresh_buf(size):
-    global buf
-    buf = random_buffer.gen_buffer(size)
 
 def scallerr(msg, fn, syscall_exception):
     err = str(syscall_exception.errno)
@@ -435,7 +431,7 @@ def create():
         dirs_created += 1
     try:
         fd = os.open(fn, os.O_CREAT | os.O_EXCL | os.O_WRONLY | os.O_DIRECT * opts.direct)
-        refresh_buf(target_sz)
+        buf = random_buffer.gen_buffer(target_sz)
         total_sz = 0
         offset = 0
         time_before = time.perf_counter()
@@ -486,7 +482,7 @@ def append():
     s = OK
     fn = gen_random_fn()
     target_sz = random_file_size()
-    refresh_buf(target_sz)
+    buf = random_buffer.gen_buffer(target_sz)
     if verbosity & 0x8000:
         print('append %s sz %s' % (fn, target_sz))
     fd = FD_UNDEFINED
@@ -564,7 +560,7 @@ def random_write():
             st_size = os.lseek(fd, 0, os.SEEK_END)
 
         target_sz = random_file_size()
-        refresh_buf(target_sz)
+        buf = random_buffer.gen_buffer(target_sz)
         if verbosity & 0x20000:
             print('randwrite %s file size %u KB, target size %u KB' % (fn, st_size/BYTES_PER_KB, target_sz/1024))
         total_count = 0
@@ -604,6 +600,7 @@ def random_write():
             e_no_space += 1
         else:
             scallerr('random write', fn, e)
+        #(self, success, errors, name, time_before, time_after, precise_time, size):
         return Result(False, e, 'random_write')
 
     try_to_close(fd, fn)
@@ -734,11 +731,12 @@ def random_discard():
     if verbosity & 0x20001:
         print('discard %u B on %s' % (target_sz, fn))
     try:
+        fd = os.open(fn, os.O_WRONLY)
         if opts.rawdevice:
-            fd = os.open(fn, os.O_WRONLY | os.O_DIRECT * opts.direct)
             st_size = os.lseek(fd, 0, os.SEEK_END)
-            os.close(fd)
+
         discarded = 0
+        BLKDISCARD =  0x12 << (4*2) | 119 # command for iocrl
         time_before = time.perf_counter()
         precise_time = 0
         while discarded < target_sz:
@@ -746,13 +744,16 @@ def random_discard():
             offset = random_seek_offset(st_size-recsz)
             if verbosity & 0x20001:
                 print('discard rsz %u' % (recsz))
-
+            args = struct.pack('QQ', offset, recsz)
             start = time.perf_counter()
-            subprocess.call('blkdiscard -o ' + str(offset) + ' -l ' + str(recsz) + ' ' + fn, shell=True)
+#            subprocess.call('blkdiscard -o ' + str(offset) + ' -l ' + str(recsz) + ' ' + fn, shell=True)
+#            subprocess.call('blkdiscard -p ' + str(recsz) + ' ' + fn, shell=True)
+            ioctl(fd, BLKDISCARD, args, 0)
             end = time.perf_counter()
 
             precise_time += float(end - start)
             discarded += recsz
+ #           discarded += 21474836480
             discard_requests += 1
 
 
@@ -767,6 +768,7 @@ def random_discard():
             return OK
         scallerr('random discard', fn, e)
         return Result(False, e, 'random_discard')
+    try_to_close(fd, fn)
     return Result(True, '', 'random_discard',time_before, time_after, precise_time, discarded)
 
 

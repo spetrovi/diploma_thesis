@@ -79,20 +79,22 @@ fill = False
 dedupe_percentage = 0
 threads = 1
 
-def parseopts():
+def parseopts(argv):
     global top_directory, starting_gun_file, opcount, max_files, file_size, duration
     global blocksize, rsptimes, bw
     global fsync_probability_pct, fdatasync_probability_pct, workload_table_filename
     global stats_report_interval, levels, dirs_per_level
     global rand_distr_type, rand_distr_type_str, mean_index_velocity, gaussian_stddev, create_stddevs_ahead
     global compression_ratio, direct, prefix, rawdevice, randommap, fill, dedupe_percentage, threads
-    if len(sys.argv) % 2 != 1:
+
+    if len(argv) % 2 != 1:
         usage('all options must have a value')
     try:
         ix = 1
-        while ix < len(sys.argv):
-            nm = sys.argv[ix]
-            val = sys.argv[ix+1]
+        while ix < len(argv):
+
+            nm = argv[ix]
+            val = argv[ix+1]
             ix += 2
             if nm == '--help' or nm == '-h':
                 usage()
@@ -167,8 +169,6 @@ def parseopts():
                 dedupe_percentage = int(val)
             elif nm == '--threads' or nm == '-+t':
                 threads = int(val)
-
-
             else:
                 usage('syntax error for option %s value %s' % (nm, val))
     except Exception as e:
@@ -218,5 +218,7 @@ def parseopts():
     sys.stdout.flush()
 
 
+
+
 if __name__ == "__main__":
-    parseopts()
+    parseopts(sys.argv)

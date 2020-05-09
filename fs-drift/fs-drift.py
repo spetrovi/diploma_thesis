@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 
 # fs-drift.py - user runs this module to generate workload
 # "-h" option generates online help
@@ -19,6 +19,8 @@ import threading
 
 # get byte counters from fsop
 
+start_time = 0
+total_errors = 0
 
 def refresh_counters():
     global counters
@@ -53,6 +55,8 @@ def print_short_stats():
 
 
 def print_stats():
+    global start_time
+    global total_errors
     print()
     print('elapsed time: %9.1f' % (time.perf_counter() - start_time))
     print('\n\n'\
@@ -109,11 +113,13 @@ class fs_drift_instance(object):
     def run(self):
         if opts.rsptimes:
             rsptime_filename = opts.rsptimes + '/fs-drift_%d_%d_%d_th_rspt.csv' % (int(time.perf_counter()), os.getpid(), self.num)
-            rsptime_file = open(rsptime_filename, "w")
+            rsptime_file = open(rsptime_filename, "w").close()
+
 
         if opts.bw:
             bw_filename = opts.bw + '/fs-drift_%d_%d_%d_th_bw.csv' % (int(time.perf_counter()), os.getpid(), self.num)
-            bw_file = open(bw_filename, "w")
+            bw_file = open(bw_filename, "w").close()
+
 
         if opts.starting_gun_file:
             while not os.access(opts.starting_gun_file, os.R_OK):
@@ -160,20 +166,26 @@ class fs_drift_instance(object):
                 before = result.time_before
                 total_time = result.precise_time
                 if opts.rsptimes:
+                    rsptime_file = open(rsptime_filename, "a+")
                     rsptime_file.write('%9.9f , %9.6f , %s\n' %
                                        (before - start_time,  total_time, result.name))
+                    rsptime_file.close()
+
                 if opts.bw:
+                    bw_file = open(bw_filename, "a+")
                     total_size = result.size
                     if total_size > 0:
                         bw_file.write('%9.9f , %9.6f , %s\n' % (
                             before - start_time,  ((total_size/BYTES_PER_KB) / total_time), result.name))
+                    bw_file.close()
+
             except KeyboardInterrupt as e:
                 print("received SIGINT (control-C) signal, aborting...")
                 break
-            #if rc != OK:
-             #   print("%s returns %d" % (name, rc))
-              #  total_errors += 1
-               # last_stat_time = before
+            
+            if not result.success:
+                global total_errors
+                total_errors += 1
 
             if (opts.drift_time > 0) and (before_drift - last_drift_time > opts.drift_time):
                 fsop.simulated_time += opts.drift_time
@@ -188,79 +200,69 @@ class fs_drift_instance(object):
                 print('bandwidth file is %s' % bw_filename)
 
 # the main program
-
-
-opts.parseopts()
-event.parse_weights()
-event.normalize_weights()
-total_errors = 0
-
-
-try:
-    os.mkdir(opts.top_directory)
-except os.error as e:
-    if e.errno != errno.EEXIST:
-        raise e
+def main(argv):
+    
+    opts.parseopts(argv)
+    event.parse_weights()
+    event.normalize_weights()
 
 
 
+    global total_errors
+    total_errors = 0
 
 
-
-sys.stdout.flush()
-
-last_stat_time = time.perf_counter()
-last_drift_time = time.perf_counter()
-stop_file = opts.top_directory + os.sep + 'stop-file'
-
-# we have to synchronize threads across multiple hosts somehow, we do this with a
-# file in a shared file system.
-
-if opts.randommap or opts.fill:
-    fsop.randommap()
+    try:
+        os.mkdir(opts.top_directory)
+    except os.error as e:
+        if e.errno != errno.EEXIST:
+            raise e
 
 
-time.sleep(2)  # give everyone else a chance to see that start-file is there
-start_time = time.perf_counter()
+    sys.stdout.flush()
 
+    last_stat_time = time.perf_counter()
+    last_drift_time = time.perf_counter()
+    stop_file = opts.top_directory + os.sep + 'stop-file'
 
-fsop.init_buf()
+    # we have to synchronize threads across multiple hosts somehow, we do this with a
+    # file in a shared file system.
 
+    if opts.randommap or opts.fill:
+        fsop.randommap()
 
-instances = []
-for i in range(opts.threads):
-    instances.append(fs_drift_instance(i))
+    global start_time
+    start_time = time.perf_counter()
 
-if opts.starting_gun_file:
-    open(opts.starting_gun_file, 'a').close()
+    instances = []
+    for i in range(opts.threads):
+        instances.append(fs_drift_instance(i))
 
-working = True
-before = fsop.time_before
-while working:
-    if (opts.stats_report_interval > 0) and (before - last_stat_time > opts.stats_report_interval):
-        if opts.short_stats == True:
-            print_short_stats()
+    if opts.starting_gun_file:
+        open(opts.starting_gun_file, 'a').close()
+
+    working = True
+    before = fsop.time_before
+    while working:
+        if (opts.stats_report_interval > 0) and (before - last_stat_time > opts.stats_report_interval):
+            if opts.short_stats == True:
+                print_short_stats()
+            else:
+                print_stats()
+
+        working = False
+        for i in instances:
+            working = i.thread.isAlive() | working
+        if working:
+            time.sleep(opts.stats_report_interval)
         else:
-            print_stats()
-
-    working = False
-    for i in instances:
-        working = i.thread.isAlive() | working
-    if working:
-        time.sleep(opts.stats_report_interval)
-    else:
-         break
-#############################################################
-#TU BOL WHILE
-#STATS PRINTIT HLOBVALNE tu
+             break
 
 
+    print_stats()
+    if opts.starting_gun_file:
+        ensure_deleted(opts.starting_gun_file)
+    ensure_deleted(stop_file)
 
-
-
-
-
-print_stats()
-if opts.starting_gun_file:
-    ensure_deleted(opts.starting_gun_file)
-ensure_deleted(stop_file)
+if __name__ == "__main__":
+    main(sys.argv)
