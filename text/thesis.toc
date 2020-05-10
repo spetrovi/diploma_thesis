@@ -20,6 +20,9 @@
 \contentsline {subsection}{\numberline {2.3.5}\rmfamily UDS index}{9}{subsection.2.3.5}
 \contentsline {section}{\numberline {2.4}\slshape Tunables}{9}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}\rmfamily VDO write policies}{9}{subsection.2.4.1}
+\contentsline {subsubsection}{\rmfamily sync}{9}{section*.8}
+\contentsline {subsubsection}{\rmfamily async}{10}{section*.9}
+\contentsline {subsubsection}{\rmfamily async-unsafe}{10}{section*.10}
 \contentsline {subsection}{\numberline {2.4.2}\rmfamily Block map cache size}{10}{subsection.2.4.2}
 \contentsline {subsection}{\numberline {2.4.3}\rmfamily VDO threads}{10}{subsection.2.4.3}
 \contentsline {subsection}{\numberline {2.4.4}\rmfamily Discard size}{10}{subsection.2.4.4}
@@ -43,22 +46,23 @@
 \contentsline {subsection}{\numberline {4.2.4}\rmfamily Deduplication}{19}{subsection.4.2.4}
 \contentsline {subsection}{\numberline {4.2.5}\rmfamily Random map}{19}{subsection.4.2.5}
 \contentsline {section}{\numberline {4.3}\slshape Testing package}{19}{section.4.3}
-\contentsline {section}{\numberline {4.4}\slshape Data processing}{20}{section.4.4}
+\contentsline {section}{\numberline {4.4}\slshape Data processing}{19}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}\rmfamily VDO chart}{20}{subsection.4.4.1}
 \contentsline {subsection}{\numberline {4.4.2}\rmfamily Throughput progression chart}{20}{subsection.4.4.2}
 \contentsline {subsection}{\numberline {4.4.3}\rmfamily Histogram}{20}{subsection.4.4.3}
-\contentsline {subsection}{\numberline {4.4.4}\rmfamily Boxplots}{21}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.4}\rmfamily Boxplots}{20}{subsection.4.4.4}
 \contentsline {section}{\numberline {4.5}\slshape Testing hardware}{21}{section.4.5}
 \contentsline {section}{\numberline {4.6}\slshape Supermicro X11SPL-F}{21}{section.4.6}
 \contentsline {chapter}{\numberline {5}\bfseries Performance of VDO}{23}{chapter.5}
 \contentsline {section}{\numberline {5.1}\slshape VDO threads}{23}{section.5.1}
 \contentsline {section}{\numberline {5.2}\slshape Empty VDO}{23}{section.5.2}
-\contentsline {section}{\numberline {5.3}\slshape Half empty VDO}{23}{section.5.3}
-\contentsline {section}{\numberline {5.4}\slshape Steady state testing}{23}{section.5.4}
-\contentsline {section}{\numberline {5.5}\slshape Block map cache}{23}{section.5.5}
-\contentsline {section}{\numberline {5.6}\slshape Discard size}{24}{section.5.6}
-\contentsline {section}{\numberline {5.7}\slshape Testing on different architectures}{24}{section.5.7}
-\contentsline {section}{\numberline {5.8}\slshape Journal performance}{24}{section.5.8}
-\contentsline {section}{\numberline {5.9}\slshape Testing with distributed file system}{24}{section.5.9}
-\contentsline {chapter}{\numberline {6}\bfseries Conclusion}{25}{chapter.6}
-\contentsline {section}{\numberline {6.1}\slshape Future work}{25}{section.6.1}
+\contentsline {section}{\numberline {5.3}\slshape Half empty VDO}{25}{section.5.3}
+\contentsline {section}{\numberline {5.4}\slshape Steady state testing}{25}{section.5.4}
+\contentsline {section}{\numberline {5.5}\slshape Block map cache}{25}{section.5.5}
+\contentsline {section}{\numberline {5.6}\slshape Maximum discard size}{25}{section.5.6}
+\contentsline {section}{\numberline {5.7}\slshape Write policies}{27}{section.5.7}
+\contentsline {section}{\numberline {5.8}\slshape Testing on different architectures}{27}{section.5.8}
+\contentsline {section}{\numberline {5.9}\slshape Journal performance}{27}{section.5.9}
+\contentsline {section}{\numberline {5.10}\slshape Testing with distributed file system}{27}{section.5.10}
+\contentsline {chapter}{\numberline {6}\bfseries Conclusion}{29}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape Future work}{29}{section.6.1}

@@ -247,9 +247,15 @@ Also, updating index is costly, so VDO is trying to minimise the updates. That i
 \subsection{VDO write policies}
 VDO can operate in either synchronous or asynchronous mode. By default VDO write policy is set to $auto$ which means the the module decides automatically which write policy to enquire. The main difference is in the approach if the block is written immediately or not. The obvious consequence is that if a system fails while VDO performs asynchronous write, user can lose data.
 
+\subsubsection{sync}
 In synchronous mode, the block is temporarily written to an allocated block and acknowledges the request. After completing the acknowledgement, it attempts to deduplciate the block. In case it's a duplicate, block map is updated in a way that the logical block points to the physical block that's already written and releases the temporal block. If the block is not a duplicate, $kvdo$ updates the block map to make the temporarily allocated physical block permanent.
 
+\subsubsection{async}
 In asynchronous mode, instead of writing the data immediately, only physical block allocation and acknowledgement of the request is performed. Next, VDO will attempt to deduplicate the block. If the block is a duplicate, the module only updates it's block map and releases the allocated block. If the block turns out to be unique, it is then written to the allocated block and the block map is updated.
+
+\subsubsection{async-unsafe}
+The option async-unsafe is there in case the user wants to keep the original non-ACID async write policy.
+
 
 \subsection{Block map cache size}
 
@@ -510,6 +516,8 @@ Choosing the correct block size for the workload is a very important step. For m
 
 The way fs-drift works, block size is the smallest granularity of IOs that will the workload achieve, which means that it is a smallest chunk of data that will be submitted to the device or file. Since there is some work to be done between the subsequent submisions, the device that services the requests can have a small bit of time to process the requests. By choosing larger blocksize the workload becomes more aggressive, since there is more data submited at the same time. 
 
+However, by increasing block size, we're increasing the smallest continuous chunk of data that will be worked with and some devices (such as HDDs) may benefit from that.
+
 \subsection{Compress ratio}
 Compress ratio is a very imporant factor while testing VDO. Generally, it is good to use some compression, so the VDO can excercise all its components. However there can be cases where lowering the compression ratio would benefit the user, f.e. if the goal of a test run is to fill as much of physical space as possible, it would be counter-productive to let a portion of the data be deduplicated and compressed.
 
@@ -526,15 +534,15 @@ However, this approach may not be best, since some blocks can be used more than 
 
 
 \section{Testing package}
-To manage the test results and metadata as well as testing environment and to be able to include tests in more complex workflows it is beneficial to enclose the benchmark in a testing package. For fs-drift, there is drift\_job package. 
+To manage the test results and metadata as well as testing environment and to be able to include tests in more complex workflows it is beneficial to encapsulate the benchmark into a testing package. For fs-drift, there is drift\_job package.
 
-This testing package accepts several parameters such as running device or parameters for fs-drift. When run, it prepares the testing environment, stores multitude of data about the system, runs the test and then gathers results, packaging it into a managable tarball.
+Drift\_job accepts several parameters such as used device, command for preallocation or parameters for fs-drift. When run, it prepares the testing environment, gathers data about the system, runs the test and package results into an easily managable tar file.
 
 If specified, the package also asynchronously gathers information while the test is running such as statistics about VDO volume.
 
-While fs-drift doesn't run on itself as a multithreaded program, there is a small support hidden away as prefix parameter. This prefix, when used, will be used as a prefix to object that particular instance of fs-drift works with.
+%While fs-drift doesn't run on itself as a multithreaded program, there is a small support hidden away as prefix parameter. This prefix, when used, will be used as a prefix to object that particular instance of fs-drift works with.
 
-This makes it possible to actually run multithreaded tests using this testing package. Drift\_job takes a parameter THREADNUM and the it runs that many instances of fs-drift as concurent threads. All the results are stored in a single package, but as multiple files, so then they might be examined in different ways.
+%This makes it possible to actually run multithreaded tests using this testing package. Drift\_job takes a parameter THREADNUM and the it runs that many instances of fs-drift as concurent threads. All the results are stored in a single package, but as multiple files, so then they might be examined in different ways.
 
 \section{Data processing}
 Data processing script is working exclusively with the files generated by the testing package drift\_job. It will open the package and create its own data objects producing a resulting report.
@@ -634,6 +642,18 @@ To examine this effect, random write workload can be used on a new instance of V
 
 To obtain fully allocated, but empty VDO volume, it is sufficient to just write one zero byte to every VDO sector. One VDO sector is 812 VDO blocks (default block size in VDO is 4096), so we'll write a zero byte every 812*4096 bytes. 
 
+\begin{figure}[!h]
+        \centering
+        \includegraphics[width=\textwidth]{../results/empty_VDO/HDD/tar_467_bw}
+\caption[EmptyVDO]{EmptyVDO}
+\label{fig:emptyVDO}
+        \centering
+        \includegraphics[width=\textwidth]{../results/empty_VDO/HDD/tar_224_bw}
+\caption[preallVDO]{PreallocatedVDO}
+\label{fig:preallocatedVDO}
+\end{figure}
+
+\clearpage
 \section{Half empty VDO}
 
 \section{Steady state testing}
@@ -654,7 +674,44 @@ To ensure the workload is truly aggresive, large file size and completely random
 
 
 
-\section{Discard size}
+\section{Maximum discard size}
+Performance of discard operation is important to consider, since users may want to discard large quantities of blocks to free space.
+
+VDO offers an option to change the maximum allowed discard size with a parameter --maxDiscardSize. VDO will process discards one VDO block at the time to ensure metadata consintency. VDO manual states that lower discard sizes could work better since, VDO can process them in parallel, assuming low IO traffic.
+
+The tests of maximum discard size throughput were conducted on four different VDO volumes created with differend --maxDiscardSize parameter. This progression was tested on empty VDO, full VDO and empty VDO with preallocation.
+
+The results from unallocated empty VDO are not considered, since it is not expected for users to work (and perform discards) on unallocated space.
+
+While processing the data, the interesting statistic to look for from vdostats is \texttt{bios in discard}.
+
+
+
+
+
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{../results/discards/empty_VDO/report/random_discard1_compare_boxplots}
+\caption[Discards]{Testing of VDO volume created with various maxDiscardSize parameters. Results show that may be beneficial to keep maximum discard size low}
+\label{fig:discard}
+\end{figure}
+
+
+\clearpage
+
+
+
+
+
+\section{Write policies}
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{../results/write_policies/report/random_write1_compare_boxplots}
+\caption[write policies]{Testing of VDO volume created with various write policies}
+\label{fig:writepolicies}
+\end{figure}
+
+
 
 \section{Testing on different architectures}
 \section{Journal performance}

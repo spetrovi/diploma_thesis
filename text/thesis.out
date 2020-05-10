@@ -53,9 +53,10 @@
 \BOOKMARK [1][-]{section.5.3}{\040Half\040empty\040VDO}{chapter.5}% 53
 \BOOKMARK [1][-]{section.5.4}{\040Steady\040state\040testing}{chapter.5}% 54
 \BOOKMARK [1][-]{section.5.5}{\040Block\040map\040cache}{chapter.5}% 55
-\BOOKMARK [1][-]{section.5.6}{\040Discard\040size}{chapter.5}% 56
-\BOOKMARK [1][-]{section.5.7}{\040Testing\040on\040different\040architectures}{chapter.5}% 57
-\BOOKMARK [1][-]{section.5.8}{\040Journal\040performance}{chapter.5}% 58
-\BOOKMARK [1][-]{section.5.9}{\040Testing\040with\040distributed\040file\040system}{chapter.5}% 59
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 60
-\BOOKMARK [1][-]{section.6.1}{\040Future\040work}{chapter.6}% 61
+\BOOKMARK [1][-]{section.5.6}{\040Maximum\040discard\040size}{chapter.5}% 56
+\BOOKMARK [1][-]{section.5.7}{\040Write\040policies}{chapter.5}% 57
+\BOOKMARK [1][-]{section.5.8}{\040Testing\040on\040different\040architectures}{chapter.5}% 58
+\BOOKMARK [1][-]{section.5.9}{\040Journal\040performance}{chapter.5}% 59
+\BOOKMARK [1][-]{section.5.10}{\040Testing\040with\040distributed\040file\040system}{chapter.5}% 60
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 61
+\BOOKMARK [1][-]{section.6.1}{\040Future\040work}{chapter.6}% 62
