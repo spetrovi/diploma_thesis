@@ -1,0 +1,86 @@
+LS_COLORS=rs=0:di=38;5;33:ln=38;5;51:mh=00:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=01;05;37;41:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;40:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.zst=38;5;9:*.tzst=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.wim=38;5;9:*.swm=38;5;9:*.dwm=38;5;9:*.esd=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.mjpg=38;5;13:*.mjpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.m4a=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.oga=38;5;45:*.opus=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
+STY=14736.pts-1.korben
+BEAKER=https://beaker.engineering.redhat.com/
+SSH_CONNECTION=10.40.193.242 60474 10.40.128.219 22
+RHTS_OPTION_COMPATIBLE=
+_=/usr/bin/printenv
+LANG=en_US.UTF-8
+HISTCONTROL=ignoredups
+DEVICE=/dev/mapper/testVDO
+TAG=VDO_SSD
+HOSTNAME=korben.tpb.lab.eng.brq.redhat.com
+OLDPWD=/root/drift_job/fs-drift
+S_COLORS=auto
+OUTPUTFILE=/mnt/testarea/tmp.DgYL40
+BEAKER_HUB_URL=https://beaker.engineering.redhat.com/
+BEAKER_RECIPE_ID=8181023
+XDG_SESSION_ID=241
+USER=root
+BEAKER_RECIPE_WHITEBOARD=
+LOOKASIDE=http://download.eng.brq.redhat.com/qa/rhts/lookaside/
+BEAKER_LAB_CONTROLLER=lab-02.rhts.eng.brq.redhat.com
+SELINUX_ROLE_REQUESTED=
+BUILDURL=http://download.eng.brq.redhat.com
+PWD=/root/drift_job
+HOME=/root
+WINDOW=0
+RECIPE=file-size_10000--report-interval_5--duration_300--bandwidth_out--blocksize_4--workload-table_randomwrite.csv--compression-ratio_3.0--fsync_0--direct_1--rawdevice_/dev/mapper/testVDO--dedupe-percentage_50--threads_1
+SSH_CLIENT=10.40.193.242 60474 22
+BEAKERLIB=/usr/share/beakerlib
+DRIFTTYPE=400g_default
+SELINUX_LEVEL_REQUESTED=
+NFSSERVERS=rhel5-nfs.rhts.eng.brq.redhat.com:/export/home rhel6-nfs.rhts.eng.brq.redhat.com:/export/home rhel7-nfs.rhts.eng.brq.redhat.com:/export/home rhel8-nfs.rhts.eng.brq.redhat.com:/export/home
+BEAKER_RESERVATION_POLICY_URL=https://home.corp.redhat.com/wiki/extended-reservations-beaker-general-pool-systems
+RHTS_OPTION_COMPAT_SERVICE=
+SSH_TTY=/dev/pts/1
+MAIL=/var/spool/mail/root
+doRSYNC=0
+TERM=screen.xterm-256color
+SHELL=/bin/bash
+DUMPSERVER=netdump-01.eng.brq.redhat.com
+BEAKER_JOB_WHITEBOARD=**File Systems** RHEL-8.1.0 kernel-4.18.0-193.3.el8 korben.tpb.lab.eng.brq.redhat.com, thesis
+XMODIFIERS=@im=ibus
+BEAKER_LAB_CONTROLLER_URL=http://lab-02.rhts.eng.brq.redhat.com:8000/
+SELINUX_USE_CURRENT_RANGE=
+ALLOCATE=1
+BC_ENV_ARGS=-l /etc/extensions.bc
+SHLVL=5
+__INTERNAL_DEFAULT_SUBMIT_LOG=__INTERNAL_FileSubmit
+POSIXFIXED=NO
+PROMPT_COMMAND=history -a;tput sgr0
+__INTERNAL_PERSISTENT_TMP=/var/tmp
+__INTERNAL_DEFAULT_REPORT_RESULT=/bin/true
+INCREMENT=20000
+LOGNAME=root
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/0/bus
+XDG_RUNTIME_DIR=/run/user/0
+LAB_CONTROLLER=lab-02.rhts.eng.brq.redhat.com
+PATH=./:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/root/bin
+HISTSIZE=100000
+TERMCAP=SC|screen.xterm-256color|VT 100/ANSI X3.64 virtual terminal:\
+	:DO=\E[%dB:LE=\E[%dD:RI=\E[%dC:UP=\E[%dA:bs:bt=\E[Z:\
+	:cd=\E[J:ce=\E[K:cl=\E[H\E[J:cm=\E[%i%d;%dH:ct=\E[3g:\
+	:do=^J:nd=\E[C:pt:rc=\E8:rs=\Ec:sc=\E7:st=\EH:up=\EM:\
+	:le=^H:bl=^G:cr=^M:it#8:ho=\E[H:nw=\EE:ta=^I:is=\E)0:\
+	:li#52:co#211:am:xn:xv:LP:sr=\EM:al=\E[L:AL=\E[%dL:\
+	:cs=\E[%i%d;%dr:dl=\E[M:DL=\E[%dM:dc=\E[P:DC=\E[%dP:\
+	:im=\E[4h:ei=\E[4l:mi:IC=\E[%d@:ks=\E[?1h\E=:\
+	:ke=\E[?1l\E>:vi=\E[?25l:ve=\E[34h\E[?25h:vs=\E[34l:\
+	:ti=\E[?1049h:te=\E[?1049l:us=\E[4m:ue=\E[24m:so=\E[3m:\
+	:se=\E[23m:mb=\E[5m:md=\E[1m:mh=\E[2m:mr=\E[7m:\
+	:me=\E[m:ms:\
+	:Co#8:pa#64:AF=\E[3%dm:AB=\E[4%dm:op=\E[39;49m:AX:\
+	:vb=\Eg:G0:as=\E(0:ae=\E(B:\
+	:ac=\140\140aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~..--++,,hhII00:\
+	:po=\E[5i:pf=\E[4i:Km=\E[M:k0=\E[10~:k1=\EOP:k2=\EOQ:\
+	:k3=\EOR:k4=\EOS:k5=\E[15~:k6=\E[17~:k7=\E[18~:\
+	:k8=\E[19~:k9=\E[20~:k;=\E[21~:F1=\E[23~:F2=\E[24~:\
+	:F3=\E[1;2P:F4=\E[1;2Q:F5=\E[1;2R:F6=\E[1;2S:\
+	:F7=\E[15;2~:F8=\E[17;2~:F9=\E[18;2~:FA=\E[19;2~:\
+	:FB=\E[20;2~:FC=\E[21;2~:FD=\E[23;2~:FE=\E[24;2~:kb=:\
+	:K2=\EOE:kB=\E[Z:kF=\E[1;2B:kR=\E[1;2A:*4=\E[3;2~:\
+	:*7=\E[1;2F:#2=\E[1;2H:#3=\E[2;2~:#4=\E[1;2D:%c=\E[6;2~:\
+	:%e=\E[5;2~:%i=\E[1;2C:kh=\E[1~:@1=\E[1~:kH=\E[4~:\
+	:@7=\E[4~:kN=\E[6~:kP=\E[5~:kI=\E[2~:kD=\E[3~:ku=\EOA:\
+	:kd=\EOB:kr=\EOC:kl=\EOD:km:
+LESSOPEN=||/usr/bin/lesspipe.sh %s

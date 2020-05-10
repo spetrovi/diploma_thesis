@@ -1,0 +1,2412 @@
+
+fs_not_mounted = top directory
+/var/tmp/fs-drift_start_gun_file = starting gun file
+                            0 = operation count
+                          300 = duration
+                           20 = maximum files
+                 10000 = file size (KB)
+                   4 = block size (KB)
+                  10 = fdatasync percentage
+                   0 = fsync percentage
+                   2 = directory levels
+                   3 = directories per level
+             uniform = filename random distribution
+                 0.0 = mean index velocity
+              1000.0 = gaussian stddev
+                 3.0 = create stddevs ahead
+                None = save response times
+                 out = save bandwidth
+                 3.0 = compression ratio
+                   1 = directIO
+                   f = prefix
+ /dev/mapper/testVDO = rawdevice
+               False = random map
+               False = fill device
+                  50 = dedupe_percentage
+                   1 = threads
+
+     randomwrite.csv = workload table filename
+                   5 = statistics report intervalpercentage
+weights: {3: 100}
+total weight: 100.000000 
+normalized weights:
+        request type     weight   cum.prob  probability
+        random_write        100   1.000      1.000
+
+
+elapsed time:       0.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+        0 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+        0 = random write requests
+        0 = random write bytes
+        0 = fdatasync calls
+        0 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+
+elapsed time:       5.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+       11 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+    29900 = random write requests
+122470400 = random write bytes
+        0 = fdatasync calls
+        0 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:31:13.593507
+
+elapsed time:      10.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+       23 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+    57500 = random write requests
+235520000 = random write bytes
+        1 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:31:18.705544
+
+elapsed time:      15.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+       36 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+    90000 = random write requests
+368640000 = random write bytes
+        2 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:31:23.818550
+
+elapsed time:      20.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+       48 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   120000 = random write requests
+491520000 = random write bytes
+        5 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:31:28.932759
+
+elapsed time:      25.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+       61 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   152500 = random write requests
+624640000 = random write bytes
+        7 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:31:34.038627
+
+elapsed time:      30.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+       73 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   182500 = random write requests
+747520000 = random write bytes
+        9 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:31:39.147541
+
+elapsed time:      35.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+       86 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   215000 = random write requests
+880640000 = random write bytes
+       10 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:31:44.254570
+
+elapsed time:      40.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+       99 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   247500 = random write requests
+1013760000 = random write bytes
+       11 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:31:49.367609
+
+elapsed time:      45.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      112 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   280000 = random write requests
+1146880000 = random write bytes
+       12 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:31:54.500562
+
+elapsed time:      50.0
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      125 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   312500 = random write requests
+1280000000 = random write bytes
+       13 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:31:59.613654
+
+elapsed time:      55.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      137 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   342752 = random write requests
+1403912192 = random write bytes
+       17 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:04.719563
+
+elapsed time:      60.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      150 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   375000 = random write requests
+1536000000 = random write bytes
+       19 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:09.825631
+
+elapsed time:      65.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      163 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   407500 = random write requests
+1669120000 = random write bytes
+       20 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:14.934633
+
+elapsed time:      70.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      176 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   440000 = random write requests
+1802240000 = random write bytes
+       21 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:20.053559
+
+elapsed time:      75.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      189 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   472500 = random write requests
+1935360000 = random write bytes
+       22 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:25.167568
+
+elapsed time:      80.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      201 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   504780 = random write requests
+2067578880 = random write bytes
+       22 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:30.276105
+
+elapsed time:      85.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      214 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   535516 = random write requests
+2193473536 = random write bytes
+       24 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:35.382041
+
+elapsed time:      90.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      227 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   567500 = random write requests
+2324480000 = random write bytes
+       26 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:40.488622
+
+elapsed time:      95.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      240 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   600000 = random write requests
+2457600000 = random write bytes
+       26 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:45.594525
+
+elapsed time:     100.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      253 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   632500 = random write requests
+2590720000 = random write bytes
+       27 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:50.699600
+
+elapsed time:     105.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      266 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   665000 = random write requests
+2723840000 = random write bytes
+       28 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:32:55.824595
+
+elapsed time:     110.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      278 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   695000 = random write requests
+2846720000 = random write bytes
+       30 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:00.941560
+
+elapsed time:     115.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      291 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   727500 = random write requests
+2979840000 = random write bytes
+       31 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:06.061609
+
+elapsed time:     120.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      304 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   760000 = random write requests
+3112960000 = random write bytes
+       32 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:11.174632
+
+elapsed time:     125.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      317 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   792500 = random write requests
+3246080000 = random write bytes
+       34 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:16.281569
+
+elapsed time:     130.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      330 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   825000 = random write requests
+3379200000 = random write bytes
+       35 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:21.387630
+
+elapsed time:     135.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      343 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   857500 = random write requests
+3512320000 = random write bytes
+       36 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:26.507567
+
+elapsed time:     140.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      356 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   890000 = random write requests
+3645440000 = random write bytes
+       36 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:31.612632
+
+elapsed time:     145.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      369 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   922500 = random write requests
+3778560000 = random write bytes
+       38 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:36.717569
+
+elapsed time:     150.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      382 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   955000 = random write requests
+3911680000 = random write bytes
+       39 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:41.823552
+
+elapsed time:     155.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      394 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+   985000 = random write requests
+4034560000 = random write bytes
+       42 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:46.931564
+
+elapsed time:     160.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      407 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1017500 = random write requests
+4167680000 = random write bytes
+       43 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:52.039587
+
+elapsed time:     165.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      420 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1050000 = random write requests
+4300800000 = random write bytes
+       45 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:33:57.148616
+
+elapsed time:     170.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      433 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1082500 = random write requests
+4433920000 = random write bytes
+       45 = fdatasync calls
+        1 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:02.260567
+
+elapsed time:     175.1
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      445 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1113782 = random write requests
+4562051072 = random write bytes
+       47 = fdatasync calls
+        3 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:07.367599
+
+elapsed time:     180.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      458 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1147122 = random write requests
+4698611712 = random write bytes
+       47 = fdatasync calls
+        3 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:12.486651
+
+elapsed time:     185.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      471 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1177500 = random write requests
+4823040000 = random write bytes
+       50 = fdatasync calls
+        3 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:17.608009
+
+elapsed time:     190.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      483 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1207500 = random write requests
+4945920000 = random write bytes
+       53 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:22.715516
+
+elapsed time:     195.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      496 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1240000 = random write requests
+5079040000 = random write bytes
+       54 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:27.822623
+
+elapsed time:     200.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      509 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1272500 = random write requests
+5212160000 = random write bytes
+       55 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:32.928576
+
+elapsed time:     205.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      522 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1305000 = random write requests
+5345280000 = random write bytes
+       56 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:38.047533
+
+elapsed time:     210.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      535 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1337500 = random write requests
+5478400000 = random write bytes
+       58 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:43.164589
+
+elapsed time:     215.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      548 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1370000 = random write requests
+5611520000 = random write bytes
+       59 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:48.275628
+
+elapsed time:     220.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      560 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1400000 = random write requests
+5734400000 = random write bytes
+       62 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:53.388571
+
+elapsed time:     225.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      573 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1432500 = random write requests
+5867520000 = random write bytes
+       64 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:34:58.492775
+
+elapsed time:     230.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      586 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1465000 = random write requests
+6000640000 = random write bytes
+       65 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:03.627082
+
+elapsed time:     235.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      598 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1495000 = random write requests
+6123520000 = random write bytes
+       69 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+
+elapsed time:     240.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      611 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1527500 = random write requests
+6256640000 = random write bytes
+       70 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:08.739783
+
+elapsed time:     245.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      623 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1559281 = random write requests
+6386814976 = random write bytes
+       71 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:13.851921
+
+elapsed time:     250.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      636 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1592096 = random write requests
+6521225216 = random write bytes
+       72 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:18.956631
+
+elapsed time:     255.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      649 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1624864 = random write requests
+6655442944 = random write bytes
+       73 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:24.069537
+
+elapsed time:     260.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      663 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1657500 = random write requests
+6789120000 = random write bytes
+       73 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:29.183647
+
+elapsed time:     265.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      675 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1688099 = random write requests
+6914453504 = random write bytes
+       75 = fdatasync calls
+        4 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:34.290588
+
+elapsed time:     270.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      688 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1720000 = random write requests
+7045120000 = random write bytes
+       78 = fdatasync calls
+        5 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:39.413627
+
+elapsed time:     275.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      700 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1752500 = random write requests
+7178240000 = random write bytes
+       80 = fdatasync calls
+        6 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:44.525694
+
+elapsed time:     280.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      713 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1782500 = random write requests
+7301120000 = random write bytes
+       81 = fdatasync calls
+        6 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:49.640795
+
+elapsed time:     285.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      726 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1815000 = random write requests
+7434240000 = random write bytes
+       83 = fdatasync calls
+        6 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:54.757577
+
+elapsed time:     290.2
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      739 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1847500 = random write requests
+7567360000 = random write bytes
+       85 = fdatasync calls
+        6 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:35:59.872555
+
+elapsed time:     295.3
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      752 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1880000 = random write requests
+7700480000 = random write bytes
+       86 = fdatasync calls
+        6 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors
+2020-05-11 00:36:04.980561
+bandwidth file is out/fs-drift_973748_1232_0_th_bw.csv
+
+elapsed time:     300.3
+
+
+        0 = center
+        0 = files created
+        0 = files appended to
+      764 = files randomly written to
+        0 = files read
+        0 = files randomly read
+        0 = files truncated
+        0 = files deleted
+        0 = files renamed
+        0 = softlinks created
+        0 = hardlinks created
+
+        0 = read requests
+        0 = read bytes
+        0 = random read requests
+        0 = random read bytes
+        0 = write requests
+        0 = write bytes
+  1910000 = random write requests
+7823360000 = random write bytes
+       89 = fdatasync calls
+        6 = fsync calls
+        0 = leaf directories created
+        0 = discard requests
+        0 = discard bytes
+
+        0 = no create -- file already existed
+        0 = file not found
+
+        0 = no directory space
+        0 = no space for new inode
+        0 = no space for write data
+
+        0 = total errors

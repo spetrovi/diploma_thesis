@@ -1,0 +1,31 @@
+config: !Configuration
+  vdos:
+    testVDO: !VDOService
+      _operationState: finished
+      ackThreads: 1
+      activated: enabled
+      bioRotationInterval: 64
+      bioThreads: 4
+      blockMapCacheSize: 128M
+      blockMapPeriod: 16380
+      compression: enabled
+      cpuThreads: 2
+      deduplication: enabled
+      device: /dev/disk/by-id/dm-uuid-LVM-gEqTQjbIPyYJPWLeWzo2Pui5OGvRKOiwdQn1QGQ0HVaS1DD2T5wv3A1xl27CwDzg
+      hashZoneThreads: 1
+      indexCfreq: 0
+      indexMemory: 0.25
+      indexSparse: disabled
+      indexThreads: 0
+      logicalBlockSize: 4096
+      logicalSize: 400G
+      logicalThreads: 1
+      maxDiscardSize: 4K
+      name: testVDO
+      physicalSize: 10G
+      physicalThreads: 1
+      slabSize: 2G
+      writePolicy: async
+  version: 538380551
+filename: /etc/vdoconf.yml
+
