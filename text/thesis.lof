@@ -4,11 +4,20 @@
 \addvspace {4\p@ }
 \addvspace {4\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Space saving methods in VDO}}{3}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Sync}}{10}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Async}}{11}{figure.2.3}
 \addvspace {4\p@ }
 \addvspace {4\p@ }
 \addvspace {4\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces EmptyVDO}}{24}{figure.5.1}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces preallVDO}}{24}{figure.5.2}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Discards}}{26}{figure.5.3}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces write policies}}{27}{figure.5.4}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces EmptyVDO}}{26}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces preallVDO}}{26}{figure.5.2}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Discards}}{29}{figure.5.3}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Discards}}{29}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Discards}}{30}{figure.5.5}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Discards}}{30}{figure.5.6}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Discards}}{31}{figure.5.7}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces write policies}}{32}{figure.5.8}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Journal}}{34}{figure.5.9}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Journal}}{34}{figure.5.10}
+\addvspace {4\p@ }
 \addvspace {4\p@ }

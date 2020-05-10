@@ -79,6 +79,8 @@ full_discards += glob.glob('../results/discards/full_VDO/*-1m*.tar.xz')
 
 #Report(full_discards, '../results/discards/full_VDO/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['logical blocks used','bios in discard'], lim_y=1300, test_label = 'max discard size') 
 
+block_map_cache = glob.glob('../results/block_map_cache/*.tar.xz')
+Report(block_map_cache, '../results/block_map_cache/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200, test_label = 'block map cache') 
 
 
 

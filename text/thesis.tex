@@ -232,11 +232,6 @@ The block map is a cause of one of the requirements on physical space. It usuall
 The 128MB can cover about 100GB of logical blocks. However if users logical space is larger than 100GB and their workload is so random that it doesn't cached pages, user can observe great preformance hit. In case the block map cache is full, therefore runs out of free pages and a request comes for a page thats not contained in the cache, VDO needs to first discard some page from the cache, write it on disk and just after then load the desired page. It is obvious that this cycle is very time expensive and therefore users are encouraged to increase block map cache size if the precoditions for cache tiering are met.
 
 
-
-
-
-\subsection{VDO threads}
-
 \subsection{UDS index}
 UDS index is a structure designed specifically to indentify duplicate data using hash fingerprints of data blocks. It exists in VDO to provide deduplication advice for effective deduplication. Instance of UDS index is not vital for VDO block handling. In case of losing the index, the VDO still manages blocks and stores and compress data, only without deduplication. Even in the event of index becoming corrupted, there are different mechanisms in place to assure data correctness, so user can discard the index and start bulding a new one.
 
@@ -244,22 +239,39 @@ Also, updating index is costly, so VDO is trying to minimise the updates. That i
 
 \section{Tunables}
 
+
+\subsection{VDO threads}
+
+
 \subsection{VDO write policies}
-VDO can operate in either synchronous or asynchronous mode. By default VDO write policy is set to $auto$ which means the the module decides automatically which write policy to enquire. The main difference is in the approach if the block is written immediately or not. The obvious consequence is that if a system fails while VDO performs asynchronous write, user can lose data.
+VDO can operate in either synchronous or asynchronous mode. By default VDO write policy is set to $auto$ which means the the module decides automatically which write policy to use. The main difference is wether or on is the write request written immediately or not. In case of system failure while using asynchronous mode, data can be lost.
 
-\subsubsection{sync}
-In synchronous mode, the block is temporarily written to an allocated block and acknowledges the request. After completing the acknowledgement, it attempts to deduplciate the block. In case it's a duplicate, block map is updated in a way that the logical block points to the physical block that's already written and releases the temporal block. If the block is not a duplicate, $kvdo$ updates the block map to make the temporarily allocated physical block permanent.
+\subsubsection{Synchronous mode}
+In synchronous mode, VDO temporarily writes the block to the device and acknowledges the request. After completing the acknowledgement, it attempts to deduplciate the block. In case it's a duplicate, block map is updated in a way that the logical block points to the physical block that iss already written and releases the previously written temporary block. In case the block is not a duplicate, $kvdo$ updates the block map to make the temporary physical block permanent.
 
-\subsubsection{async}
-In asynchronous mode, instead of writing the data immediately, only physical block allocation and acknowledgement of the request is performed. Next, VDO will attempt to deduplicate the block. If the block is a duplicate, the module only updates it's block map and releases the allocated block. If the block turns out to be unique, it is then written to the allocated block and the block map is updated.
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{graphics/diagrams/sync.png}
+\caption[Sync]{Sync diagram}
+\label{fig:sync}
+\end{figure}
 
-\subsubsection{async-unsafe}
+\subsubsection{Asynchronous mode}
+In asynchronous mode, instead of writing the data immediately, physical block is only allocated and acknowledgement of request is performed. Next, VDO will attempt to deduplicate the block. If the block is a duplicate, the module only updates it's block map and releases the allocated block. If the block is be unique, block map is updated and the data is written to the allocated block.
+
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{graphics/diagrams/async.png}
+\caption[Async]{Async diagram}
+\label{fig:async}
+\end{figure}
+
+\subsubsection{Asynchronous unsafe mode}
 The option async-unsafe is there in case the user wants to keep the original non-ACID async write policy.
 
 
 \subsection{Block map cache size}
 
-\subsection{VDO threads}
 
 \subsection{Discard size}
 
@@ -325,17 +337,17 @@ The option async-unsafe is there in case the user wants to keep the original non
 %\subsection{Monitoring VDO}
 %VDO works as a thinly provisioned volume. Therefore applications or file systems that use it will only see a logical space that is provided by VDO. To monitor VDO space usage, physical space left or compression ratio and much more, $vdostats$ utility provides neccessary inspection of VDO volume.
 
-\chapter{Benchmarks}
+\chapter{Fs-drift}
 \label{benchmarks}
 
-\section{fs-drift}
+\section{Introduction}
 Fs-drift is an open-source benchmark developed specifically for testing heavy workload and aging performance. Being implemented in Python, it is very easy for users or contributors to add new features or change the benchmark behavior to their needs. For testing performance of VDO, several new features were added.
 
 %\subsection{New features}
 %Fs-drift was used as a main tool in a previous study of file system aging so only new features will be presented in this thesis.
 For performance testing of VDO, new features and behavior needed to be implemented to fs-drift to enable more precise control over IOs and testing process.
 
-\subsection{Compressible data generator}
+\section{Compressible data generator}
 While testing compression and deduplication technology as VDO, data generated for testing need to be specificaly shaped. The benchmark needs to be able to generate the testing data in a way that corresponds to examined cases. A restriction for VDO testing is that the repeating patterns in compressible data cannot be composed entirely of zeroes, because the way VDO deals with zero blocks (see, Zero blocks elimination). For this reason, new parameter was added to fs-drift, that enables the user to produce buffers using $lzdatagenerator$ with specified compressibility.
 
 This feature was implemented using alternative IO buffer behavior which works with another open source project called $lzdatagen$.
@@ -352,7 +364,7 @@ Usage:
 \end{itemize}
 
 
-\subsection{Deduplication}
+\section{Deduplication}
 While some of the data from lzdatagen will be naturally deduplicable, more precise control of deduplicibility of the data could result in more precise performance measuerment.
 
 As mentioned in the section above, user can input seed value to lzdatagen to produce the same output. Fs-drift uses this parameter to produce deduplicable data. Based on the inputed probability, fs-drift will either produce new data by obtaining new seed from os.urandom() function and saving it for later. In case fs-drift needs to produce data that will deduplicate, it uses one of the stored seed from the previously generated data.
@@ -363,7 +375,7 @@ Usage:
 \end{itemize}
 
 
-\subsection{DirectIO}
+\section{DirectIO}
 When researching behavior of random operations in fs-drift, file system cache can often skew considerable amount od measurements.
 
 %This could affect reads, since the blocks could be read from the cache instead of the device.
@@ -377,7 +389,7 @@ Usage:
     \item -D|--direct, if true, use os.O\_DIRECT flag when opening files. Data alignment of 4096 bytes will be used. (default False)
 \end{itemize}
 
-\subsection{Rawdevice}
+\section{Rawdevice}
 While file system can be installed on a VDO layer (and there is an increasing number of users which do), it is important to have an option to test VDO block device also without the file system to get more precise measueremts. File systems can have considerable impact on performance and can skew results in ways that make it hard to clearly observe VDO impact on overall performance.
 
 Rawdevice mode was added, that enables fs-drift to run block-wise on a given device instead of working with files on a file system.
@@ -388,7 +400,7 @@ Usage:
 \end{itemize}
 
 
-\subsection{Random discard operation}
+\section{Random discard operation}
 With thinly provisioned technology being increasingly relevant, it is interesting for researchers to also test performance of a block discards. Discard command could be passed either from the file system or an application to let the underlying device know that the particular block is no longer occupied and can be returned to the block pool.
 
 In Linux, available command for block discard is $blkdiscard$. User can specify the offset and length to be discarded, making it very easy to write an operation type for fs-drift.
@@ -442,7 +454,7 @@ os.close(fd)
 
 If the user of fs-drift wants to test discard speed, he can specify so in the configuration file along with a probability of the event. When the event of discard is triggered, fs-drift works similar as with random writes, but intead of producing buffer and writing data, it's using discards with random offset and specified block size to call BLKDISCARD.
 
-\subsection{Random map}
+\section{Random map}
 When computing offset for random operations, it might not enough to just generate random number. Sometimes it is benefical to administer IOs only to unused blocks, ensuring no overwriting takes place and all the free blocks will eventually be used.
 
 For this purposes a feature to keep track of unused offests was added to fs-drift. The random map is generated before the test as a shuffled list of possible indices, to save time while the workload is in progress.
@@ -454,7 +466,7 @@ Usage:
     \item -r|--randommap, if true, use random map to get random offsets (default False)
 \end{itemize}
 
-\subsection{Multithread}
+\section{Multithread}
 Multithreaded workloads are essential for researching performance of ------.
 
 Option to run fs-drift a multithreaded bechmark was added. User will just specify the number of threads that is to be used and fs-drift will spawn that many. For this option, large parts of fs-drift needed to be reengineered so the threads are not corrupting eachother data structures, buffers, etc.
@@ -467,7 +479,7 @@ Important fact to notice is that every thread is maintaining its own performance
 \end{itemize}
 
 
-\subsection{Performance measurement}
+\section{Performance measurement}
 In fs-drift, performance is measured by saving a time stamp before invoking the IO operation and storing the time stamp difference after the operation was finished. However, with this type of measurment, it is important to make sure the time stamping is as close to the actual IO operations as possible. 
 
 In previous versions, the time measurement was the same for every IO operation, which made some of the measurement incosistent, e.g. taking into the measurement the time to generate buffers, setting offset to file descriptors. etc.
@@ -477,7 +489,7 @@ This problem was removed by moving the time stamps inside the functions, providi
 Another small feature added by switching to $perf\_counter()$ as a tool to log time instead of $time()$.
 
 
-\subsection{Data reporting}
+\section{Data reporting}
 In previous versions, data was stored in the programs memory which increased RAM consumption during long tests. Also in case of OS or benchmark failure all the results were lost. This problem was removed by having the output files open and continually appending new entries.
 
 In fs-drift, gathering only response (completion) times introduced noise to the datapoints, since there can be variability of file or data size, that variability will directly project into the data, since working with larger files can take longer than working with smaller files.
@@ -534,9 +546,9 @@ However, this approach may not be best, since some blocks can be used more than 
 
 
 \section{Testing package}
-To manage the test results and metadata as well as testing environment and to be able to include tests in more complex workflows it is beneficial to encapsulate the benchmark into a testing package. For fs-drift, there is drift\_job package.
+To manage the test results and metadata as well as testing environment and to be able to include tests in more complex or automised workflows, it is beneficial to encapsulate the benchmark into a testing package. For fs-drift, there is drift\_job package.
 
-Drift\_job accepts several parameters such as used device, command for preallocation or parameters for fs-drift. When run, it prepares the testing environment, gathers data about the system, runs the test and package results into an easily managable tar file.
+Drift\_job accepts several parameters such as used device, command for preallocation or parameters for fs-drift. When run, it prepares the testing environment, gathers data about the system, runs the test and package results into an easily managable tar file. The results can be then automatically sent to a data gathering server.
 
 If specified, the package also asynchronously gathers information while the test is running such as statistics about VDO volume.
 
@@ -545,9 +557,29 @@ If specified, the package also asynchronously gathers information while the test
 %This makes it possible to actually run multithreaded tests using this testing package. Drift\_job takes a parameter THREADNUM and the it runs that many instances of fs-drift as concurent threads. All the results are stored in a single package, but as multiple files, so then they might be examined in different ways.
 
 \section{Data processing}
-Data processing script is working exclusively with the files generated by the testing package drift\_job. It will open the package and create its own data objects producing a resulting report.
+Data processing is accomplished by using library written for processing drift\_job packages. The main object Report will process data from all the specified result packages and creates easy to view html report.
 
-The report contains all the metadata gathered by the test as well as many different charts and statistics.
+The html report consists of two parts. First part is presenting individual report for given results. The second part is comparing the inputed results in an easily digestable manner.
+
+The report output can be tuned with several parameters:
+
+\begin{itemize}
+    \item list of paths to individual tar packages
+    \item path to store the output
+    \item offset, tuple to control which part of X axis to view
+    \item log window, for approximating data points
+    \item smooth, to let the object know if interpolation and filtering should be used
+    \item chart\_vdostats, list of vdostats atributes to plot
+    \item lim\_Y to set the upper limit of Y axis
+    \item test\_label, to label outputed comparing charts
+\end{itemize}
+
+%Data processing script is working exclusively with the files generated by the testing package drift\_job. It will open the package and create its own data objects producing a report.
+
+%The report contains metadata gathered by the test as well as many different charts and statistics.
+
+%The data processing scripts accepts many parameters so we can compare different test runs and tune the output.
+
 
 \subsection{VDO chart}
 In case the test was run on a VDO volume, the resulting tarball will contain a file with vdostats logs. The data processing script will find all the statistics the user inputs and produces a chart. This chart therefore shows the state of VDO in time, while the test was running. We use it mainly to view how many logical and physical blocks were used. But with testing specific components like block map cache or journal, we can view their statistics easlily on this chart
@@ -559,73 +591,15 @@ This chart is mainly used to confirm there was no event that would speed up or s
 
 Hower, it is very usefull, when there is an expected change in behavior of the underlying device such as Empty VDO or Half-Full VDO test
 
-\subsection{Histogram}
-Histogram of measured throughput is an excellent tool to observe some effects when testing. On this chart, we can usually observe if there are different structures servicing IOs during our workload such as cache.
+\subsection{Histograms}
+%Histogram of measured throughput is an excellent tool to observe some effects when testing. On this chart, we can usually observe if there are different structures servicing IOs during our workload such as cache.
 
 \subsection{Boxplots}
-Boxplots are the main tool we use to compare performance of different tests.
+Boxplots are the main tool used to visually compare performance of different tests. The part in focus is the median, which is the main metrics considered when comparing multiple test runs.
 
 \section{Testing hardware}
 Testing for this thesis was conducted on multiple machines provided by Red Hat company. I will introduce testing systems which will be used for multitude of tests with or without the VDO layer installed. These machines were chosen by their computing power, provided memory and by useful storage hardware they are equiped with. These machines are stable systems used by Red Hat Kernel Performance team for regular testing.
 
-\label{machines}
-\section{Supermicro X11SPL-F}
-This machine is used for regular testing of VDO and other complex technologies in Red Hat Kernel Performance team. It's equiped with 4 $\SI{10}{\tera\byte}$ SAS rotational drives and one $\SI{220}{\giga\byte}$ SATA SSD for tests that require LVM Cache. The system is always installed on an additional SSD. This machine is equiped with enough memory to handle large VDO volumes.
-\clearpage
-\begin{tabular}{|l|l|}
-\hline
-   \multicolumn{2}{|l|}{Machine\,1} \\ \hline %draven
-    Model & Supermicro X11SPL-F\\
-    \hline
-    Processor & Intel Xeon Silver 4110  \\
-    \hline
-    Clock speed & $\SI{2.10}{\giga\hertz}$ (8 cores) \\
-    \hline
-    Memory & $\SI{49152}{\mega\byte}$ \\
-
-\hline
-   \multicolumn{2}{|l|}{Testing Hard Drives (4x)} \\ \hline %draven
-    Model & WD HGST Ultrastar\\
-    \hline
-    Capacity & $\SI{1}{\tera\byte}$  \\
-    \hline
-    Interface & SAS $\SI{12}{\giga\byte}$  \\
-    \hline
-    Type & Rotational HDD \\
-    \hline    
-    Logical sector size & $\SI{4096}{\byte}$ \\    
-    \hline    
-    Physical sector size & $\SI{4096}{\byte}$ \\
-    \hline
-    
-    \multicolumn{2}{|l|}{Testiting SSD (for LVM cache)} \\ \hline %draven
-     Model & Micron 5100 MTFD \\
-    \hline
-     Capacity & $\SI{240}{\giga\byte}$  \\
-    \hline
-    Interface & SATA $\SI{6}{\giga\byte}$  \\
-    \hline
-    Type & SSD \\
-    \hline    
-    Logical sector size & $\SI{512}{\byte}$ \\    
-    \hline    
-     Physical sector size & $\SI{4096}{\byte}$ \\
-    \hline
-    
-    \multicolumn{2}{|l|}{System disk} \\ \hline %draven
-    Model & SuperMicro SSD  \\
-    \hline
-    Capacity & $\SI{126}{\giga\byte}$  \\
-    \hline
-    Interface & PCIe Gen3 x4 Lanes  \\
-    \hline
-    Type & SSD \\
-    \hline    
-   Logical sector size & $\SI{512}{\byte}$ \\    
-    \hline    
-    Physical sector size & $\SI{512}{\byte}$ \\
-    \hline   
-\end{tabular}
 
 
 \chapter{Performance of VDO}
@@ -683,27 +657,53 @@ The tests of maximum discard size throughput were conducted on four different VD
 
 The results from unallocated empty VDO are not considered, since it is not expected for users to work (and perform discards) on unallocated space.
 
-While processing the data, the interesting statistic to look for from vdostats is \texttt{bios in discard}.
+While processing the data, the interesting statistic to look for from vdostats is \texttt{bios in discard}. By observing bios in discard together with logical blocks used and with the progession of throughput, we can see the relationship between performance of discarding data and performance of discarding empty blocks.
 
 
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{../results/discards/full_VDO/report/tar_132_vdostats}
+\caption[Discards]{Inspecting VDO stats}
+\label{fig:discard-full-vdostats}
+        \centering
+        \includegraphics[width=\textwidth]{../results/discards/full_VDO/report/tar_132_bw.png}
+\caption[Discards]{Inspecting throughput}
+\label{fig:discard-full-througput}
+\end{figure}
 
+As we can see on the Figure~\ref{discard}, while having normal VDO setup and regular discard workload, the speed of discard operation is decreasing with using larger discard sizes. This test was conducted after a previous run of fs-drift filled all the space with random writes. Filling the storage with random data before every test takes a considerably long time. To shorten the time to test discard operation, we could try testing with empty VDO.
+
+It is important to notice, that while filling the volume with random data might not be necessary, the tests should be done on fully allocated VDO volume. If there is a discard request for a block tha has not yet been allocated, the discard handling is much faster, since no work has been done. This effect could be observed by running the same test on an unallocated storage as presented in Figure~\ref{discard-unalloc}.
+
+This is once again a reason for why preallocation of the tested storage is important. The results from empty, but previously allocated VDO show the same behavior as the reults from the test where VDO was filled with random workload at the beggining.
+
+
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{../results/discards/full_VDO/report/random_discard1_compare_boxplots}
+\caption[Discards]{Testing of VDO volume created with various maxDiscardSize parameters. Prior to the test, the device was filled with random write workload}
+\label{fig:discard-full}
+        \centering
+        \includegraphics[width=\textwidth]{../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots}
+\caption[Discards]{Testing of VDO volume created with various maxDiscardSize parameters. This test was conducted on a fresh unallocated instance of VDO}
+\label{fig:discard-unalloc}
+\end{figure}
 
 
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/discards/empty_VDO/report/random_discard1_compare_boxplots}
-\caption[Discards]{Testing of VDO volume created with various maxDiscardSize parameters. Results show that may be beneficial to keep maximum discard size low}
-\label{fig:discard}
+\caption[Discards]{Testing of VDO volume created with various maxDiscardSize parameters. This test was conducted on a preallocated VDO without any data written}
+\label{fig:discard-empty}
 \end{figure}
+
 
 
 \clearpage
 
-
-
-
-
 \section{Write policies}
+Write policies are an important aspect of working with VDO. 
+
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/write_policies/report/random_write1_compare_boxplots}
@@ -715,14 +715,37 @@ While processing the data, the interesting statistic to look for from vdostats i
 
 \section{Testing on different architectures}
 \section{Journal performance}
+Recovery journal is an important aspect of VDO for assuring safety of user data. It is physically present in the last slabs of VDO storage, in the metadata part. Updating journal might not be an expensive operation, if the supporting device under VDO volume is fast enough. However, with increasing number of VDO users, use cases where VDO will be placed on a badly performing devices can emerge.
+
+This experimend is aimed at exploring a use case where writing to a journal can be a bottleneck for the VDO performance.
+
+The test was conducted using slow rotational hard drive on a Machine 2. Performance of this drive is very poor and installing VDO on top of it increases the performance. However, it would be interesting to observe if journaling is posing as a bottleneck and the VDO volume could be even faster.
+
+VDO stores its metadata on the last slab (or multiple last slabs) of the physical device. By having the last slabs be actually on a completely different, fast device could show how much speeding the journal increases the overall performance of VDO.
+
+We will start by creating a partition on the rotational drive. After putting this partition and the fast SSD into one volume group, we will create an LV on the partition and grow it, so the last blocks are allocated from the second device. Finally, VDO can be put on top of this configuration and the test can be conducted.
+
+To make absolutely sure only the journal updates went to the fast device and not actual data, the test was run using seekwatcher, to examine block seeks. As can be seen on charts, data were kept strictly on the slow device part of the LV and only journal updates were handled by fast device.
+
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{../results/journal/seeks/ssd_lv}
+\caption[Journal]{seekwatcher}
+\label{fig:journal-LV}
+        \centering
+        \includegraphics[width=\textwidth]{../results/journal/seeks/ssd}
+\caption[Journal]{Seekwatcher}
+\label{fig:journal-SSD}
+\end{figure}
+
+
+
 \section{Testing with distributed file system}
 
 \chapter{Conclusion}
 \label{conclusion}
 
 \section{Future work}
-Add more precise control over deduplication to fs-drift
-Add asyncIO and proper multithreading to fs-drift
 
 
 
@@ -831,6 +854,65 @@ Add asyncIO and proper multithreading to fs-drift
 
 
 
+\chapter{Appendix}
+\label{machines}
+\section{Supermicro X11SPL-F}
+This machine is used for regular testing of VDO and other complex technologies in Red Hat Kernel Performance team. It's equiped with 4 $\SI{10}{\tera\byte}$ SAS rotational drives and one $\SI{220}{\giga\byte}$ SATA SSD for tests that require LVM Cache. The system is always installed on an additional SSD. This machine is equiped with enough memory to handle large VDO volumes.
+\clearpage
+\begin{tabular}{|l|l|}
+\hline
+   \multicolumn{2}{|l|}{Machine\,1} \\ \hline %draven
+    Model & Supermicro X11SPL-F\\
+    \hline
+    Processor & Intel Xeon Silver 4110  \\
+    \hline
+    Clock speed & $\SI{2.10}{\giga\hertz}$ (8 cores) \\
+    \hline
+    Memory & $\SI{49152}{\mega\byte}$ \\
+
+\hline
+   \multicolumn{2}{|l|}{Testing Hard Drives (4x)} \\ \hline %draven
+    Model & WD HGST Ultrastar\\
+    \hline
+    Capacity & $\SI{1}{\tera\byte}$  \\
+    \hline
+    Interface & SAS $\SI{12}{\giga\byte}$  \\
+    \hline
+    Type & Rotational HDD \\
+    \hline    
+    Logical sector size & $\SI{4096}{\byte}$ \\    
+    \hline    
+    Physical sector size & $\SI{4096}{\byte}$ \\
+    \hline
+    
+    \multicolumn{2}{|l|}{Testiting SSD (for LVM cache)} \\ \hline %draven
+     Model & Micron 5100 MTFD \\
+    \hline
+     Capacity & $\SI{240}{\giga\byte}$  \\
+    \hline
+    Interface & SATA $\SI{6}{\giga\byte}$  \\
+    \hline
+    Type & SSD \\
+    \hline    
+    Logical sector size & $\SI{512}{\byte}$ \\    
+    \hline    
+     Physical sector size & $\SI{4096}{\byte}$ \\
+    \hline
+    
+    \multicolumn{2}{|l|}{System disk} \\ \hline %draven
+    Model & SuperMicro SSD  \\
+    \hline
+    Capacity & $\SI{126}{\giga\byte}$  \\
+    \hline
+    Interface & PCIe Gen3 x4 Lanes  \\
+    \hline
+    Type & SSD \\
+    \hline    
+   Logical sector size & $\SI{512}{\byte}$ \\    
+    \hline    
+    Physical sector size & $\SI{512}{\byte}$ \\
+    \hline   
+\end{tabular}
 
 
 
