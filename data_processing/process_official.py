@@ -31,13 +31,15 @@ baselines['hulk']['NVMe'] = glob.glob('../results/hulk_baselines/*-NVMe-*tar.xz'
 #baselines['hulk']['NVMe'] = glob.glob('./official/hulk_baselines/*-VDO_NVMe-*tar.xz') #[running 13:13]
 
 #zbehnut korben, SSD[respin], HDD[respin], (VDO_SSD, VDO_HDD, empty&prealloc VDO_SSD, empty&prealloc VDO HDD)[done]
-baselines['korben']['HDD'] = glob.glob('../results/korben_baselines/*hdd_baseline*tar.xz')
-baselines['korben']['SSD'] = glob.glob('../results/korben_baselines/*ssd_baseline*tar.xz')
+baselines['korben']['HDD'] = glob.glob('../results/korben_baselines/*-HDD-*baseline*tar.xz')
+baselines['korben']['SSD'] = glob.glob('../results/korben_baselines/*-SSD-baseline*tar.xz')
 
-baselines['korben']['VDO_HDD'] = glob.glob('../results/korben_baselines/*vdo_hdd*tar.xz')
-baselines['korben']['VDO_SSD'] = glob.glob('../results/korben_baselines/*vdo_ssd*tar.xz')
+baselines['korben']['VDO_HDD'] = glob.glob('../results/korben_baselines/*-VDO_HDD-*tar.xz')
+baselines['korben']['VDO_SSD'] = glob.glob('../results/korben_baselines/*-VDO_SSD-*tar.xz')
 
-#korben_vdo_baselines = Report(baselines['korben']['VDO_HDD'] + baselines['korben']['VDO_SSD'], './official/korben_baselines/VDO/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=300)
+#Report(baselines['korben']['HDD'] + baselines['korben']['VDO_HDD'], '../results/korben_baselines/VDO_HDD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=300)
+
+#Report(baselines['korben']['SSD'] + baselines['korben']['VDO_SSD'], '../results/korben_baselines/VDO_SSD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=300)
 
 #Experiment empty & alloc
 empty_VDO_SSD = glob.glob('../results/empty_VDO/*vdo_ssd_empty*.tar.xz')
@@ -45,7 +47,7 @@ empty_VDO_HDD = glob.glob('../results/empty_VDO/*vdo_hdd_empty*.tar.xz')
 
 #Report(baselines['korben']['SSD'] + empty_VDO_SSD + baselines['korben']['VDO_SSD'] , '../results/empty_VDO/SSD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200) 
 
-#Report(baselines['korben']['HDD'] + empty_VDO_HDD + baselines['korben']['VDO_HDD'] , '../results/empty_VDO/HDD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200) 
+Report(baselines['korben']['HDD'] + empty_VDO_HDD + baselines['korben']['VDO_HDD'] , '../results/empty_VDO/HDD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200) 
 
 #Experiment write policies
 write_policies = glob.glob('../results/write_policies/*.tar.xz')
@@ -80,7 +82,7 @@ full_discards += glob.glob('../results/discards/full_VDO/*-1m*.tar.xz')
 #Report(full_discards, '../results/discards/full_VDO/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['logical blocks used','bios in discard'], lim_y=1300, test_label = 'max discard size') 
 
 block_map_cache = glob.glob('../results/block_map_cache/*.tar.xz')
-Report(block_map_cache, '../results/block_map_cache/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200, test_label = 'block map cache') 
+#Report(block_map_cache, '../results/block_map_cache/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=30, test_label = 'block map cache') 
 
 
 

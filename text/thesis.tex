@@ -616,6 +616,9 @@ To examine this effect, random write workload can be used on a new instance of V
 
 To obtain fully allocated, but empty VDO volume, it is sufficient to just write one zero byte to every VDO sector. One VDO sector is 812 VDO blocks (default block size in VDO is 4096), so we'll write a zero byte every 812*4096 bytes. 
 
+
+
+\clearpage
 \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth]{../results/empty_VDO/HDD/tar_467_bw}
@@ -713,7 +716,7 @@ Write policies are an important aspect of working with VDO.
 
 
 
-\section{Testing on different architectures}
+
 \section{Journal performance}
 Recovery journal is an important aspect of VDO for assuring safety of user data. It is physically present in the last slabs of VDO storage, in the metadata part. Updating journal might not be an expensive operation, if the supporting device under VDO volume is fast enough. However, with increasing number of VDO users, use cases where VDO will be placed on a badly performing devices can emerge.
 
@@ -727,18 +730,29 @@ We will start by creating a partition on the rotational drive. After putting thi
 
 To make absolutely sure only the journal updates went to the fast device and not actual data, the test was run using seekwatcher, to examine block seeks. As can be seen on charts, data were kept strictly on the slow device part of the LV and only journal updates were handled by fast device.
 
+One additional test was conducted by backing the journal with even more powerfull device. The ending region of VDO was spread over a part of NVMe SSD in hopes it would speed up the process even further. However, power of NVMe is in its number of queues. The process that handles VDO journaling is not multithreaded, as staded in Chapter 1. That is the reason why backing VDO with NVMe doesn't bring any additional benefits compared to a normal SSD.
+
+We can observe the change in throughput using various hardware in a Figure~\ref{fig:journal-all}
+
 \begin{figure}[!htb]
         \centering
-        \includegraphics[width=\textwidth]{../results/journal/seeks/ssd_lv}
-\caption[Journal]{seekwatcher}
+        \includegraphics[width=\textwidth]{../results/journal/seeks/snaps/ssd_testlv}
+\caption[Journal]{Block tracing of the whole physical space under VDO using seekwatcher}
 \label{fig:journal-LV}
         \centering
-        \includegraphics[width=\textwidth]{../results/journal/seeks/ssd}
-\caption[Journal]{Seekwatcher}
+        \includegraphics[width=\textwidth]{../results/journal/seeks/snaps/ssd}
+\caption[Journal]{Block tracing of the SSD alone using seekwatcher}
 \label{fig:journal-SSD}
 \end{figure}
 
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{../results/journal/report/random_write945_compare_boxplots}
+\caption[Journal]{Throughput}
+\label{fig:journal-all}
+\end{figure}
 
+\section{Testing on different architectures}
 
 \section{Testing with distributed file system}
 

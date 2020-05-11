@@ -59,10 +59,10 @@
 \contentsline {section}{\numberline {5.5}\slshape Block map cache}{27}{section.5.5}
 \contentsline {section}{\numberline {5.6}\slshape Maximum discard size}{27}{section.5.6}
 \contentsline {section}{\numberline {5.7}\slshape Write policies}{32}{section.5.7}
-\contentsline {section}{\numberline {5.8}\slshape Testing on different architectures}{32}{section.5.8}
-\contentsline {section}{\numberline {5.9}\slshape Journal performance}{32}{section.5.9}
+\contentsline {section}{\numberline {5.8}\slshape Journal performance}{32}{section.5.8}
+\contentsline {section}{\numberline {5.9}\slshape Testing on different architectures}{33}{section.5.9}
 \contentsline {section}{\numberline {5.10}\slshape Testing with distributed file system}{33}{section.5.10}
-\contentsline {chapter}{\numberline {6}\bfseries Conclusion}{35}{chapter.6}
-\contentsline {section}{\numberline {6.1}\slshape Future work}{35}{section.6.1}
-\contentsline {chapter}{\numberline {7}\bfseries Appendix}{37}{chapter.7}
-\contentsline {section}{\numberline {7.1}\slshape Supermicro X11SPL-F}{37}{section.7.1}
+\contentsline {chapter}{\numberline {6}\bfseries Conclusion}{37}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape Future work}{37}{section.6.1}
+\contentsline {chapter}{\numberline {7}\bfseries Appendix}{39}{chapter.7}
+\contentsline {section}{\numberline {7.1}\slshape Supermicro X11SPL-F}{39}{section.7.1}
