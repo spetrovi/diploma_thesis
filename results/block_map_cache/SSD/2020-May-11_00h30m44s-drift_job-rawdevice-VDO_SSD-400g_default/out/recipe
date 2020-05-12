@@ -1,1 +1,0 @@
- --file-size 10000 --report-interval 5 --duration 300 --bandwidth out --blocksize 4 --workload-table randomwrite.csv --compression-ratio 3.0 --fsync 0 --direct 1 --rawdevice /dev/mapper/testVDO --dedupe-percentage 50 --threads 1 --top-directory fs_not_mounted --starting-gun-file /var/tmp/fs-drift_start_gun_file

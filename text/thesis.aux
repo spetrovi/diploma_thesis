@@ -50,101 +50,115 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.4}\rmfamily   CPU}{7}{subsection.2.2.4}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}\slshape   Internal structures}{7}{section.2.3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}\rmfamily   Slabs}{7}{subsection.2.3.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}\rmfamily   Recovery journal}{7}{subsection.2.3.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}\rmfamily   Recovery journal}{8}{subsection.2.3.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}\rmfamily   Block map cache}{8}{subsection.2.3.3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}\rmfamily   UDS index}{9}{subsection.2.3.4}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.4}\slshape   Tunables}{9}{section.2.4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}\rmfamily   VDO threads}{9}{subsection.2.4.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}\rmfamily   VDO write policies}{9}{subsection.2.4.2}}
-\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Synchronous mode}{9}{section*.8}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Sync}}{10}{figure.2.2}}
-\newlabel{fig:sync}{{2.2}{10}{Sync}{figure.2.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Asynchronous mode}{10}{section*.9}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Async}}{11}{figure.2.3}}
-\newlabel{fig:async}{{2.3}{11}{Async}{figure.2.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Asynchronous unsafe mode}{11}{section*.10}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}\rmfamily   Block map cache size}{11}{subsection.2.4.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.4}\rmfamily   Discard size}{11}{subsection.2.4.4}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}\bfseries  Fs-drift}{13}{chapter.3}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Logical zones thread}{9}{section*.8}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Physical zones thread}{10}{section*.9}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   I/O submission threads}{10}{section*.10}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   CPU and Hash zone threads}{10}{section*.11}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   I/O acknowledgement threads}{10}{section*.12}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Journal thread}{10}{section*.13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces VDO threads and internal structures}}{11}{figure.2.2}}
+\newlabel{fig:VDO-internals}{{2.2}{11}{VDO threads and internal structures}{figure.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}\rmfamily   VDO write policies}{12}{subsection.2.4.2}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Synchronous mode}{12}{section*.14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Sync}}{12}{figure.2.3}}
+\newlabel{fig:sync}{{2.3}{12}{Sync}{figure.2.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Asynchronous mode}{13}{section*.15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Async}}{13}{figure.2.4}}
+\newlabel{fig:async}{{2.4}{13}{Async}{figure.2.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Asynchronous unsafe mode}{14}{section*.16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}\rmfamily   Block map cache size}{14}{subsection.2.4.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.4}\rmfamily   Discard size}{14}{subsection.2.4.4}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}\bfseries  Fs-drift}{15}{chapter.3}}
 \@writefile{lof}{\addvspace {4\p@ }}
 \@writefile{lot}{\addvspace {4\p@ }}
-\newlabel{benchmarks}{{3}{13}{Fs-drift}{chapter.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}\slshape   Introduction}{13}{section.3.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}\slshape   Compressible data generator}{13}{section.3.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}\slshape   Deduplication}{14}{section.3.3}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}\slshape   DirectIO}{14}{section.3.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}\slshape   Rawdevice}{15}{section.3.5}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.6}\slshape   Random discard operation}{15}{section.3.6}}
-\newlabel{ex:blkdiscard}{{3.1}{16}{Using BLKDISCARD ioctl to discard first 4096 bytes from the beginning of the device}{lstlisting.3.1}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.1}Using BLKDISCARD ioctl to discard first 4096 bytes from the beginning of the device}{16}{lstlisting.3.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.7}\slshape   Random map}{16}{section.3.7}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.8}\slshape   Multithread}{17}{section.3.8}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.9}\slshape   Performance measurement}{17}{section.3.9}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.10}\slshape   Data reporting}{18}{section.3.10}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}\bfseries  Testing methodology}{19}{chapter.4}}
+\newlabel{benchmarks}{{3}{15}{Fs-drift}{chapter.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}\slshape   Introduction}{15}{section.3.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}\slshape   Compressible data generator}{15}{section.3.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}\slshape   Deduplication}{16}{section.3.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}\slshape   DirectIO}{16}{section.3.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}\slshape   Rawdevice}{17}{section.3.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}\slshape   Random discard operation}{17}{section.3.6}}
+\newlabel{ex:blkdiscard}{{3.1}{18}{Using BLKDISCARD ioctl to discard first 4096 bytes from the beginning of the device}{lstlisting.3.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3.1}Using BLKDISCARD ioctl to discard first 4096 bytes from the beginning of the device}{18}{lstlisting.3.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.7}\slshape   Random map}{18}{section.3.7}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.8}\slshape   Multithread}{19}{section.3.8}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.9}\slshape   IOdepth}{19}{section.3.9}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.10}\slshape   Performance measurement}{19}{section.3.10}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.11}\slshape   Data reporting}{20}{section.3.11}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}\bfseries  Testing methodology}{21}{chapter.4}}
 \@writefile{lof}{\addvspace {4\p@ }}
 \@writefile{lot}{\addvspace {4\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}\slshape   Testing environment}{19}{section.4.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}\slshape   Testing with fs-drift}{19}{section.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}\rmfamily   File size}{19}{subsection.4.2.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}\rmfamily   Block size}{20}{subsection.4.2.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}\rmfamily   Compress ratio}{20}{subsection.4.2.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}\rmfamily   Deduplication}{21}{subsection.4.2.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}\rmfamily   Random map}{21}{subsection.4.2.5}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}\slshape   Testing package}{21}{section.4.3}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}\slshape   Data processing}{21}{section.4.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}\rmfamily   VDO chart}{22}{subsection.4.4.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}\rmfamily   Throughput progression chart}{22}{subsection.4.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}\rmfamily   Histograms}{23}{subsection.4.4.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.4}\rmfamily   Boxplots}{23}{subsection.4.4.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}\slshape   Testing hardware}{23}{section.4.5}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}\bfseries  Performance of VDO}{25}{chapter.5}}
+\newlabel{methodology}{{4}{21}{Testing methodology}{chapter.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}\slshape   Testing environment}{21}{section.4.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}\rmfamily   VDO allocation}{21}{subsection.4.1.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces EmptyVDO}}{23}{figure.4.1}}
+\newlabel{fig:emptyVDO}{{4.1}{23}{EmptyVDO}{figure.4.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces preallVDO}}{23}{figure.4.2}}
+\newlabel{fig:preallocatedVDO}{{4.2}{23}{preallVDO}{figure.4.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}\slshape   Testing with fs-drift}{24}{section.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}\rmfamily   File size}{24}{subsection.4.2.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}\rmfamily   Block size}{24}{subsection.4.2.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}\rmfamily   Compress ratio}{24}{subsection.4.2.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}\rmfamily   Deduplication}{25}{subsection.4.2.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}\rmfamily   Random map}{25}{subsection.4.2.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}\slshape   Testing package}{25}{section.4.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}\slshape   Data processing}{26}{section.4.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}\rmfamily   VDO chart}{26}{subsection.4.4.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}\rmfamily   Throughput progression chart}{27}{subsection.4.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}\rmfamily   Histograms}{27}{subsection.4.4.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.4}\rmfamily   Boxplots}{27}{subsection.4.4.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}\slshape   Testing hardware}{27}{section.4.5}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}\bfseries  Performance of VDO}{29}{chapter.5}}
 \@writefile{lof}{\addvspace {4\p@ }}
 \@writefile{lot}{\addvspace {4\p@ }}
-\newlabel{testing}{{5}{25}{Performance of VDO}{chapter.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}\slshape   VDO threads}{25}{section.5.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}\slshape   Empty VDO}{25}{section.5.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces EmptyVDO}}{26}{figure.5.1}}
-\newlabel{fig:emptyVDO}{{5.1}{26}{EmptyVDO}{figure.5.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces preallVDO}}{26}{figure.5.2}}
-\newlabel{fig:preallocatedVDO}{{5.2}{26}{preallVDO}{figure.5.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}\slshape   Half empty VDO}{27}{section.5.3}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}\slshape   Steady state testing}{27}{section.5.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}\slshape   Block map cache}{27}{section.5.5}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.6}\slshape   Maximum discard size}{27}{section.5.6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Discards}}{29}{figure.5.3}}
-\newlabel{fig:discard-full-vdostats}{{5.3}{29}{Discards}{figure.5.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Discards}}{29}{figure.5.4}}
-\newlabel{fig:discard-full-througput}{{5.4}{29}{Discards}{figure.5.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Discards}}{30}{figure.5.5}}
-\newlabel{fig:discard-full}{{5.5}{30}{Discards}{figure.5.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Discards}}{30}{figure.5.6}}
-\newlabel{fig:discard-unalloc}{{5.6}{30}{Discards}{figure.5.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Discards}}{31}{figure.5.7}}
-\newlabel{fig:discard-empty}{{5.7}{31}{Discards}{figure.5.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.7}\slshape   Write policies}{32}{section.5.7}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces write policies}}{32}{figure.5.8}}
-\newlabel{fig:writepolicies}{{5.8}{32}{write policies}{figure.5.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.8}\slshape   Journal performance}{32}{section.5.8}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.9}\slshape   Testing on different architectures}{33}{section.5.9}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.10}\slshape   Testing with distributed file system}{33}{section.5.10}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Journal}}{34}{figure.5.9}}
-\newlabel{fig:journal-LV}{{5.9}{34}{Journal}{figure.5.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Journal}}{34}{figure.5.10}}
-\newlabel{fig:journal-SSD}{{5.10}{34}{Journal}{figure.5.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Journal}}{35}{figure.5.11}}
-\newlabel{fig:journal-all}{{5.11}{35}{Journal}{figure.5.11}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}\bfseries  Conclusion}{37}{chapter.6}}
+\newlabel{testing}{{5}{29}{Performance of VDO}{chapter.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}\slshape   VDO threads}{29}{section.5.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}\slshape   Half empty VDO}{29}{section.5.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}\slshape   Steady state testing}{29}{section.5.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}\slshape   Block map cache}{29}{section.5.4}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Testing of VDO volume created with various with sufficient and insufficient block map}}{30}{table.5.1}}
+\newlabel{tab:blockmap-tab}{{5.1}{30}{Testing of VDO volume created with various with sufficient and insufficient block map}{table.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Block map cache size testing}}{31}{figure.5.1}}
+\newlabel{fig:blockmap-boxplots}{{5.1}{31}{Block map cache size testing}{figure.5.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}\slshape   Maximum discard size}{32}{section.5.5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Discards}}{33}{figure.5.2}}
+\newlabel{fig:discard-full-vdostats}{{5.2}{33}{Discards}{figure.5.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Discards}}{33}{figure.5.3}}
+\newlabel{fig:discard-full-througput}{{5.3}{33}{Discards}{figure.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Discards}}{34}{figure.5.4}}
+\newlabel{fig:discard-full}{{5.4}{34}{Discards}{figure.5.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Discards}}{34}{figure.5.5}}
+\newlabel{fig:discard-unalloc}{{5.5}{34}{Discards}{figure.5.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Discards}}{35}{figure.5.6}}
+\newlabel{fig:discard-empty}{{5.6}{35}{Discards}{figure.5.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.6}\slshape   Write policies}{36}{section.5.6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces write policies}}{36}{figure.5.7}}
+\newlabel{fig:writepolicies}{{5.7}{36}{write policies}{figure.5.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.7}\slshape   Journal performance}{36}{section.5.7}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.8}\slshape   Testing on different architectures}{37}{section.5.8}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.9}\slshape   Testing with distributed file system}{37}{section.5.9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Journal}}{38}{figure.5.8}}
+\newlabel{fig:journal-LV}{{5.8}{38}{Journal}{figure.5.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Journal}}{38}{figure.5.9}}
+\newlabel{fig:journal-SSD}{{5.9}{38}{Journal}{figure.5.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Journal}}{39}{figure.5.10}}
+\newlabel{fig:journal-all}{{5.10}{39}{Journal}{figure.5.10}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}\bfseries  Conclusion}{41}{chapter.6}}
 \@writefile{lof}{\addvspace {4\p@ }}
 \@writefile{lot}{\addvspace {4\p@ }}
-\newlabel{conclusion}{{6}{37}{Conclusion}{chapter.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}\slshape   Future work}{37}{section.6.1}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {7}\bfseries  Appendix}{39}{chapter.7}}
+\newlabel{conclusion}{{6}{41}{Conclusion}{chapter.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}\slshape   Future work}{41}{section.6.1}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}\bfseries  Appendix}{43}{chapter.7}}
 \@writefile{lof}{\addvspace {4\p@ }}
 \@writefile{lot}{\addvspace {4\p@ }}
-\newlabel{machines}{{7}{39}{Appendix}{chapter.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.1}\slshape   Supermicro X11SPL-F}{39}{section.7.1}}
+\newlabel{machines}{{7}{43}{Appendix}{chapter.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}\slshape   Supermicro X11SPL-F}{43}{section.7.1}}
 \@ifundefined{unitindent}{\newdimen\unitindent\let \@indentset\relax }{}
 \global \unitindent=32.39998pt\relax\@indentset\relax
-\gdef \thesis@pages@postamble {40}
-\gdef \thesis@pages {40}
+\gdef \thesis@pages@postamble {44}
+\gdef \thesis@pages {44}

@@ -43,6 +43,7 @@
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{#1}}}
 \usepackage{listings}
 \usepackage[binary-units=true]{siunitx}
+\usepackage{pdflscape}
 %%
 %% The following section sets up the metadata of the thesis.
 \thesissetup{
@@ -212,6 +213,10 @@ Working VDO instance contains structures that handle the incomming events.
 
 \subsection{Slabs}
 
+Physical space VDO is working with consists of Physical Block Numbers (PBNs).
+
+PBNs are divided into larger sections called Slabs
+
 \subsection{Recovery journal}
 Recovery journal provides track of all block changes that has yet to be fully, reliably written to the physical device. It provides performance improvement with bothsynchronous and asynchronous writing policies.
 
@@ -233,14 +238,60 @@ The 128MB can cover about 100GB of logical blocks. However if users logical spac
 
 
 \subsection{UDS index}
-UDS index is a structure designed specifically to indentify duplicate data using hash fingerprints of data blocks. It exists in VDO to provide deduplication advice for effective deduplication. Instance of UDS index is not vital for VDO block handling. In case of losing the index, the VDO still manages blocks and stores and compress data, only without deduplication. Even in the event of index becoming corrupted, there are different mechanisms in place to assure data correctness, so user can discard the index and start bulding a new one.
+UDS index is a structure designed specifically to identify duplicate data using hash fingerprints of data blocks. It exists in VDO to provide deduplication advice for effective deduplication. Instance of UDS index is not vital for VDO block handling. In case of losing UDS index, VDO still manages blocks and stores and compress data, only without deduplication. Even in the event of index becoming corrupted, there are different mechanisms in place to assure data correctness, so user can discard the index and start bulding a new one.
 
-Also, updating index is costly, so VDO is trying to minimise the updates. That is a reason the index can contain references to blocks that are no longer present in data. Those blocks are called stale blocks.
+Updating index is costly, so VDO is trying to minimise the updates. That is a reason the index can contain references to blocks that are no longer present in data. Those blocks are called stale blocks.
+
 
 \section{Tunables}
 
 
 \subsection{VDO threads}
+\subsubsection{Logical zones thread}
+Logical space presented to users of VDO device consists of Logical Block Numbers (LBNs).
+
+LBNs are contained within pages, which are the main unit a block map cache is working with. Pages are furhter grouped into zones. Zones are assigned to logical zone threads, such as workload on multiple zones can be managed in paralel
+
+Logical zone threads are active during read and write requests, since they are translating LBNs to PBNs.
+
+\subsubsection{Physical zones thread}
+Physical space VDO is working with consists of Physical Block Numbers (PBNs).
+
+PBNs are divided into larger sections called slabs. Every slab is divided into zones. Physical zone threads are processing requests to physical zones in parallel.
+
+Physical zones threads are active only during write phase, because their purpose is to update reference count.
+
+
+\subsubsection{I/O submission threads}
+I/O submission threads are submiting block I/O (bio) operations from VDO to the underlying physical deivce by passing requests from other VDO threads to the driver of the physical device. 
+
+The numver of I/O submission threads can be tuned using --vdoBioThreads command.
+
+\subsubsection{CPU and Hash zone threads}
+CPU threads and Hash zone threads in VDO help manage and balance intensive computing workload to multiple cores. The intensive operations such as computing hashes or compression are handled by these threads.
+
+The number of CPU and Hash zone threads can be tuned using --vdoCpuThreads and --vdoHashZoneThreads respectively.
+
+\subsubsection{I/O acknowledgement threads}
+This type of thread is managing acknowledgement operations to an application above VDO after I/O request completion.
+
+The number of ack threads can be tuned using --vdoAckThreads.
+
+\subsubsection{Journal thread}
+
+
+
+\addtolength{\textheight}{1.75in}
+\begin{landscape}
+\begin{figure}[!hb]
+        \centering
+        \includegraphics[width=\columnwidth]{graphics/diagrams/vdo_internal.png}
+\caption[VDO threads and internal structures]{This diagram displays VDO internal structures and their relationship with VDO threads.}
+\label{fig:VDO-internals}
+\end{figure}
+\end{landscape}
+\addtolength{\textheight}{-1.75in}
+
 
 
 \subsection{VDO write policies}
@@ -473,10 +524,23 @@ Option to run fs-drift a multithreaded bechmark was added. User will just specif
 
 Important fact to notice is that every thread is maintaining its own performance throughput report so it is expected that the user will know how to aggregate and interpret the result.
 
+If multithreaded fs-drift is used for testing, user should limit the number of parallel IOs using iodepth parameter.
+
 
 \begin{itemize}
     \item -T|--threads, fs-drift will spawn this many threads to run a workload (default False)
 \end{itemize}
+
+\section{IOdepth}
+Fs-drift threads will submit their IO requests to the device or files in parallel. By default, this behavior is unmanaged and can result in overloading the target.
+
+By using iodepth parameter, user can limit the number of 4k IOs that will be worked on at the same time.
+
+
+\begin{itemize}
+    \item -i|--iodepth, number of 4k blocks that can be executed at the same time (default 0)
+\end{itemize}
+
 
 
 \section{Performance measurement}
@@ -503,6 +567,7 @@ With this in mind, an option to store bandwidth was added as a new feature. Band
 
 
 \chapter{Testing methodology}
+\label{methodology}
 This chapter presents used testing hardware, setup of testing environment and performance measuring methodology.
 
 
@@ -516,6 +581,41 @@ Storage stack for testing purposes is always prepared by executing a seuqence of
 The storage stack can be tested either as a raw deveice, or file system can be installed on top of it when working with files, or relationship between stack and file system needs to be examined.
 
 It is important to create a fresh instance of stack before the test to ensure stable testing conditions. Also, before every test, we $sync$ and $drop caches$. 
+
+\subsection{VDO allocation}
+Reproducibility of results is an important aspect of any kind of testing. As mentioned, new test environment is prepared before every test to achieve stable, reproducible results. However, when VDO instance just started, it's mapping information is not fully allocated yet. VDO stores its mapping information in a tree, which is allocated as needed.
+
+%This could pose a problem for performance testing, since the allocation takes some to complete and therefore some amount of testing time will be testing the allocation latency. We can observe this effect on a Figure~\ref{fig:emptyVDO}. This test was conducted on a empty instance of VDO on top of HDD device. As could be observed, it took about 150s for VDO to reach stable performance.
+
+In case we don't want to specifically test VDO allocation latency, the first 150s of testing time is effectively wasted. However, this could be avoided by forcing VDO to allocate all of its mapping tree before the test. VDO logical space is divided into regions of 812 4k blocks. Every region is covered by the same set of mapping blocks. Therefore, writing some data to each region will force VDO to allocate the whole mapping tree. 
+
+We can achieve the allocation f.e. by writing zero byte every 812*4096 bytes through all the logical space before test. Figure~\ref{fig:preallocatedVDO} shows performance of VDO measured after preallocation. We can observe, that the performance is stabilised from the start of the test unlinke the previous test.
+
+%When preparing VDO volume for testing it is important to notice that a logical space of a VDO instance that just started is not yet fully allocated.
+
+
+%Only after writing data, the volume becomes progressively more allocated. Every new subsequent block of data that is written to VDO has to allocate one to four new blocks. This could affect writing performance of new VDO volume.
+
+%To examine this effect, random write workload can be used on a new instance of VDO. Results can be compared to a performance of a fully allocated VDO volume or to a device without VDO.
+
+%To obtain fully allocated, but empty VDO volume, it is sufficient to just write one zero byte to every VDO sector. One VDO sector is 812 VDO blocks (default block size in VDO is 4096), so we'll write a zero byte every 812*4096 bytes. 
+
+
+
+\clearpage
+\begin{figure}[!h]
+        \centering
+        \includegraphics[width=\textwidth]{../results/empty_VDO/HDD/tar_467_bw}
+\caption[EmptyVDO]{EmptyVDO}
+\label{fig:emptyVDO}
+        \centering
+        \includegraphics[width=\textwidth]{../results/empty_VDO/HDD/tar_224_bw}
+\caption[preallVDO]{PreallocatedVDO}
+\label{fig:preallocatedVDO}
+\end{figure}
+
+\clearpage
+
 
 \section{Testing with fs-drift}
 Fs-drift is a powerfull tool for administering IOs, simulating many types of workload. To obtain correct performance measurements, it's important to setup benchmark correctly.
@@ -550,7 +650,7 @@ To manage the test results and metadata as well as testing environment and to be
 
 Drift\_job accepts several parameters such as used device, command for preallocation or parameters for fs-drift. When run, it prepares the testing environment, gathers data about the system, runs the test and package results into an easily managable tar file. The results can be then automatically sent to a data gathering server.
 
-If specified, the package also asynchronously gathers information while the test is running such as statistics about VDO volume.
+If specified, the package also asynchronously gathers information while the test is running such as statistics about VDO volume. However, since starting phase of fs-drift may take considerable amount of time (allocation, computing random map), the gathering thread waits for fs-drift start file. This functionality is used mainly to gather statistics about VDO using vdostats, however other points of interest may be stored for later examination using this feature.
 
 %While fs-drift doesn't run on itself as a multithreaded program, there is a small support hidden away as prefix parameter. This prefix, when used, will be used as a prefix to object that particular instance of fs-drift works with.
 
@@ -609,47 +709,65 @@ Testing for this thesis was conducted on multiple machines provided by Red Hat c
 \section{VDO threads}
 
 
-\section{Empty VDO}
-When preparing VDO volume for testing it is important to notice that a logical space of a fresh instance of VDO is not yet fully allocated. Only after writing data, the volume becomes progressively more allocated. Every new subsequent block of data that is written to VDO has to allocate one to four new blocks. This could affect writing performance of new VDO volume.
 
-To examine this effect, random write workload can be used on a new instance of VDO. Results can be compared to a performance of a fully allocated VDO volume or to a device without VDO.
-
-To obtain fully allocated, but empty VDO volume, it is sufficient to just write one zero byte to every VDO sector. One VDO sector is 812 VDO blocks (default block size in VDO is 4096), so we'll write a zero byte every 812*4096 bytes. 
-
-
-
-\clearpage
-\begin{figure}[!h]
-        \centering
-        \includegraphics[width=\textwidth]{../results/empty_VDO/HDD/tar_467_bw}
-\caption[EmptyVDO]{EmptyVDO}
-\label{fig:emptyVDO}
-        \centering
-        \includegraphics[width=\textwidth]{../results/empty_VDO/HDD/tar_224_bw}
-\caption[preallVDO]{PreallocatedVDO}
-\label{fig:preallocatedVDO}
-\end{figure}
-
-\clearpage
 \section{Half empty VDO}
 
 \section{Steady state testing}
 
 \section{Block map cache}
-As mentioned in Chapter 2, block map cache is an internal VDO structure that keeps part of the journal in memory to provide better performance. Its default size is $\SI{128}{\mega\byte}$, which is XXX pages, that covers about $\SI{100}{\giga\byte}$ worth of data. 
+%As mentioned in Chapter~\ref{vdo}, block map cache is an internal VDO structure that keeps part of the journal in memory to provide better performance. Its default size is 
 
-This could pose a performance problem in case the logical space is large enough and the workload access the space in a way the block map cache is tired out. If the block map cache fills up, (runs out of free pages), and there is a write request to a non-cached page, the cache is forced to discard one page from its pool to make room for the relevant page. This operation is very costly and this could become a bottleneck for VDO performance.
+When VDO receives a request, it needs to find mapping between the logical and physical address in the block map. First, it looks for the needed entry in the pages stored in block map cache. If it's not in the cache, VDO will retrieve the correct page from the part of block map that is stored on the disk and writes the page into the block map cache. If the request was a write request, page is updated only in memory and the change will be written to the on-disk part when VDO decides to discard the page from the cache.
+
+VDO decides to discard pages from the cache either when it wasn't used for some time of if there is no space for a new page to be cached. If there is no space left in the cache, VDO needs to discard some page, writing it on the device and load the requested page. This round trip of two I/Os to the physical device is expensive and could cause a performance problem.
+
+The default size of block map cache is $\SI{128}{\mega\byte}$, which is XXX pages, that covers about $\SI{100}{\giga\byte}$ worth of data. In case the logical space is larger than what could be managed by the block map cache and the access pattern of the workload is unpredictable enough, block map cache can easily run out of free pages and would need to write and load a page to and from the physical device on every request. That could be a bottleneck for VDO performance and is the reason why users can increase the size of a block map if they believe the standard size will not suffice.
+
+To test this effect, an unpredictable, aggresive random write workload can be run on VDO instances with various sizes and various block map cache sizes.
+
+The test results show performance of random write workload on three VDO instances. Al the parameters of VDO were kept the same except logical size, and block map cache size:
+%In case the logical space is large enough and the workload access pattern causes the cache to fill up completely in a way the block map cache is tired out. If the block map cache fills up, (runs out of free pages), and there is a write request to a non-cached page, the cache is forced to discard one page from its pool to make room for the relevant page. This operation is very costly and this could become a bottleneck for VDO performance.
 
 
 %If the block map cache runs out of free pages, it is forced to discard one page and load the need one (which is written to) from disk. This operation is very costly and this could become a bottleneck for VDO performance.
 
-To test this effect, we can use random write workload on an instance with sufficient and insufficient cache size. The parameter to tune cache size in VDO is --blockMapCacheSize=BYTES.
+%To test this effect, we can use random, unpredictable write workload on an instance of VDO with sufficient and insufficient cache size. The parameter to tune cache size in VDO is --blockMapCacheSize=BYTES.
 
 %To ensure the workload is truly aggresive, parameter randommap and large file size is used so the test makes lots of requests in a short amount of time and there is no chance that the requested blocks will be in the cache.
 
-To ensure the workload is truly aggresive, large file size and completely random write is used so the test makes lots of requests in a short amount of time and the effect of caching pages could be seen.
+%To ensure the workload is truly aggresive, large file size and completely random write is used so the test makes lots of requests in a short amount of time and the effect of caching pages could be seen.
 
+\begin{itemize}
+    \item Test1: logical size: 80g, block map cache size: $\SI{128}{\mega\byte}$(default)
+    \item Test2: logical size: 400g, block map cache size: $\SI{128}{\mega\byte}$(default)
+    \item Test3: logical size: 400g, block map cache size: $\SI{512}{\mega\byte}$ 
+\end{itemize}
 
+The expected results will be that on the VDO volume with insufficient cache size, performance will be singificantly worse than on other two tests. The test with increased cache size will demonstrate, that the standard performance is restored to the baseline levels.
+
+We can observe the comparison of performance on Figure~\ref{fig:blockmap-boxplots} and Table~\ref{tab:blockmap-tab} for exact numbers.
+
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{../results/block_map_cache/report/random_write1_compare_boxplots}
+\caption[Block map cache size testing]{Testing of VDO volume created with various with sufficient and insufficient block map}
+\label{fig:blockmap-boxplots}
+\end{figure}
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|}
+        \hline
+        \multicolumn{7}{|l|}{Throughput of random write (MB/s)} \\ \hline
+        test name & median & first quartile & third quartile & min & max & stdev \\ \hline 
+80g & 67.32 & 46.16 & 151.54 & 10.57 & 188.82 & 55  \\ \hline
+400g defaul & 1.13 & 0.94 & 1.32 & 0.85 & 35.98 & 1  \\ \hline
+400g increased\_cache & 74.66 & 58.18 & 174.05 & 12.69 & 187.58 & 55  \\ \hline
+\end{tabular}
+\caption{Testing of VDO volume created with various with sufficient and insufficient block map}
+\label{tab:blockmap-tab}
+\end{table}
+\clearpage
 
 \section{Maximum discard size}
 Performance of discard operation is important to consider, since users may want to discard large quantities of blocks to free space.

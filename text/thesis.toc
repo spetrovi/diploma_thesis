@@ -14,55 +14,62 @@
 \contentsline {subsection}{\numberline {2.2.4}\rmfamily CPU}{7}{subsection.2.2.4}
 \contentsline {section}{\numberline {2.3}\slshape Internal structures}{7}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}\rmfamily Slabs}{7}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}\rmfamily Recovery journal}{7}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.2}\rmfamily Recovery journal}{8}{subsection.2.3.2}
 \contentsline {subsection}{\numberline {2.3.3}\rmfamily Block map cache}{8}{subsection.2.3.3}
 \contentsline {subsection}{\numberline {2.3.4}\rmfamily UDS index}{9}{subsection.2.3.4}
 \contentsline {section}{\numberline {2.4}\slshape Tunables}{9}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}\rmfamily VDO threads}{9}{subsection.2.4.1}
-\contentsline {subsection}{\numberline {2.4.2}\rmfamily VDO write policies}{9}{subsection.2.4.2}
-\contentsline {subsubsection}{\rmfamily Synchronous mode}{9}{section*.8}
-\contentsline {subsubsection}{\rmfamily Asynchronous mode}{10}{section*.9}
-\contentsline {subsubsection}{\rmfamily Asynchronous unsafe mode}{11}{section*.10}
-\contentsline {subsection}{\numberline {2.4.3}\rmfamily Block map cache size}{11}{subsection.2.4.3}
-\contentsline {subsection}{\numberline {2.4.4}\rmfamily Discard size}{11}{subsection.2.4.4}
-\contentsline {chapter}{\numberline {3}\bfseries Fs-drift}{13}{chapter.3}
-\contentsline {section}{\numberline {3.1}\slshape Introduction}{13}{section.3.1}
-\contentsline {section}{\numberline {3.2}\slshape Compressible data generator}{13}{section.3.2}
-\contentsline {section}{\numberline {3.3}\slshape Deduplication}{14}{section.3.3}
-\contentsline {section}{\numberline {3.4}\slshape DirectIO}{14}{section.3.4}
-\contentsline {section}{\numberline {3.5}\slshape Rawdevice}{15}{section.3.5}
-\contentsline {section}{\numberline {3.6}\slshape Random discard operation}{15}{section.3.6}
-\contentsline {section}{\numberline {3.7}\slshape Random map}{16}{section.3.7}
-\contentsline {section}{\numberline {3.8}\slshape Multithread}{17}{section.3.8}
-\contentsline {section}{\numberline {3.9}\slshape Performance measurement}{17}{section.3.9}
-\contentsline {section}{\numberline {3.10}\slshape Data reporting}{18}{section.3.10}
-\contentsline {chapter}{\numberline {4}\bfseries Testing methodology}{19}{chapter.4}
-\contentsline {section}{\numberline {4.1}\slshape Testing environment}{19}{section.4.1}
-\contentsline {section}{\numberline {4.2}\slshape Testing with fs-drift}{19}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}\rmfamily File size}{19}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}\rmfamily Block size}{20}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}\rmfamily Compress ratio}{20}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}\rmfamily Deduplication}{21}{subsection.4.2.4}
-\contentsline {subsection}{\numberline {4.2.5}\rmfamily Random map}{21}{subsection.4.2.5}
-\contentsline {section}{\numberline {4.3}\slshape Testing package}{21}{section.4.3}
-\contentsline {section}{\numberline {4.4}\slshape Data processing}{21}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}\rmfamily VDO chart}{22}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}\rmfamily Throughput progression chart}{22}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}\rmfamily Histograms}{23}{subsection.4.4.3}
-\contentsline {subsection}{\numberline {4.4.4}\rmfamily Boxplots}{23}{subsection.4.4.4}
-\contentsline {section}{\numberline {4.5}\slshape Testing hardware}{23}{section.4.5}
-\contentsline {chapter}{\numberline {5}\bfseries Performance of VDO}{25}{chapter.5}
-\contentsline {section}{\numberline {5.1}\slshape VDO threads}{25}{section.5.1}
-\contentsline {section}{\numberline {5.2}\slshape Empty VDO}{25}{section.5.2}
-\contentsline {section}{\numberline {5.3}\slshape Half empty VDO}{27}{section.5.3}
-\contentsline {section}{\numberline {5.4}\slshape Steady state testing}{27}{section.5.4}
-\contentsline {section}{\numberline {5.5}\slshape Block map cache}{27}{section.5.5}
-\contentsline {section}{\numberline {5.6}\slshape Maximum discard size}{27}{section.5.6}
-\contentsline {section}{\numberline {5.7}\slshape Write policies}{32}{section.5.7}
-\contentsline {section}{\numberline {5.8}\slshape Journal performance}{32}{section.5.8}
-\contentsline {section}{\numberline {5.9}\slshape Testing on different architectures}{33}{section.5.9}
-\contentsline {section}{\numberline {5.10}\slshape Testing with distributed file system}{33}{section.5.10}
-\contentsline {chapter}{\numberline {6}\bfseries Conclusion}{37}{chapter.6}
-\contentsline {section}{\numberline {6.1}\slshape Future work}{37}{section.6.1}
-\contentsline {chapter}{\numberline {7}\bfseries Appendix}{39}{chapter.7}
-\contentsline {section}{\numberline {7.1}\slshape Supermicro X11SPL-F}{39}{section.7.1}
+\contentsline {subsubsection}{\rmfamily Logical zones thread}{9}{section*.8}
+\contentsline {subsubsection}{\rmfamily Physical zones thread}{10}{section*.9}
+\contentsline {subsubsection}{\rmfamily I/O submission threads}{10}{section*.10}
+\contentsline {subsubsection}{\rmfamily CPU and Hash zone threads}{10}{section*.11}
+\contentsline {subsubsection}{\rmfamily I/O acknowledgement threads}{10}{section*.12}
+\contentsline {subsubsection}{\rmfamily Journal thread}{10}{section*.13}
+\contentsline {subsection}{\numberline {2.4.2}\rmfamily VDO write policies}{12}{subsection.2.4.2}
+\contentsline {subsubsection}{\rmfamily Synchronous mode}{12}{section*.14}
+\contentsline {subsubsection}{\rmfamily Asynchronous mode}{13}{section*.15}
+\contentsline {subsubsection}{\rmfamily Asynchronous unsafe mode}{14}{section*.16}
+\contentsline {subsection}{\numberline {2.4.3}\rmfamily Block map cache size}{14}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.4}\rmfamily Discard size}{14}{subsection.2.4.4}
+\contentsline {chapter}{\numberline {3}\bfseries Fs-drift}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}\slshape Introduction}{15}{section.3.1}
+\contentsline {section}{\numberline {3.2}\slshape Compressible data generator}{15}{section.3.2}
+\contentsline {section}{\numberline {3.3}\slshape Deduplication}{16}{section.3.3}
+\contentsline {section}{\numberline {3.4}\slshape DirectIO}{16}{section.3.4}
+\contentsline {section}{\numberline {3.5}\slshape Rawdevice}{17}{section.3.5}
+\contentsline {section}{\numberline {3.6}\slshape Random discard operation}{17}{section.3.6}
+\contentsline {section}{\numberline {3.7}\slshape Random map}{18}{section.3.7}
+\contentsline {section}{\numberline {3.8}\slshape Multithread}{19}{section.3.8}
+\contentsline {section}{\numberline {3.9}\slshape IOdepth}{19}{section.3.9}
+\contentsline {section}{\numberline {3.10}\slshape Performance measurement}{19}{section.3.10}
+\contentsline {section}{\numberline {3.11}\slshape Data reporting}{20}{section.3.11}
+\contentsline {chapter}{\numberline {4}\bfseries Testing methodology}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}\slshape Testing environment}{21}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\rmfamily VDO allocation}{21}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}\slshape Testing with fs-drift}{24}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\rmfamily File size}{24}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\rmfamily Block size}{24}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\rmfamily Compress ratio}{24}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\rmfamily Deduplication}{25}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\rmfamily Random map}{25}{subsection.4.2.5}
+\contentsline {section}{\numberline {4.3}\slshape Testing package}{25}{section.4.3}
+\contentsline {section}{\numberline {4.4}\slshape Data processing}{26}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\rmfamily VDO chart}{26}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}\rmfamily Throughput progression chart}{27}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}\rmfamily Histograms}{27}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}\rmfamily Boxplots}{27}{subsection.4.4.4}
+\contentsline {section}{\numberline {4.5}\slshape Testing hardware}{27}{section.4.5}
+\contentsline {chapter}{\numberline {5}\bfseries Performance of VDO}{29}{chapter.5}
+\contentsline {section}{\numberline {5.1}\slshape VDO threads}{29}{section.5.1}
+\contentsline {section}{\numberline {5.2}\slshape Half empty VDO}{29}{section.5.2}
+\contentsline {section}{\numberline {5.3}\slshape Steady state testing}{29}{section.5.3}
+\contentsline {section}{\numberline {5.4}\slshape Block map cache}{29}{section.5.4}
+\contentsline {section}{\numberline {5.5}\slshape Maximum discard size}{32}{section.5.5}
+\contentsline {section}{\numberline {5.6}\slshape Write policies}{36}{section.5.6}
+\contentsline {section}{\numberline {5.7}\slshape Journal performance}{36}{section.5.7}
+\contentsline {section}{\numberline {5.8}\slshape Testing on different architectures}{37}{section.5.8}
+\contentsline {section}{\numberline {5.9}\slshape Testing with distributed file system}{37}{section.5.9}
+\contentsline {chapter}{\numberline {6}\bfseries Conclusion}{41}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape Future work}{41}{section.6.1}
+\contentsline {chapter}{\numberline {7}\bfseries Appendix}{43}{chapter.7}
+\contentsline {section}{\numberline {7.1}\slshape Supermicro X11SPL-F}{43}{section.7.1}

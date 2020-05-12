@@ -47,7 +47,7 @@ empty_VDO_HDD = glob.glob('../results/empty_VDO/*vdo_hdd_empty*.tar.xz')
 
 #Report(baselines['korben']['SSD'] + empty_VDO_SSD + baselines['korben']['VDO_SSD'] , '../results/empty_VDO/SSD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200) 
 
-Report(baselines['korben']['HDD'] + empty_VDO_HDD + baselines['korben']['VDO_HDD'] , '../results/empty_VDO/HDD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200) 
+#Report(baselines['korben']['HDD'] + empty_VDO_HDD + baselines['korben']['VDO_HDD'] , '../results/empty_VDO/HDD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200) 
 
 #Experiment write policies
 write_policies = glob.glob('../results/write_policies/*.tar.xz')
@@ -80,9 +80,24 @@ full_discards += glob.glob('../results/discards/full_VDO/*-128k*.tar.xz')
 full_discards += glob.glob('../results/discards/full_VDO/*-1m*.tar.xz')
 
 #Report(full_discards, '../results/discards/full_VDO/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['logical blocks used','bios in discard'], lim_y=1300, test_label = 'max discard size') 
+block_map_cache = {}
+block_map_cache['400g_default'] = glob.glob('../results/block_map_cache/*-400g_default*.tar.xz')
+block_map_cache['increased_cache'] = glob.glob('../results/block_map_cache/*-400g_increased*.tar.xz')
+block_map_cache['80g'] = glob.glob('../results/block_map_cache/*-80g*.tar.xz')
 
-block_map_cache = glob.glob('../results/block_map_cache/*.tar.xz')
-#Report(block_map_cache, '../results/block_map_cache/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=30, test_label = 'block map cache') 
+#Report(block_map_cache['80g']+ block_map_cache['400g_default'] + block_map_cache['increased_cache'], '../results/block_map_cache/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200, test_label = 'block map cache')
+
+#Experiments half full
+half = glob.glob('../results/half/*.tar.xz')
+#Report(half, '../results/half/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200, test_label = 'VDO')
+
+tun = glob.glob('../results/tuning/*.tar.xz')
+
+#Report(tun, '../results/tuning/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['current VDO IO requests in progress','maximum VDO IO requests in progress'], lim_y=12000, test_label = 'VDO')
+
+aging = lob.glob('../results/tuning/*.tar.xz')
+Report(aging, '../results/aging/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=5000, test_label = 'aging')
+
 
 
 

@@ -1,4 +1,0 @@
-increment=20000
-device=/dev/mapper/testVDO
-raw_recipe=file-size_10000--report-interval_5--duration_300--bandwidth_out--blocksize_4--workload-table_randomwrite.csv--compression-ratio_3.0--fsync_0--direct_1--rawdevice_/dev/mapper/testVDO--dedupe-percentage_50--threads_1
-allocate=1

@@ -42,9 +42,12 @@ def create_button(name):
         return button
         
 def read_file(name):
-  f = open(name,'r')
-  str_ = f.read()
-  f.close()
+  try:
+    f = open(name,'r')
+    str_ = f.read()
+    f.close()
+  except:
+    return ''
   return str_
 
 def eval_op(op):
@@ -261,6 +264,7 @@ class Tar:
         self.histograms = self.generate_histogram()
         self.boxplots = self.generate_boxplot()
     	self.vdo_plot = self.generate_vdo_plot()
+    	self.threads_plot = self.generate_threads_plot()
     	self.usage_plot = self.generate_usage_plot()
     	self.extents_ID= 'afaf'#used_space_histogram('./out/fie_data', self.destination)
     	self.image_log = read_file('./out/log.out')
@@ -295,8 +299,7 @@ class Tar:
         ID_cur = self.image_ID+'_vdostats.png'
         if not read_file(filename):
             return ID_cur
-        #values = {'dedupe_advice_valid':[], 'zero_blocks':[], 'compressed_blocks':[], 'data_blocks_used':[], 'compressed_fragments':[], 'logic_blocks_used':[]}
-        #values = {'dedupe_advice_valid':[], 'data_blocks_used':[], 'logic_blocks_used':[]}
+
         values = {}
         #prepare empyt lists:
         for val in self.chart_vdostas:
@@ -311,31 +314,9 @@ class Tar:
                 if name in values:
                     val = line.split(':')[1].strip()
                     #most of the values are in 4k blocks, so turning them to GBs
-                    val = round((float(val)*4096)/(1024*1024*1024), 4)
+                    #val = round((float(val)*4096)/(1024*1024*1024), 4)
+                    val = float(val)
                     values[name].append(val)
-                #The number of physical blocks currently in use by a VDO volume to store data. 
-                #if 'data blocks used' in line:
-                #        data_blocks_used = round((float(line.split(': ')[1])*4)/(1024*1024), 2)
-                #The number of logical blocks currently mapped. 
-                #if 'logical blocks used' in line:
-                #        logic_blocks_used = round((float(line.split(': ')[1])*4)/(1024*1024), 2)
-                #The number of physical blocks of compressed data that have been written since the VDO volume was last restarted. 
-                #if 'compressed blocks written' in line:
-                #        cbw = round((float(line.split(': ')[1])*4)/(1024*1024), 2)
-                #if 'compressed fragments written' in line:
-                #        cfw = round((float(line.split(': ')[1])*4)/(1024*1024), 2)
-                #Dedupe advice valid 
-                #if 'dedupe advice valid' in line:
-                #    dedupe = round((float(line.split(': ')[1])*4)/(1024*1024), 2)
-
-            #zero_blocks = logic_blocks_used - data_blocks_used - cbw - dedupe
-            
-            #values['dedupe_advice_valid'].append(dedupe)
-            #values['zero_blocks'].append(zero_blocks)
-            #values['zero_blocks'].append(zero_blocks)
-            #values['compressed_fragments'].append(cfw)
-            #values['data_blocks_used'].append(data_blocks_used)
-            #values['logic_blocks_used'].append(logic_blocks_used)
 
         recipe = get_value(self.properties,'recipe').split('--')
         for param in recipe:
@@ -351,11 +332,74 @@ class Tar:
                 x = [interval*i for i in range(len(y))]
                 ax.plot(x, y, label=key)
                 
-        ax.legend(loc=2)
+        #ax.legend(loc=2)
+        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         ax.set_title('vdostats')
         plt.savefig(self.destination+ID_cur, bbox_inches='tight')
         plt.close()
         return ID_cur
+
+    def generate_threads_plot(self, filename='./out/threads'):
+        ID_cur = self.image_ID+'_threads.png'
+        if not read_file(filename):
+            return ID_cur
+        blacklisted = ['indexW', 'reader', 'writer']
+
+        values = {}
+        threads = read_file(filename).split('grep')
+        for report in threads:
+            rep = report.split('\n')
+            
+            for line in rep:
+                elems = filter(lambda x: x!='', line.split(' '))
+                if len(elems) < 11: continue
+                name = elems[-1].strip('[]').split(':')[1]
+                if name in blacklisted: continue
+                val = float(elems[2])
+                if name in values:
+                    values[name].append(val)
+                if name not in values:
+                    values[name] = [val]
+
+        recipe = get_value(self.properties,'recipe').split('--')
+        for param in recipe:
+            if 'report-interval' in param:
+                interval = int(param.split('_')[1])
+
+        fig, ax = plt.subplots()
+        ax.set_ylabel('CPU usage [%]')
+        ax.set_xlabel('Time [s]')
+        ax.grid()
+      	#fig.set_size_inches(4, 3)
+        for key, y in values.items():
+                x = [interval*i for i in range(len(y))]
+                ax.plot(x, y, label=key)
+
+        #VDO threads analysis
+        report = threads[len(threads)/2].split('\n')
+        f = open(self.destination+self.image_ID+'VDO_threads_analysis', 'a+')        
+        for line in report:
+            elems = filter(lambda x: x!='', line.split(' '))
+            if len(elems) < 11: continue
+            name = elems[-1].strip('[]').split(':')[1]
+            if name in blacklisted: continue
+            val = float(elems[2])
+            
+            f.write('Thread: ' + name + ',Usage: ' + str(val) + '%')
+            if val > 30 and val < 50: f.write(' OK')
+            if val < 30: f.write(' LOW')
+            if val > 50: f.write(' HIGH')
+            f.write('\n')
+
+
+
+        #ax.legend(loc=2)
+        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        ax.set_title('CPU usage of VDO threads')
+        plt.savefig(self.destination+ID_cur, bbox_inches='tight')
+        plt.close()
+        return ID_cur
+
 
     def generate_histogram(self):
         #template = read_file('templates/histogram.js')
@@ -504,7 +548,10 @@ class Report:
     subprocess.call('mkdir '+self.destination,shell=True)
     self.tars = []
     for path in paths:
+        try:
             self.tars.append(Tar(path, self.destination, offset, log_window, smooth, chart_vdostats, lim_y))
+        except:
+            print('Bad tar: ' + path)
     self.compare = Compare(self.tars, self.destination, offset, log_window, test_label)
     self.report = self.make_report()
     self.save()
@@ -669,6 +716,10 @@ class Report:
     for tar in self.tars:
         	tr.td.img(src=tar.vdo_plot, align='left')
 
+    tr = table.tr
+    for tar in self.tars:
+        	tr.td.img(src=tar.threads_plot, align='left')
+
 
     tr = table.tr
     for tar in self.tars:
@@ -695,33 +746,28 @@ class Report:
     for ID in self.compare.png_boxplots:
         tr.td.img(src=ID, align='left')
 
-
-
-    
-
-    
-
-
-    table = r.table(id='t01')
-    tr = table.tr
-    tr.th('random write')
-    tr.th
-    tr.th
-    tr.th
-    tr.th
-    tr.th
-    tr.th
-
-    tr = table.tr
-    tr.th('test name')
-    tr.th('median')
-    tr.th('first quartile')
-    tr.th('third quartile')
-    tr.th('min')
-    tr.th('max')
-    tr.th('standard deviation')
-    tr = table.tr
     for ID, data in self.compare.tables.items():
+        table = r.table(id='t01')
+        tr = table.tr
+        tr.th(data[0].op)
+        tr.th
+        tr.th
+        tr.th
+        tr.th
+        tr.th
+        tr.th
+
+        tr = table.tr
+        tr.th('test name')
+        tr.th('median')
+        tr.th('first quartile')
+        tr.th('third quartile')
+        tr.th('min')
+        tr.th('max')
+        tr.th('standard deviation')
+        tr = table.tr
+
+
         for boxplot in data:
             tr = table.tr
             tr.td(boxplot.name)
@@ -732,8 +778,26 @@ class Report:
             tr.td(boxplot.high+'MB/s')
             tr.td(boxplot.stdev+'MB/s')
 
+    latex_code = ''
 
+    for ID, data in self.compare.tables.items():
 
+        latex_code = """\\begin{tabular}{|l|l|l|l|l|l|l|}
+        \hline
+        \multicolumn{7}{|l|}{Throughput of """ + data[0].op + """ (MB/s)} \\\ \hline
+        test name & median & first quartile & third quartile & min & max & stdev \\\ \hline \n"""
+
+        for boxplot in data:
+            latex_code += boxplot.name + ' & '
+            latex_code += boxplot.median + ' & '
+            latex_code += boxplot.q1 + ' & '
+            latex_code += boxplot.q3 + ' & '
+            latex_code += boxplot.low + ' & '
+            latex_code += boxplot.high + ' & '
+            latex_code += boxplot.stdev + ' \\\ \hline\n'
+    latex_code += '\end{tabular}'
+
+    r += '<!-- \n' + latex_code + '\n-->'
     #table = r.table
     #tr = table.tr
     #tr.td.div(id=self.compare.boxplotID, align='left')
