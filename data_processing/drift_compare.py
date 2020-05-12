@@ -314,8 +314,8 @@ class Tar:
                 if name in values:
                     val = line.split(':')[1].strip()
                     #most of the values are in 4k blocks, so turning them to GBs
-                    #val = round((float(val)*4096)/(1024*1024*1024), 4)
-                    val = float(val)
+                    val = round((float(val)*4096)/(1024*1024*1024), 4)
+                    #val = float(val)
                     values[name].append(val)
 
         recipe = get_value(self.properties,'recipe').split('--')

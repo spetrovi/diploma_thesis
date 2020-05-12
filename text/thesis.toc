@@ -52,13 +52,14 @@
 \contentsline {subsection}{\numberline {4.2.3}\rmfamily Compress ratio}{24}{subsection.4.2.3}
 \contentsline {subsection}{\numberline {4.2.4}\rmfamily Deduplication}{25}{subsection.4.2.4}
 \contentsline {subsection}{\numberline {4.2.5}\rmfamily Random map}{25}{subsection.4.2.5}
-\contentsline {section}{\numberline {4.3}\slshape Testing package}{25}{section.4.3}
-\contentsline {section}{\numberline {4.4}\slshape Data processing}{26}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}\rmfamily VDO chart}{26}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}\rmfamily Throughput progression chart}{27}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}\rmfamily Histograms}{27}{subsection.4.4.3}
-\contentsline {subsection}{\numberline {4.4.4}\rmfamily Boxplots}{27}{subsection.4.4.4}
-\contentsline {section}{\numberline {4.5}\slshape Testing hardware}{27}{section.4.5}
+\contentsline {subsection}{\numberline {4.2.6}\rmfamily Multithread and maximal performance}{25}{subsection.4.2.6}
+\contentsline {section}{\numberline {4.3}\slshape Testing package}{26}{section.4.3}
+\contentsline {section}{\numberline {4.4}\slshape Data processing}{27}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\rmfamily VDO chart}{27}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}\rmfamily Throughput progression chart}{28}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}\rmfamily Histograms}{28}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}\rmfamily Boxplots}{28}{subsection.4.4.4}
+\contentsline {section}{\numberline {4.5}\slshape Testing hardware}{28}{section.4.5}
 \contentsline {chapter}{\numberline {5}\bfseries Performance of VDO}{29}{chapter.5}
 \contentsline {section}{\numberline {5.1}\slshape VDO threads}{29}{section.5.1}
 \contentsline {section}{\numberline {5.2}\slshape Half empty VDO}{29}{section.5.2}

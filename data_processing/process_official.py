@@ -95,8 +95,8 @@ tun = glob.glob('../results/tuning/*.tar.xz')
 
 #Report(tun, '../results/tuning/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['current VDO IO requests in progress','maximum VDO IO requests in progress'], lim_y=12000, test_label = 'VDO')
 
-aging = lob.glob('../results/tuning/*.tar.xz')
-Report(aging, '../results/aging/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=5000, test_label = 'aging')
+aging = glob.glob('../results/aging/*.tar.xz')
+Report(aging, '../results/aging/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats + ['bios in discard'], lim_y=5000, test_label = 'aging')
 
 
 

@@ -643,7 +643,22 @@ Most testing workloads that aim to test limits of VDO technology are random writ
 
 However, this approach may not be best, since some blocks can be used more than once and some blocks may never be used. The act of overwriting blocks can introduce noise to the results, so in case the test is not specifically aimed at reusing blocks, it is reccomended to use randommap.
 
+\subsection{Multithread and maximal performance}
+VDO is a high performing layer aimed to serve intensive, multithreaded applications. As a block device, VDO serves incoming IO stream through a queue of 2000 IOs. In the test aimed to excercise upper limits of VDO performance, the generated workloads need to be intensive enough so the full potential of VDO can be achieved.
 
+To generate such workload, we need to use multithreaded fs-drift with batch submition controled by iodepth. Iodepth in fs-drift controls exactly how many 4k blocks will be in progress at any given time. It is not only lower, but also upper limit of the batch size.
+
+By setting these parameters correctly, we aim at the right VDO queue excercies. If the VDO isn't engaged enough, the test is limiting itself in the performance. On the other hand, if the test has no upper limit on IO submission, the queue would be overflown at all times, which will slow down performance.
+
+Following formula references a way to compute maximal batch size with given number of threads and block size.
+
+\[ threads * (blocksize \ 4) = Maximal batch size \]
+
+In case the maximal batch size of the test with given parameters is much larger than 2000 (size of VDO queue), the test will overwhelm VDO and measued performance would be too low. In case the maximal batch size of a test is much smaller than 2000, the test will not excercise VDO fully and the performance would also appear low.
+
+Fs-drift parameter iodepth limits the batch size from both size. If the user specifies iodepth of 2000, fs-drift will be submitting exactly 2000 4k blocks at the same time.
+
+However, even limiting batch size with iodepth isn't a final solution. In case the physical device under VDO is very slow, VDO might not be able to empty the queue between batches which would again cause delays and worse performance. Testers should always make sure the queue was properly excercised by inspecting vdostats during and after the tests.
 
 \section{Testing package}
 To manage the test results and metadata as well as testing environment and to be able to include tests in more complex or automised workflows, it is beneficial to encapsulate the benchmark into a testing package. For fs-drift, there is drift\_job package.
