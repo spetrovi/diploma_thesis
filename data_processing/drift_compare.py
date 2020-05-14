@@ -17,14 +17,15 @@ from scipy.stats import linregress
 import re
 import os
 
-colors = {'read': '#f7a35c', 'write': '#90ed7d', 'random_read': '#434348', 'random_write': '#7cb5ec', 'random_discard': '#7cb5ec'}
+colors = {'read': '#f7a35c', 'write': '#90ed7d', 'random_read': '#434348', 'random_write': '#7cb5ec', 'random_discard':'#434348'}
 
 def first(_tuple):
     return _tuple[0]
 
-def untar(source):   
-	if source[-2:] == 'xz':
-		subprocess.call('tar -Jxf '+source+' -C ./',shell=True)
+def untar(source):
+    subprocess.call('rm -rf out',shell=True)
+    if source[-2:] == 'xz':
+        subprocess.call('tar -Jxf '+source+' -C ./',shell=True)
 
 #[(),(),()] -> ([,,,],[,,,])								
 def uncurry(l):
@@ -60,51 +61,81 @@ def op_sort((op,x)):
 def op_sort_boxplot(boxplot):
     return eval_op(boxplot.op)
 
-def process_files(bw_files, offset, log_window=1.0):
+def process_files(bw_files, offset, log_window=1.0, bs=10000):
     mask = {'append':'write', 'random_write':'random_write', 'random_read':'random_read', 'read':'read', 'create':'create', 'delete':'delete', 'random_discard':'random_discard'}
     blacklisted = ['create']
-    operation = {}
+    result = {}
+    separate = []
+    
     for fn in bw_files:
+        operation = {}
+        raw_bws = []
+        appended = [-1]
+        st_avg = 0
         with open(fn, "rb") as csvfile:
             datareader = csv.reader(csvfile)
-            datareader = [row for row in datareader if float(row[0]) >= offset[0]]
-            datareader = [row for row in datareader if float(row[0]) <= offset[1]]
+           
+            #datareader = [row for row in datareader if float(row[0]) >= offset[0]]
+            #datareader = [row for row in datareader if float(row[0]) <= offset[1]]
+
             for i, row in enumerate(datareader):
                 name = row[2].strip()
                 name = mask[name]
-                if name not in blacklisted and name not in operation: operation[name] = [0]
+                if name not in blacklisted and name not in operation: operation[name] = [[]]
                 time = float(row[0])
-                slot = int(time/log_window)
-                if name not in blacklisted and len(operation[name])-1 < slot:
-                    #print 'Hello:'
-                    #print slot-len(operation[name])-1
-                   operation[name] += [operation[name][len(operation[name])-1] for i in range(slot-len(operation[name]))]
-                   operation[name] += [0]
-                    #operation[name] += [0 for i in range(slot-len(operation[name])+1)]
+                if len(row) == 4:
+                    bs = int(row[3])
+                bw = float(row[1])/1024
+                raw_bws.append(bw)
+                completion_time = 1/((bw*1024)/(bs/1024))
+                slot_start = int(time/log_window)
+                slot_end = slot_start + int(completion_time/log_window) 
 
-                #Attempt to sum results from paralel runs
-                if name not in blacklisted and len(operation[name])-1 > slot:
-                    if i != len(datareader)-1:
-                        slot = int(float(row[0])/log_window)
-                        bw = float(row[1])/1024
-                        next_slot = int(float(datareader[i+1][0])/log_window)
-                        for j in range(slot, next_slot-1):
-                            if j < len(operation[name]):
-                                operation[name][j] += bw
-                            if j >= len(operation[name]): 
-                                operation[name].append(bw)
+                if name not in blacklisted and len(operation[name])-1 < slot_end:
+                   operation[name] += [[] for i in range(slot_end-len(operation[name])+1)]
 
-
-                if name not in blacklisted and len(operation[name])-1 == slot:
-   #                 print operation[name]
-  #                  print 'time: '+str(time)
- #                   print 'slot: '+str(slot)
-#                    print str(float(row[1])/1024)
-                    operation[name][slot] += float(row[1])/1024
-
-    for key, data in operation.items():
-        operation[key] = filter(lambda x: x != 0, data)
-    return operation
+                if name not in blacklisted and len(operation[name]) >= slot_end:
+                    if slot_start == slot_end:
+                            operation[name][slot_start].append(bw)
+                    for s in range(slot_start, slot_end):
+                            operation[name][s].append(bw)
+        
+        separate.append(operation)
+                
+        
+    master = {}
+    for item in separate:
+        for key, data in item.items():
+            #print data
+            #print '\n\n'
+            data2 = []
+            for i in data:
+                if i: 
+                    data2.append(np.average(i))
+                else: data2.append(0)
+    
+            #print data2
+            #print '\n\n\n\n'
+            if key not in master:
+                master[key] = data2
+            else:
+                for i, elem in enumerate(data2):
+                    if i < len(master[key]):
+                        master[key][i] += elem
+                    else:
+                        master[key].append(elem)
+        #print master['random_write']
+        #print '\n\n\n next one\n'
+        
+       
+    for key, data in master.items():
+        data = data[int(offset[0]//log_window):]
+        x = [i for i, y in enumerate(data) if y != 0 ]
+        data = filter(lambda x: not not x  , data)
+        master[key] = (x, data)
+   
+    #print master['random_write']
+    return master
 
 
 #returns value of the given parameter
@@ -114,7 +145,7 @@ def get_value(string, parameter):
 	return res[0]
 
 class Boxplot:
-  def __init__(self, op, data, name):
+  def __init__(self, op, (x, data), name):
         self.op = op
         self.name = name
         self.low = str(round(np.min(data) + 0.01, 2))
@@ -212,7 +243,7 @@ class Compare:
             for (name, x) in tests:
                 if name == 'unsafe': name = 'async-unsafe'
                 i += 1
-                vectors.append(x)
+                vectors.append(x[1])
                 ticks.append(name)
                 positions.append(i)
                 
@@ -259,12 +290,19 @@ class Tar:
         self.bw_files = glob.glob('./out/*bw*.csv')
         if os.path.exists('./out/vdoconfig'):
             self.vdoconfig = read_file('./out/vdoconfig').split('\n')
-        self.bws = process_files(self.bw_files, self.offset, self.log_window)
+        recipe = get_value(self.properties,'recipe').split('--')
+        blocksize = 10000*1024
+        for param in recipe:
+            if 'blocksize' in param:
+                blocksize = int(param.split('_')[1])*1024
+
+        self.bws = process_files(self.bw_files, self.offset, self.log_window, blocksize)
         self.bw_plot = self.generate_bw_plot()
         self.histograms = self.generate_histogram()
         self.boxplots = self.generate_boxplot()
     	self.vdo_plot = self.generate_vdo_plot()
     	self.threads_plot = self.generate_threads_plot()
+        #self.threads_plot = ''
     	self.usage_plot = self.generate_usage_plot()
     	self.extents_ID= 'afaf'#used_space_histogram('./out/fie_data', self.destination)
     	self.image_log = read_file('./out/log.out')
@@ -296,7 +334,7 @@ class Tar:
         return ID_cur
 
     def generate_vdo_plot(self, filename='./out/vdostats'):
-        ID_cur = self.image_ID+'_vdostats.png'
+        ID_cur = self.image_ID+'_vdostats'
         if not read_file(filename):
             return ID_cur
 
@@ -314,14 +352,34 @@ class Tar:
                 if name in values:
                     val = line.split(':')[1].strip()
                     #most of the values are in 4k blocks, so turning them to GBs
-                    val = round((float(val)*4096)/(1024*1024*1024), 4)
-                    #val = float(val)
+                    if name != 'current VDO IO requests in progress':
+                        val = round((float(val)*4096)/(1024*1024*1024), 4)
+                    else:
+                        val = float(val)
                     values[name].append(val)
 
         recipe = get_value(self.properties,'recipe').split('--')
         for param in recipe:
             if 'report-interval' in param:
                 interval = int(param.split('_')[1])
+        
+        if 'current VDO IO requests in progress' in values:
+            #plot queue chart on separate fig
+            fig, ax = plt.subplots()
+            ax.set_ylabel('IOs [4k]')
+            ax.set_xlabel('Time [s]')
+            ax.grid()
+
+            y = values['current VDO IO requests in progress']
+            x = [interval*i for i in range(len(y))]
+            ax.plot(x, y, label='current VDO IO requests in progress')
+        
+            ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+            ax.set_title('queue utilisation')
+            plt.savefig(self.destination + ID_cur + '_queue.png', bbox_inches='tight')
+            plt.close()
+
+            values.pop('current VDO IO requests in progress')
 
         fig, ax = plt.subplots()
         ax.set_ylabel('Blocks [GB]')
@@ -335,18 +393,19 @@ class Tar:
         #ax.legend(loc=2)
         ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         ax.set_title('vdostats')
-        plt.savefig(self.destination+ID_cur, bbox_inches='tight')
+        plt.savefig(self.destination + ID_cur + '.png', bbox_inches='tight')
         plt.close()
-        return ID_cur
+        return ID_cur + '.png'
 
     def generate_threads_plot(self, filename='./out/threads'):
         ID_cur = self.image_ID+'_threads.png'
         if not read_file(filename):
             return ID_cur
-        blacklisted = ['indexW', 'reader', 'writer']
 
+        blacklisted = ['indexW', 'reader', 'writer']
+        
         values = {}
-        threads = read_file(filename).split('grep')
+        threads = read_file(filename).split('grep kvdo')
         for report in threads:
             rep = report.split('\n')
             
@@ -377,6 +436,7 @@ class Tar:
 
         #VDO threads analysis
         report = threads[len(threads)/2].split('\n')
+        self.thread_analysis = ''
         f = open(self.destination+self.image_ID+'VDO_threads_analysis', 'a+')        
         for line in report:
             elems = filter(lambda x: x!='', line.split(' '))
@@ -385,10 +445,18 @@ class Tar:
             if name in blacklisted: continue
             val = float(elems[2])
             
+            self.thread_analysis += 'Thread: ' + name + ',Usage: ' + str(val) + '%'
+
             f.write('Thread: ' + name + ',Usage: ' + str(val) + '%')
-            if val > 30 and val < 50: f.write(' OK')
-            if val < 30: f.write(' LOW')
-            if val > 50: f.write(' HIGH')
+            if val > 30 and val < 50: 
+                self.thread_analysis += ' OK\n'
+                f.write(' OK')
+            if val < 30: 
+                self.thread_analysis += ' LOW\n'            
+                f.write(' LOW')
+            if val > 50:
+                self.thread_analysis += ' HIGH\n'
+                f.write(' HIGH')
             f.write('\n')
 
 
@@ -414,7 +482,7 @@ class Tar:
         hists = {}
         bins = {}
 
-        for key, data in self.bws.items():
+        for key, (x,data) in self.bws.items():
             ID_cur = ID + '_' + key+'.png'
             fig, ax = plt.subplots()
             #hist, bins = np.histogram(data)
@@ -456,7 +524,7 @@ class Tar:
 
         operations.sort(key=op_sort)
 
-        for (key, x) in operations:
+        for (key, (xx,x)) in operations:
             i+=1
             vectors.append(x)
             ticks.append(key)
@@ -496,15 +564,18 @@ class Tar:
         ax.set_xlabel('Time [s]')
         ax.set_title('Throughput of IO operations')
         
-        offset_correct = int(self.offset[0] / self.log_window)
+        offset_correct = int(self.offset[0])
 
 
-        for key, y in operation.items():
-            x = [offset_correct + i*self.log_window for i in range(len(y))]
+
+        for key, (x,y) in operation.items():
+
+            x = map(lambda c: c * self.log_window, x)
+
 
             #prepare values
             xx = np.linspace(min(x),max(x), 600)
-
+            
             #y = map(lambda x: x/1000, y) #kb to mb
             info_file.write(key+'\n')
             info_file.write(str(np.median(y))+'\,MB/s\n')
@@ -544,17 +615,17 @@ class Report:
   def __init__(self, paths, destination, offset, log_window, smooth, chart_vdostats, lim_y=500, test_label='Test label'):
     self.destination = destination
 #	self.destination = destination+paths[0].split('/')[-1:][0][:-7]+'_vs_'+paths[1].split('/')[-1:][0][:-7]+'/'
-    
     subprocess.call('mkdir '+self.destination,shell=True)
     self.tars = []
     for path in paths:
-        try:
+        #try:
             self.tars.append(Tar(path, self.destination, offset, log_window, smooth, chart_vdostats, lim_y))
-        except:
-            print('Bad tar: ' + path)
-    self.compare = Compare(self.tars, self.destination, offset, log_window, test_label)
-    self.report = self.make_report()
-    self.save()
+        #except:
+        #    print('Bad tar: ' + path)
+    if self.tars:
+        self.compare = Compare(self.tars, self.destination, offset, log_window, test_label)
+        self.report = self.make_report()
+        self.save()
 
 
   def save(self):
@@ -718,6 +789,19 @@ class Report:
 
     tr = table.tr
     for tar in self.tars:
+        	tr.td.img(src=tar.vdo_plot[:-4]+'_queue.png', align='left')
+
+    tr = table.tr
+    td = tr.td
+
+    for tar in self.tars:
+        for l in tar.thread_analysis.split('\n'):
+            td.li(l)
+        td = tr.td
+
+
+    tr = table.tr
+    for tar in self.tars:
         	tr.td.img(src=tar.threads_plot, align='left')
 
 
@@ -735,7 +819,10 @@ class Report:
     for i in range(0, hist_num):
         tr = table.tr
         for j in range(0, len(self.tars)):
-            tr.td.img(src=self.tars[j].histograms[i], align='left')            
+            try:
+                tr.td.img(src=self.tars[j].histograms[i], align='left')            
+            except:
+                continue
         
     tr = table.tr
     for tar in self.tars:

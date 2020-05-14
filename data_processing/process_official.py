@@ -32,14 +32,14 @@ baselines['hulk']['NVMe'] = glob.glob('../results/hulk_baselines/*-NVMe-*tar.xz'
 
 #zbehnut korben, SSD[respin], HDD[respin], (VDO_SSD, VDO_HDD, empty&prealloc VDO_SSD, empty&prealloc VDO HDD)[done]
 baselines['korben']['HDD'] = glob.glob('../results/korben_baselines/*-HDD-*baseline*tar.xz')
-baselines['korben']['SSD'] = glob.glob('../results/korben_baselines/*-SSD-baseline*tar.xz')
+baselines['korben']['HDD'].sort()
+baselines['korben']['SSD'] = glob.glob('../results/korben_baselines/*-ssd_baseline*tar.xz')
 
 baselines['korben']['VDO_HDD'] = glob.glob('../results/korben_baselines/*-VDO_HDD-*tar.xz')
+baselines['korben']['VDO_HDD'].sort()
 baselines['korben']['VDO_SSD'] = glob.glob('../results/korben_baselines/*-VDO_SSD-*tar.xz')
 
-#Report(baselines['korben']['HDD'] + baselines['korben']['VDO_HDD'], '../results/korben_baselines/VDO_HDD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=300)
-
-#Report(baselines['korben']['SSD'] + baselines['korben']['VDO_SSD'], '../results/korben_baselines/VDO_SSD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=300)
+#Report( baselines['korben']['VDO_HDD'] + baselines['korben']['HDD'], '../results/korben_baselines/VDO_HDD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=300)
 
 #Experiment empty & alloc
 empty_VDO_SSD = glob.glob('../results/empty_VDO/*vdo_ssd_empty*.tar.xz')
@@ -88,19 +88,31 @@ block_map_cache['80g'] = glob.glob('../results/block_map_cache/*-80g*.tar.xz')
 #Report(block_map_cache['80g']+ block_map_cache['400g_default'] + block_map_cache['increased_cache'], '../results/block_map_cache/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200, test_label = 'block map cache')
 
 #Experiments half full
-half = glob.glob('../results/half/*.tar.xz')
-#Report(half, '../results/half/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200, test_label = 'VDO')
+half = glob.glob('../results/half/*half.tar.xz')
+seq = glob.glob('../results/half/*seq*.tar.xz')
+rand = glob.glob('../results/half/*rand*.tar.xz')
+Report(seq + half + rand, '../results/half/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['logical blocks used', 'data blocks used'] + ['current VDO IO requests in progress'], lim_y=200, test_label = 'VDO')
 
 tun = glob.glob('../results/tuning/*.tar.xz')
 
 #Report(tun, '../results/tuning/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['current VDO IO requests in progress','maximum VDO IO requests in progress'], lim_y=12000, test_label = 'VDO')
 
 aging = glob.glob('../results/aging/*.tar.xz')
-Report(aging, '../results/aging/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats + ['bios in discard'], lim_y=5000, test_label = 'aging')
+aging.sort()
+#Report(aging, '../results/aging/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats + ['current VDO IO requests in progress'], lim_y=600, test_label = 'aging')
 
+queue = glob.glob('../results/queue/**tar.xz')
+queue.sort()
+#Report(queue, '../results/queue/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats + ['current VDO IO requests in progress'], lim_y=600, test_label = 'queue_tiering')
+#Report(iodepth, '../results/korben_baselines/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=200, test_label = 'aging')
 
+threads = glob.glob('../results/threads/*tar.xz')
+threads.sort()
 
+#Report(threads, '../results/threads/report/', offset=(0,1000), log_window = 0.01, smooth = True, chart_vdostats = chart_vdostats + ['current VDO IO requests in progress'], lim_y=1000, test_label = 'queue_tiering')
 
+power = glob.glob('../results/korben_baselines/OLDBAD/*/*-iodept*tar.xz')
+#Report(power, '../results/korben_baselines/POWER/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=500, test_label = 'aging')
 
 
 

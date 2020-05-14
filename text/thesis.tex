@@ -532,9 +532,9 @@ If multithreaded fs-drift is used for testing, user should limit the number of p
 \end{itemize}
 
 \section{IOdepth}
-Fs-drift threads will submit their IO requests to the device or files in parallel. By default, this behavior is unmanaged and can result in overloading the target.
+Fs-drift threads will submit their IO requests to the device or files in parallel. By default, this behavior is unmanaged and can result in overloading or starving the target.
 
-By using iodepth parameter, user can limit the number of 4k IOs that will be worked on at the same time.
+By using iodepth parameter, user can specify how many 4k IO units will be submitted at the same time. This behavior is implemented by managing two counters inside fs-drift. First counter will contain information about how many IOs are ready to be submitted. If this number is lower tham specified iodepth, threads will wait for others to prepare and raise the counter. Second counter contains information on how many IOs are in progress. If this number is higher or the same as the specified iodepth, threads will wait for the counter to be lowered.
 
 
 \begin{itemize}
@@ -626,17 +626,17 @@ File size is another parameter that need to be carefully thought of. File size i
 \subsection{Block size}
 Choosing the correct block size for the workload is a very important step. For most cases, the native VDO blocksize of 4k is used. However, it is important to understand what does choosing different blocksize mean for the workload.
 
-The way fs-drift works, block size is the smallest granularity of IOs that will the workload achieve, which means that it is a smallest chunk of data that will be submitted to the device or file. Since there is some work to be done between the subsequent submisions, the device that services the requests can have a small bit of time to process the requests. By choosing larger blocksize the workload becomes more aggressive, since there is more data submited at the same time. 
+The way fs-drift works, block size is the smallest granularity of IOs that will the workload achieve, which means that it is a smallest chunk of data that will be submitted to the device or file. Since there is some work to be done between the subsequent submisions, the device that services the requests can have a small bit of time to process the requests. By choosing larger blocksize the workload becomes more aggressive, since there is more data submited at the same time.
 
-However, by increasing block size, we're increasing the smallest continuous chunk of data that will be worked with and some devices (such as HDDs) may benefit from that.
+However, by increasing block size, we're increasing the smallest continuous chunk of data that will be worked with, so a random workload may become slightly more sequential.
 
-\subsection{Compress ratio}
-Compress ratio is a very imporant factor while testing VDO. Generally, it is good to use some compression, so the VDO can excercise all its components. However there can be cases where lowering the compression ratio would benefit the user, f.e. if the goal of a test run is to fill as much of physical space as possible, it would be counter-productive to let a portion of the data be deduplicated and compressed.
+\subsection{Compression ratio}
+Compression ratio is a very imporant factor while testing VDO. Generally, it is good to use some compression, so the VDO can excercise all its components. However there can be cases where lowering the compression ratio would benefit the user, f.e. if the goal of a test run is to fill as much of physical space as possible, it would be counter-productive to let a portion of the data be deduplicated and compressed.
 
 While testing VDO, it is important to remember that it's using packaging compression and storing compressed fragments in one block. In case the compression ratio of written blocks is lower than 50\%, therefore resulting compressed blocks would occupy more than 50\% of their original size, there will be no apparent compression during the test, because the packaging algorithm would not be able to fit multiple blocks into one.
 
 \subsection{Deduplication}
-
+Similar to compression, it is expected that user data will be to some degree deduplicable and the testing workload should reflect that. Fs-drift is producing deduplicabla data on a file-size granularity.
 
 \subsection{Random map}
 Most testing workloads that aim to test limits of VDO technology are random writes. This also excercises the ability of VDO to serialise workload for the device underneath. By default, fs-drift is randomly choosing the offset to write the next block of data.
@@ -725,9 +725,33 @@ Testing for this thesis was conducted on multiple machines provided by Red Hat c
 
 
 
-\section{Half empty VDO}
+\section{Half full VDO}
+VDO will try to serialise the the incomming workload if possible by sequentially filling slabs to about half of their capacity. If more than half of slab is used, or if VDO is running out of free physical blocks, it will start to search for free blocks in the slab, which will appear as a change in performance. 
+
+When VDO is empty, the performance can look as of preformance of underlying device under sequential load. After using about 50\% of the physical capacity, performance will lower and starts to resemble a performance of underlying device under random workload. Figures~\ref{fig:half-start} and ~\ref{fig:half-end} show change of access pattern of VDO to an underlying device.
+
+We could test this effect by setting up fresh VDO volume, preallocating it and running random write workload without randommap. This means some of the blocks might be overwritten during the workload, which can free some physical blocks from the sequentially filled slab, that the VDO can search for.
+
+While running this test, performance of VDO should be reasonably stable until it uses about half of its data blocks. Performance should sharply decrease after that point.
+
+On Figure and Figure, results from such test can be examined. Physical space for this test was set to 5g with slab size of 2g, therefore this instance of VDO has one slab of data blocks. We can observe on the Figure that the workload caused the VDO to use half of its datablocks in about 120s. While looking at the Throughput graph, we can see that is the turing point for performance decrease.
+
+
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{../results/half/start}
+\caption[Access pattern]{Access pattern of VDO to the underlying device while VDO is empty. VDO is serialising incomming workload.}
+\label{fig:half-start}
+        \centering
+        \includegraphics[width=\textwidth]{../results/half/end}
+\caption[Access pattern]{Access pattern of VDO to the underlying device while VDO is almost full. VDO can't serialise incomming workload anymore.}
+\label{fig:half-end}
+\end{figure}
+
 
 \section{Steady state testing}
+
+
 
 \section{Block map cache}
 %As mentioned in Chapter~\ref{vdo}, block map cache is an internal VDO structure that keeps part of the journal in memory to provide better performance. Its default size is 
@@ -885,9 +909,12 @@ We can observe the change in throughput using various hardware in a Figure~\ref{
 \label{fig:journal-all}
 \end{figure}
 
-\section{Testing on different architectures}
+%\section{Aging testing}
+%Aging test is a type of test that simulates usage for prolonged time. Resulting device layout is usually fragmented and its performance may be decreased. The volume can also spend considerable amout of time in near-full conditions. 
 
-\section{Testing with distributed file system}
+%To test this scenario, we will use multithreaded random write workload with occasional discard. VDO manual recommends to perform occasional large discard of unused blocks to save space and overhead. The test will be conducted on an NVMe device, since its cost may likely cause users to think about installing space saving software.
+
+
 
 \chapter{Conclusion}
 \label{conclusion}
