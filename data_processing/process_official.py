@@ -51,7 +51,7 @@ empty_VDO_HDD = glob.glob('../results/empty_VDO/*vdo_hdd_empty*.tar.xz')
 
 #Experiment write policies
 write_policies = glob.glob('../results/write_policies/*.tar.xz')
-#Report(write_policies, '../results/write_policies/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=2700, test_label='write policy') 
+#Report(write_policies, '../results/write_policies/latest/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=500, test_label='write policy') 
 
 #Experiment journal speeding
 no_tail = glob.glob('../results/journal/*no_tail*.tar.xz')
@@ -109,7 +109,7 @@ queue.sort()
 threads = glob.glob('../results/threads/*tar.xz')
 threads.sort()
 
-#Report(threads, '../results/threads/report/', offset=(0,1000), log_window = 0.01, smooth = True, chart_vdostats = chart_vdostats + ['current VDO IO requests in progress'], lim_y=1000, test_label = 'queue_tiering')
+Report(threads, '../results/threads/report/', offset=(0,1000), log_window = 0.01, smooth = True, chart_vdostats = chart_vdostats + ['current VDO IO requests in progress'], lim_y=600, test_label = 'threads')
 
 power = glob.glob('../results/korben_baselines/OLDBAD/*/*-iodept*tar.xz')
 #Report(power, '../results/korben_baselines/POWER/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=500, test_label = 'aging')

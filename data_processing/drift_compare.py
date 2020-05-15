@@ -66,6 +66,27 @@ def process_files(bw_files, offset, log_window=1.0, bs=10000):
     blacklisted = ['create']
     result = {}
     separate = []
+
+
+    if len(bw_files) == 1:
+        operation = {}
+        bws = []
+        times = []
+        with open(bw_files[0], "rb") as csvfile:
+            datareader = csv.reader(csvfile)
+           
+            datareader = [row for row in datareader if float(row[0]) >= offset[0]]
+            datareader = [row for row in datareader if float(row[0]) <= offset[1]]
+
+            for i, row in enumerate(datareader):
+                name = row[2].strip()
+                name = mask[name]
+                if name not in blacklisted and name not in operation: operation[name] = ([],[])
+                time = float(row[0])
+                bw = float(row[1])/1024
+                operation[name][0].append(time)
+                operation[name][1].append(bw)
+        return operation
     
     for fn in bw_files:
         operation = {}
@@ -132,6 +153,7 @@ def process_files(bw_files, offset, log_window=1.0, bs=10000):
         data = data[int(offset[0]//log_window):]
         x = [i for i, y in enumerate(data) if y != 0 ]
         data = filter(lambda x: not not x  , data)
+        x = map(lambda c: c * log_window, x)
         master[key] = (x, data)
    
     #print master['random_write']
@@ -374,7 +396,7 @@ class Tar:
             x = [interval*i for i in range(len(y))]
             ax.plot(x, y, label='current VDO IO requests in progress')
         
-            ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+            ax.legend(loc='center left')#, bbox_to_anchor=(1, 0.5))
             ax.set_title('queue utilisation')
             plt.savefig(self.destination + ID_cur + '_queue.png', bbox_inches='tight')
             plt.close()
@@ -390,8 +412,8 @@ class Tar:
                 x = [interval*i for i in range(len(y))]
                 ax.plot(x, y, label=key)
                 
-        #ax.legend(loc=2)
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        ax.legend(loc=2)
+        #ax.legend(loc='center left')#, bbox_to_anchor=(1, 0.5))
         ax.set_title('vdostats')
         plt.savefig(self.destination + ID_cur + '.png', bbox_inches='tight')
         plt.close()
@@ -570,7 +592,7 @@ class Tar:
 
         for key, (x,y) in operation.items():
 
-            x = map(lambda c: c * self.log_window, x)
+
 
 
             #prepare values
@@ -618,10 +640,10 @@ class Report:
     subprocess.call('mkdir '+self.destination,shell=True)
     self.tars = []
     for path in paths:
-        #try:
+        try:
             self.tars.append(Tar(path, self.destination, offset, log_window, smooth, chart_vdostats, lim_y))
-        #except:
-        #    print('Bad tar: ' + path)
+        except:
+            print('Bad tar: ' + path)
     if self.tars:
         self.compare = Compare(self.tars, self.destination, offset, log_window, test_label)
         self.report = self.make_report()
@@ -872,7 +894,7 @@ class Report:
         latex_code = """\\begin{tabular}{|l|l|l|l|l|l|l|}
         \hline
         \multicolumn{7}{|l|}{Throughput of """ + data[0].op + """ (MB/s)} \\\ \hline
-        test name & median & first quartile & third quartile & min & max & stdev \\\ \hline \n"""
+        test name & median & 1st q. & 3rd q. & min & max & stdev \\\ \hline \n"""
 
         for boxplot in data:
             latex_code += boxplot.name + ' & '

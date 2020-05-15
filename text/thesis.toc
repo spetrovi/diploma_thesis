@@ -61,9 +61,9 @@
 \contentsline {subsection}{\numberline {4.4.4}\rmfamily Boxplots}{28}{subsection.4.4.4}
 \contentsline {section}{\numberline {4.5}\slshape Testing hardware}{28}{section.4.5}
 \contentsline {chapter}{\numberline {5}\bfseries Performance of VDO}{31}{chapter.5}
-\contentsline {section}{\numberline {5.1}\slshape VDO threads}{31}{section.5.1}
-\contentsline {section}{\numberline {5.2}\slshape Half full VDO}{31}{section.5.2}
-\contentsline {section}{\numberline {5.3}\slshape Steady state testing}{32}{section.5.3}
+\contentsline {section}{\numberline {5.1}\slshape Half full VDO}{31}{section.5.1}
+\contentsline {section}{\numberline {5.2}\slshape Steady state testing}{31}{section.5.2}
+\contentsline {section}{\numberline {5.3}\slshape VDO threads}{32}{section.5.3}
 \contentsline {section}{\numberline {5.4}\slshape Block map cache}{32}{section.5.4}
 \contentsline {section}{\numberline {5.5}\slshape Maximum discard size}{36}{section.5.5}
 \contentsline {section}{\numberline {5.6}\slshape Write policies}{40}{section.5.6}
