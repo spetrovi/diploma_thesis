@@ -246,6 +246,9 @@ For better memory usage, UDS's Sparse Indexing feature was introduced to the uds
 
 
 \subsection{CPU}
+Some of the operations VDO needs to execute in order to effectively save space while remaining highly performing are CPU intensive. These operations such as computing hashes for deduplication or compressing blocks can overload a machine with low computing power
+
+VDO works as a multithreaded application, so it can balance load on multiple cores. Users should regularily check the usage of VDO threads. In case, any thread is using more than 50\% of its CPU, the thread count should be increased to balance the workload better.
 
 \section{Internal supporting structures}
 Working VDO instance contains supporting structures that handle the incomming events. Undrestanding their purpose as function is integral to proper performance tuning.
@@ -292,23 +295,23 @@ Physical space VDO is working with consists of Physical Block Numbers (PBNs).
 
 PBNs are divided into larger sections called slabs. Every slab is divided into zones. Physical zone threads are processing requests to physical zones in parallel.
 
-Physical zones threads are active only during write phase, because their purpose is to update reference count.
+Physical zones threads are active only during write phase, because their purpose is to update reference count. vdoPhysicalThreads is the option for seting physical threads.
 
 
 \subsubsection{I/O submission threads}
 I/O submission threads are submiting block I/O (bio) operations from VDO to the underlying physical deivce by passing requests from other VDO threads to the driver of the physical device. 
 
-The numver of I/O submission threads can be tuned using --vdoBioThreads command.
+The number of I/O submission threads can be tuned using vdoBioThreads option.
 
 \subsubsection{CPU and Hash zone threads}
 CPU threads and Hash zone threads in VDO help manage and balance intensive computing workload to multiple cores. The intensive operations such as computing hashes or compression are handled by these threads.
 
-The number of CPU and Hash zone threads can be tuned using --vdoCpuThreads and --vdoHashZoneThreads respectively.
+The number of CPU and Hash zone threads can be tuned using vdoCpuThreads and vdoHashZoneThreads options respectively.
 
 \subsubsection{I/O acknowledgement threads}
 This type of thread is managing acknowledgement operations to an application above VDO after I/O request completion.
 
-The number of ack threads can be tuned using --vdoAckThreads.
+The number of ack threads can be tuned using vdoAckThreads option.
 
 %\subsubsection{Journal thread}
 
@@ -336,7 +339,7 @@ In synchronous mode, VDO temporarily writes the block to the device and acknowle
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{graphics/diagrams/sync.png}
-\caption[Sync]{Sync diagram}
+\caption[Synchronous write mode]{This diagram shows a flowchart of asynchronous diagram processing}
 \label{fig:sync}
 \end{figure}
 
@@ -346,7 +349,7 @@ In asynchronous mode, instead of writing the data immediately, physical block is
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{graphics/diagrams/async.png}
-\caption[Async]{Async diagram}
+\caption[Asynchronous write mode]{This diagram shows a flowchart of asynchronous diagram processing}
 \label{fig:async}
 \end{figure}
 
@@ -475,7 +478,7 @@ To battle this effect, option to use direct IO was added. When passing os.O\_DIR
 
 Usage:
 \begin{itemize}
-    \item -D|--direct, if true, use os.O\_DIRECT flag when opening files. Data alignment of 4096 bytes will be used. (default False)
+    \item -D|--direct, if 1, use os.O\_DIRECT flag when opening files. Data alignment of 4096 bytes will be used. (default 0)
 \end{itemize}
 
 \section{Rawdevice}
@@ -496,7 +499,7 @@ In Linux, available command for block discard is $blkdiscard$. User can specify 
 
 The pilot idea was to call blkdiscard command using the subprocess module. However, discard operations are very fast and the speed of calling subprocess module has become a significant bottleneck.
 
-Howver, Python provides a framework to directly call ioctls directly from the Python code. First, the code for BLKDISCARD operation needs to be computed. Parameter for BLKDISCARD ioctl is an array of two u\_int64 numbers which represent the beginning offset and length to discard. This structure can be created by using Pythons module struct.
+Howver, Python provides a framework to execute ioctl calls directly from the Python code. First, the code for BLKDISCARD operation needs to be computed. Parameter for BLKDISCARD ioctl is an array of two u\_int64 numbers which represent the beginning offset and length to discard. This structure can be created by using Pythons module $struct$.
 
 
 
@@ -540,8 +543,7 @@ ioctl(fd, BLKDISCARD, args, 0)
 os.close(fd)
 \end{lstlisting}
 
-
-If the user of fs-drift wants to test discard speed, he can specify so in the configuration file along with a probability of the event. When the event of discard is triggered, fs-drift works similar as with random writes, but intead of producing buffer and writing data, it's using discards with random offset and specified block size to call BLKDISCARD.
+If the users of fs-drift wants to test discard speed, they can specify so in the configuration file along with a probability of the event. When the event of discard is triggered, fs-drift works similar as with random writes, but intead of producing buffer and writing data, it's using discards with random offset and specified block size to call BLKDISCARD.
 
 \section{Random map}
 When computing offset for random operations, it might not enough to just generate random number. Sometimes it is benefical to administer IOs only to unused blocks, ensuring no overwriting takes place and all the free blocks will eventually be used.
@@ -572,7 +574,7 @@ If multithreaded fs-drift is used for testing, user should limit the number of p
 \section{IOdepth}
 Fs-drift threads will submit their IO requests to the device or files in parallel. By default, this behavior is unmanaged and can result in overloading or starving the target.
 
-By using iodepth parameter, user can specify how many 4k IO units will be submitted at the same time. This behavior is implemented by managing two counters inside fs-drift. First counter will contain information about how many IOs are ready to be submitted. If this number is lower tham specified iodepth, threads will wait for others to prepare and raise the counter. Second counter contains information on how many IOs are in progress. If this number is higher or the same as the specified iodepth, threads will wait for the counter to be lowered.
+By using iodepth parameter, user can specify how many 4k IO units will be submitted at the same time. This behavior is implemented by managing a counter shared between threads. This counter contains information on how many IOs are in progress. If this number is higher or the same as the specified iodepth, threads will wait for the counter to be lowered. If a thread is in its preparation phase and the IO depth is full, it will compute larger buffer of random data, so the workload is more effective.
 
 
 \begin{itemize}
@@ -1042,8 +1044,20 @@ tail\_nvme & 19.08 & 13.32 & 29.67 & 8.27 & 149.68 & 21 \\ \hline
 
 \chapter{Conclusion}
 \label{conclusion}
+The purpose of this thesis was to lay foundation for performance testing of Virutal Data Optimiser driver. This goal was achieved by explaining principles of VDO space saving, VDO internal structures and tuning mechanisms and by providing workflow for performance testing as well as displaying many test results with reccommendations for correct VDO usage.
 
-\section{Future work}
+In this thesis, purpose of VDO driver was explained along with mechanisms of space saving and data reduction. Following the basic principles, system requierements and VDO internal structures were introduced with emphasis on their impact on performance.
+
+For the purposes of this thesis and future performance testing of VDO, many new features were added to a benchmark fs-drift, so that it can be used in a professional environment to test VDO and other block level layers thoroughly. These features significantly improve usability and possibilities of testing with fs-drift.
+
+Along with developing features for fs-drift, a testing package compliant with Red Hat Kernel Performance automised workflow was created to execute tests and gather results. The results from these tests were processed by data processing library developed for this purpose.
+
+In the testing part of this thesis, principles of VDO testing and tuning were explained and explored in practice. Each set of tests illustrates and clarifies the boundaries of VDO and shows ways of performance testing of different components of VDO or means to achieve better performance. 
+
+Results from the tests were processed into easily readable reports available in the electronic appendix. Subset of all generated graphs and tables was included in the main text to illustrate some of the points made.
+
+Some of the tests designed for this thesis will be used for automised CI and Compose testing workflow in Red hat Kernel Performance team. By conducting regular tests in a stable testing environment, performance of VDO can be under high quality supervision and possible issues can be found and removed effectively.
+
 
 
 

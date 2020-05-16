@@ -18,47 +18,53 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: thesis-blx.bib
 Database file #2: citations2.bib
+I was expecting a `,' or a `}'---line 17 of file citations2.bib
+ : 
+ : @misc{man:writemodes,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
 Biblatex version: 3.3
 Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
-You've used 4 entries,
+You've used 2 entries,
             6256 wiz_defined-function locations,
-            1201 strings with 9215 characters,
-and the built_in function-call counts, 10371 in all, are:
-= -- 536
-> -- 233
-< -- 72
-+ -- 174
-- -- 81
-* -- 558
-:= -- 890
+            1182 strings with 8834 characters,
+and the built_in function-call counts, 2621 in all, are:
+= -- 92
+> -- 52
+< -- 10
++ -- 38
+- -- 22
+* -- 67
+:= -- 297
 add.period$ -- 0
-call.type$ -- 4
-change.case$ -- 43
-chr.to.int$ -- 36
-cite$ -- 6
-duplicate$ -- 1121
-empty$ -- 1132
-format.name$ -- 91
-if$ -- 2287
+call.type$ -- 2
+change.case$ -- 2
+chr.to.int$ -- 30
+cite$ -- 2
+duplicate$ -- 213
+empty$ -- 330
+format.name$ -- 0
+if$ -- 609
 int.to.chr$ -- 0
-int.to.str$ -- 8
+int.to.str$ -- 1
 missing$ -- 0
-newline$ -- 83
-num.names$ -- 109
-pop$ -- 999
+newline$ -- 27
+num.names$ -- 0
+pop$ -- 362
 preamble$ -- 1
-purify$ -- 49
+purify$ -- 2
 quote$ -- 0
-skip$ -- 464
+skip$ -- 133
 stack$ -- 0
-substring$ -- 659
-swap$ -- 344
-text.length$ -- 61
+substring$ -- 116
+swap$ -- 61
+text.length$ -- 23
 text.prefix$ -- 0
 top$ -- 1
-type$ -- 124
+type$ -- 56
 warning$ -- 0
-while$ -- 125
+while$ -- 46
 width$ -- 0
-write$ -- 80
+write$ -- 26
+(There was 1 error message)
