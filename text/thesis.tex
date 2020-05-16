@@ -638,11 +638,11 @@ This technique will be by default used prior to all further tests, unless explic
 \begin{figure}[!h]
         \centering
         \includegraphics[width=\textwidth]{../results/empty_VDO/HDD/tar_467_bw}
-\caption[EmptyVDO]{EmptyVDO}
+\caption[Performance of unallocated VDO storage]{Performance of allocated VDO storage in time. After all mapping space is allocated, the performance stabilises.}
 \label{fig:emptyVDO}
         \centering
         \includegraphics[width=\textwidth]{../results/empty_VDO/HDD/tar_224_bw}
-\caption[preallVDO]{PreallocatedVDO}
+\caption[Performance of allocated VDO storage]{Performance of empty, but previously allocated VDO storage. Measurements are stable through the whole test.}
 \label{fig:preallocatedVDO}
 \end{figure}
 
@@ -769,11 +769,11 @@ On Figure and Figure, results from such test can be examined. Physical space for
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/half/start}
-\caption[Access pattern]{Access pattern of VDO to the underlying device while VDO is empty. VDO is serialising incomming workload.}
+\caption[Access pattern of VDO with enough free space]{Access pattern of VDO to the underlying device while VDO is empty. VDO is successfully serialising incomming workload.}
 \label{fig:half-start}
         \centering
         \includegraphics[width=\textwidth]{../results/half/end}
-\caption[Access pattern]{Access pattern of VDO to the underlying device while VDO is almost full. VDO can't serialise incomming workload anymore.}
+\caption[Access pattern of VDO running out of free space]{Access pattern of VDO to the underlying device while VDO is almost full. VDO can't serialise incomming workload anymore.}
 \label{fig:half-end}
 \end{figure}
 
@@ -831,7 +831,7 @@ By examining the exact values in Table~\ref{tab:tuning}, we can see that the cor
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/threads/direct/low_res/random_write1_compare_boxplots}
-\caption[Tuning VDO threads]{Testing of VDO volume created with increasing numbers of VDO threads}
+\caption[Tuning performance by increasing number of VDO threads]{Testing of VDO volume created with increasing numbers of VDO threads}
 \label{fig:threads-all}
 \end{figure}
 
@@ -847,7 +847,7 @@ default & 166.24 & 116.82 & 229.1 & 6.99 & 953.87 & 89 \\ \hline
 4.tar.x & 256.41 & 189.02 & 306.05 & 4.12 & 1664.54 & 141 \\ \hline
 5.tar.x & 267.29 & 163.87 & 321.38 & 4.89 & 1400.84 & 153 \\ \hline
 \end{tabular}
-\caption[Tuning VDO threads]{Results of performance tests of multiple tests with increasing number of load balancing VDO threads}
+\caption[Tuning performance by increasing number of VDO threads]{Results of performance tests of multiple tests with increasing number of load balancing VDO threads}
 \label{tab:tuning}
 \end{table}
 
@@ -922,11 +922,11 @@ While processing the data, the interesting statistic to look for from vdostats i
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/discards/full_VDO/report/tar_184_vdostats}
-\caption[Discards]{Inspecting VDO stats}
+\caption[Evolution of VDO stats during random discard workload]{Evolution of VDO stats during random discard workload}
 \label{fig:discard-full-vdostats}
         \centering
         \includegraphics[width=\textwidth]{../results/discards/full_VDO/report/tar_184_bw.png}
-\caption[Discards]{Inspecting throughput}
+\caption[Evolution of throughput during random discard workload]{Evolution of throughput during random discard workload}
 \label{fig:discard-full-througput}
 \end{figure}
 
@@ -940,14 +940,14 @@ It is aparent, the results from empty, but previously allocated VDO show the sam
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/discards/full_VDO/report/random_discard1_compare_boxplots}
-\caption[Discards]{Testing of VDO volume created with various maxDiscardSize parameters. Prior to the test, the device was filled with random write workload}
+\caption[Testing of VDO volume created with variable maximum discard size]{Testing of VDO volume created with variable maximum discard size. Prior to the test, the device was filled with random write workload}
 \label{fig:discard-full}
         \centering
 %        \includegraphics[width=\textwidth]{../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots}
 %\caption[Discards]{Testing of VDO volume created with various maxDiscardSize parameters. This test was conducted on a fresh unallocated instance of VDO}
 %\label{fig:discard-unalloc}
         \includegraphics[width=\textwidth]{../results/discards/empty_VDO/report/random_discard1_compare_boxplots}
-\caption[Discards]{Testing of VDO volume created with various maxDiscardSize parameters. This test was conducted on a preallocated VDO without any data written}
+\caption[Testing of VDO volume created with variable maximum discard size on an empty VDO]{Testing of VDO volume created with variable maximum discard size on an empty VDO. The volume has been preallocated, but no additional data was written.}
 \label{fig:discard-empty}
 \end{figure}
 
@@ -992,7 +992,7 @@ It is aparent that the synchronuous policy will be the slowest, since for every 
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/write_policies/report/random_write1_compare_boxplots}
-\caption[write policies]{Testing of VDO volume created with various write policies}
+\caption[Performance of various write policies]{Testing of VDO volume created with various write policies. Synchronous, asynchronous and ACID non-compliant asnychronous-unsafe policy.}
 \label{fig:writepolicies}
 \end{figure}
 
@@ -1005,7 +1005,7 @@ sync & 138.06 & 117.13 & 168.84 & 57.61 & 381.13 & 44 \\ \hline
 async-unsafe & 212.87 & 177.17 & 258.17 & 99.24 & 510.32 & 66 \\ \hline
 async & 207.14 & 172.57 & 253.68 & 92.76 & 539.94 & 69 \\ \hline
 \end{tabular}
-\caption{Write policies}
+\caption[Performance of various write policies]{Testing of VDO volume created with various write policies. Synchronous, asynchronous and ACID non-compliant asnychronous-unsafe policy.}
 \label{tab:writepolicies}
 \end{table}
 
@@ -1057,18 +1057,18 @@ caption={sdad},
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/journal/seeks/snaps/ssd_testlv}
-\caption[Journal]{Block tracing of the whole physical space under VDO using seekwatcher}
+\caption[Access pattern of VDO to data blocks on an underlying device]{Access pattern of VDO to data blocks on an underlying device.}
 \label{fig:journal-LV}
         \centering
         \includegraphics[width=\textwidth]{../results/journal/seeks/snaps/ssd}
-\caption[Journal]{Block tracing of the SSD alone using seekwatcher}
+\caption[Access pattern of VDO to the recovery journal.]{Access pattern of VDO to the recovery journal placed on additional fast storage.}
 \label{fig:journal-SSD}
 \end{figure}
 
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/journal/report/random_write1_compare_boxplots}
-\caption[Journal]{Throughput}
+\caption[Performance of VDO with ending regions placed on different devices.]{Performance of VDO with ending regions placed on different devices. In the first test, the recovery journal is together with data blocks on an HDD. In the second and third test, the journal is forced on SSD and NVMe device respectively.}
 \label{fig:journal-all}
 \end{figure}
 
@@ -1081,10 +1081,8 @@ caption={sdad},
 vdo\_hdd\_baseline & 1.28 & 0.97 & 1.87 & 0.85 & 4.73 & 0 \\ \hline
 tail\_ssd & 16.93 & 12.27 & 25.38 & 7.29 & 152.26 & 28 \\ \hline
 tail\_nvme & 19.08 & 13.32 & 29.67 & 8.27 & 149.68 & 21 \\ \hline
-
 \end{tabular}
-
-\caption{Placing the journal on various storage}
+\caption[Performance of VDO with ending regions placed on different devices.]{Performance of VDO with ending regions placed on different devices. In the first test, the recovery journal is together with data blocks on an HDD. In the second and third test, the journal is forced on SSD and NVMe device respectively.}
 \label{tab:journal}
 \end{table}
 %\section{Aging testing}
@@ -1394,7 +1392,7 @@ In the Chapter~\ref{testing}, peculiar behavior discard operation of unallocated
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots}
-\caption[Discards on unnalocated VDO]{This test was conducted on a fresh unallocated instance of VDO}
+\caption[Performance of discard operation on an unnallocated VDO volume.]{This test was conducted on a fresh, unallocated instance of VDO volume. The performance appears to be high because of attempts are being made to discard blocks that are not in the mapping tree.}
 \label{fig:discard-unalloc}
 \end{figure}
 

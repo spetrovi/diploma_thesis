@@ -9,23 +9,23 @@
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Asynchronous write mode}}{14}{figure.2.4}
 \addvspace {4\p@ }
 \addvspace {4\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces EmptyVDO}}{25}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces preallVDO}}{25}{figure.4.2}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Performance of unallocated VDO storage}}{25}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Performance of allocated VDO storage}}{25}{figure.4.2}
 \addvspace {4\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Access pattern}}{35}{figure.5.1}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Access pattern}}{35}{figure.5.2}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Access pattern of VDO with enough free space}}{35}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Access pattern of VDO running out of free space}}{35}{figure.5.2}
 \contentsline {figure}{\numberline {5.3}{\ignorespaces VDO threads load on default setting}}{37}{figure.5.3}
 \contentsline {figure}{\numberline {5.4}{\ignorespaces VDO threads load after tuning}}{37}{figure.5.4}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Tuning VDO threads}}{38}{figure.5.5}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Tuning performance by increasing number of VDO threads}}{38}{figure.5.5}
 \contentsline {figure}{\numberline {5.6}{\ignorespaces Block map cache size testing}}{40}{figure.5.6}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Discards}}{43}{figure.5.7}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Discards}}{43}{figure.5.8}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Discards}}{44}{figure.5.9}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Discards}}{44}{figure.5.10}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces write policies}}{46}{figure.5.11}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Journal}}{49}{figure.5.12}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Journal}}{49}{figure.5.13}
-\contentsline {figure}{\numberline {5.14}{\ignorespaces Journal}}{50}{figure.5.14}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Evolution of VDO stats during random discard workload}}{43}{figure.5.7}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Evolution of throughput during random discard workload}}{43}{figure.5.8}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Testing of VDO volume created with variable maximum discard size}}{44}{figure.5.9}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Testing of VDO volume created with variable maximum discard size on an empty VDO}}{44}{figure.5.10}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Performance of various write policies}}{46}{figure.5.11}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Access pattern of VDO to data blocks on an underlying device}}{49}{figure.5.12}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Access pattern of VDO to the recovery journal.}}{49}{figure.5.13}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Performance of VDO with ending regions placed on different devices.}}{50}{figure.5.14}
 \addvspace {4\p@ }
 \addvspace {4\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Discards on unnalocated VDO}}{56}{figure.7.1}
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Performance of discard operation on an unnallocated VDO volume.}}{57}{figure.7.1}

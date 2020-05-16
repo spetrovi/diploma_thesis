@@ -71,4 +71,4 @@
 \contentsline {subsection}{\numberline {7.1.2}\rmfamily Machine\tmspace +\thinmuskip {.1667em}2}{53}{subsection.7.1.2}
 \contentsline {section}{\numberline {7.2}\slshape Additional results}{56}{section.7.2}
 \contentsline {subsection}{\numberline {7.2.1}\rmfamily Discard performance of unallocated VDO}{56}{subsection.7.2.1}
-\contentsline {chapter}{Bibliography}{57}{chapter*.16}
+\contentsline {chapter}{Bibliography}{59}{chapter*.16}
