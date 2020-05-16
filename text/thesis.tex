@@ -366,7 +366,7 @@ The block map is a cause of one of the requirements on physical space. It usuall
 
 The 128MB can cover about 100GB of logical blocks. However if VDO logical space is larger than 100GB and the workload is so random that the requests doesn't hit cached pages, user can observe great preformance hit. In case the block map cache is full, therefore runs out of free pages and a request comes for a page thats not contained in the cache, VDO needs to first discard some page from the cache, write it on disk and just after then load the desired page. It is obvious that this cycle is very time expensive and therefore users are encouraged to increase block map cache size if the precoditions for cache tiering are met.
 
-\subsection{Discard size}
+
 
 
 %\subsection{VDO in Storage Stack}
@@ -499,8 +499,9 @@ In Linux, available command for block discard is $blkdiscard$. User can specify 
 
 The pilot idea was to call blkdiscard command using the subprocess module. However, discard operations are very fast and the speed of calling subprocess module has become a significant bottleneck.
 
-Howver, Python provides a framework to execute ioctl calls directly from the Python code. First, the code for BLKDISCARD operation needs to be computed. Parameter for BLKDISCARD ioctl is an array of two u\_int64 numbers which represent the beginning offset and length to discard. This structure can be created by using Pythons module $struct$.
+Howver, Python provides a framework to execute ioctl calls directly from the Python code. First, the code for BLKDISCARD operation needs to be computed. Parameter for BLKDISCARD ioctl is an array of two u\_int64 numbers which represent the beginning offset and length to discard. This structure can be created by using Pythons module $struct$. Example~\ref{ex:blkdiscard} shows exactly how to issue block discard ioctl.
 
+If the users of fs-drift wants to test discard speed, they can specify so in the configuration file along with a probability of the event. When the event of discard is triggered, fs-drift works similar as with random writes, but intead of producing buffer and writing data, it's using discards with random offset and specified block size to call BLKDISCARD.
 
 
 \lstset{language=Python, 
@@ -520,7 +521,7 @@ caption={sdad},
 }
 
 
-\begin{lstlisting}[language=Python, caption={Using BLKDISCARD ioctl to discard first 4096 bytes from the beginning of the device},label={ex:blkdiscard}][frame=single]
+\begin{lstlisting}[language=Python, caption={Using BLKDISCARD ioctl to discard first 4096 bytes of a device /dev/sde},label={ex:blkdiscard}][frame=single]
 import os
 import struct
 from fnctl import ioctl
@@ -543,7 +544,6 @@ ioctl(fd, BLKDISCARD, args, 0)
 os.close(fd)
 \end{lstlisting}
 
-If the users of fs-drift wants to test discard speed, they can specify so in the configuration file along with a probability of the event. When the event of discard is triggered, fs-drift works similar as with random writes, but intead of producing buffer and writing data, it's using discards with random offset and specified block size to call BLKDISCARD.
 
 \section{Random map}
 When computing offset for random operations, it might not enough to just generate random number. Sometimes it is benefical to administer IOs only to unused blocks, ensuring no overwriting takes place and all the free blocks will eventually be used.
@@ -796,9 +796,47 @@ Setting the correct number of VDO threads is the main method for users to increa
 
 To show the effect of VDO threads tuning, we'll design a workload that could exercise VDO in a way it will benefit from thread count increase. The designed workload will mimic high-trafic, multithreaded usage. We'll use high thread count, large block size, random write workload without randommap, so the data can be randomly overwritten. To generate more traffic, occassional large discard will be triggered so the physical space becomes more fragmented.
 
+With this demanding workload, we can test various VDO volumes with various thread count. 
 
 
 
+
+
+\begin{figure}[!htb]
+\begin{minipage}{.5\textwidth}
+        \includegraphics[width=\linewidth]{../results/threads/direct/low_res/tar_753_threads.png}
+\caption[VDO threads load on default setting]{Thread load on default setting}
+\label{fig:CPUdefault}
+\end{minipage}
+\begin{minipage}{.5\textwidth}
+        \includegraphics[width=\linewidth]{../results/threads/direct/low_res/tar_132_threads.png}
+\caption[VDO threads load after tuning]{Thread load after increasing number of threads}
+\label{fig:CPUtuing}
+
+\end{minipage}
+\end{figure}
+
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{../results/threads/direct/low_res/random_write1_compare_boxplots}
+\caption[Tuning VDO threads]{Testing of VDO volume created with increasing numbers of VDO threads}
+\label{fig:threads-all}
+\end{figure}
+
+\begin{table}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+        \hline
+        \multicolumn{7}{|l|}{Throughput of random write (MB/s)} \\ \hline
+        & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
+default & 166.24 & 116.82 & 229.1 & 6.99 & 953.87 & 89 \\ \hline
+1.tar.x & 149.48 & 107.79 & 221.91 & 9.08 & 1130.06 & 94 \\ \hline
+2.tar.x & 239.78 & 164.48 & 281.05 & 6.48 & 1241.21 & 125 \\ \hline
+3.tar.x & 247.74 & 181.42 & 287.65 & 11.74 & 1366.39 & 125 \\ \hline
+4.tar.x & 256.41 & 189.02 & 306.05 & 4.12 & 1664.54 & 141 \\ \hline
+5.tar.x & 267.29 & 163.87 & 321.38 & 4.89 & 1400.84 & 153 \\ \hline
+\end{tabular}
+\end{table}
+\clearpage
 \section{Block map cache}
 %As mentioned in Chapter~\ref{vdo}, block map cache is an internal VDO structure that keeps part of the journal in memory to provide better performance. Its default size is 
 
