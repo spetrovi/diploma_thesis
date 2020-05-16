@@ -271,11 +271,11 @@ class Compare:
                 
                 self.tables[ID].append(Boxplot(op, x, name))
             #ax.set_yscale('log')
-            #ax.set_ylim(bottom=0, top=60)
+            ax.set_ylim(bottom=0, top=400)
             ax.boxplot(vectors, positions)
             ax.set_xticklabels(ticks)                
             plt.savefig(self.destination + ID, bbox_inches='tight')
-    
+            
             plt.close()
             self.png_boxplots.append(ID)
 
@@ -291,7 +291,7 @@ class Tar:
         self.tar_name = tar.split('/')[-1:][0][:-7]
         self.properties = read_file(self.tar[:-7]+'.properties')
         self.fsystem = get_value(self.properties,'filesystem')
-        self.host = get_value(self.properties,'hostname').split('.')[0]
+        #self.host = get_value(self.properties,'hostname').split('.')[0]
         self.image_ID = ''
         self.offset = offset#in seconds
         self.table = []
@@ -300,7 +300,7 @@ class Tar:
         self.vdoconfig = ['']
         self.chart_vdostas = chart_vdostats
         self.lim_y = lim_y
-        self.name = tar.split('/')[-1].split('-')[-1].rstrip('.tar.xz')
+        self.name = tar.split('/')[-1].split('-')[-1][:-7]
         self.process()
 
 
@@ -453,6 +453,7 @@ class Tar:
         ax.grid()
       	#fig.set_size_inches(4, 3)
         for key, y in values.items():
+                if key == 'journal' or key == 'packer': continue
                 x = [interval*i for i in range(len(y))]
                 ax.plot(x, y, label=key)
 
@@ -485,8 +486,9 @@ class Tar:
 
         #ax.legend(loc=2)
         ax.set_ylim(bottom=0, top=100)
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        #ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         ax.set_title('CPU usage of VDO threads')
+        fig.set_size_inches(4, 3)
         plt.savefig(self.destination+ID_cur, bbox_inches='tight')
         plt.close()
         return ID_cur
@@ -641,10 +643,10 @@ class Report:
     subprocess.call('mkdir '+self.destination,shell=True)
     self.tars = []
     for path in paths:
-        try:
+        #try:
             self.tars.append(Tar(path, self.destination, offset, log_window, smooth, chart_vdostats, lim_y))
-        except:
-            print('Bad tar: ' + path)
+        #except:
+        #    print('Bad tar: ' + path)
     if self.tars:
         self.compare = Compare(self.tars, self.destination, offset, log_window, test_label)
         self.report = self.make_report()
@@ -810,26 +812,26 @@ class Report:
     for tar in self.tars:
         	tr.td.img(src=tar.vdo_plot, align='left')
 
-#    tr = table.tr
-#    for tar in self.tars:
-#        	tr.td.img(src=tar.vdo_plot[:-4]+'_queue.png', align='left')
+    tr = table.tr
+    for tar in self.tars:
+        	tr.td.img(src=tar.vdo_plot[:-4]+'_queue.png', align='left')
 
     
-#    try:
-#        tr = table.tr
-#        td = tr.td
+    try:
+        tr = table.tr
+        td = tr.td
 
-#        for tar in self.tars:
-#            for l in tar.thread_analysis.split('\n'):
-#                td.li(l)
-#            td = tr.td
+        for tar in self.tars:
+            for l in tar.thread_analysis.split('\n'):
+                td.li(l)
+            td = tr.td
 
 
-#        tr = table.tr
-#        for tar in self.tars:
-#           	tr.td.img(src=tar.threads_plot, align='left')
-#    except:
-#        pass
+        tr = table.tr
+        for tar in self.tars:
+           	tr.td.img(src=tar.threads_plot, align='left')
+    except:
+        pass
 
     tr = table.tr
     for tar in self.tars:
