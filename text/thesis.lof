@@ -14,18 +14,18 @@
 \addvspace {4\p@ }
 \contentsline {figure}{\numberline {5.1}{\ignorespaces Access pattern}}{35}{figure.5.1}
 \contentsline {figure}{\numberline {5.2}{\ignorespaces Access pattern}}{35}{figure.5.2}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces VDO threads load on default setting}}{36}{figure.5.3}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces VDO threads load after tuning}}{36}{figure.5.4}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Tuning VDO threads}}{37}{figure.5.5}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Block map cache size testing}}{39}{figure.5.6}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Discards}}{42}{figure.5.7}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Discards}}{42}{figure.5.8}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Discards}}{43}{figure.5.9}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Discards}}{43}{figure.5.10}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces write policies}}{45}{figure.5.11}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Journal}}{48}{figure.5.12}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Journal}}{48}{figure.5.13}
-\contentsline {figure}{\numberline {5.14}{\ignorespaces Journal}}{49}{figure.5.14}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces VDO threads load on default setting}}{37}{figure.5.3}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces VDO threads load after tuning}}{37}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Tuning VDO threads}}{38}{figure.5.5}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Block map cache size testing}}{40}{figure.5.6}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Discards}}{43}{figure.5.7}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Discards}}{43}{figure.5.8}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Discards}}{44}{figure.5.9}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Discards}}{44}{figure.5.10}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces write policies}}{46}{figure.5.11}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Journal}}{49}{figure.5.12}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Journal}}{49}{figure.5.13}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Journal}}{50}{figure.5.14}
 \addvspace {4\p@ }
 \addvspace {4\p@ }
 \contentsline {figure}{\numberline {7.1}{\ignorespaces Discards on unnalocated VDO}}{56}{figure.7.1}

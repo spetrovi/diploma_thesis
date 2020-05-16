@@ -60,10 +60,10 @@
 \contentsline {section}{\numberline {5.1}\slshape VDO aging}{33}{section.5.1}
 \contentsline {section}{\numberline {5.2}\slshape Steady state testing}{33}{section.5.2}
 \contentsline {section}{\numberline {5.3}\slshape VDO threads}{36}{section.5.3}
-\contentsline {section}{\numberline {5.4}\slshape Block map cache}{38}{section.5.4}
+\contentsline {section}{\numberline {5.4}\slshape Block map cache}{37}{section.5.4}
 \contentsline {section}{\numberline {5.5}\slshape Maximum discard size}{39}{section.5.5}
-\contentsline {section}{\numberline {5.6}\slshape Write policies}{44}{section.5.6}
-\contentsline {section}{\numberline {5.7}\slshape Journal performance}{45}{section.5.7}
+\contentsline {section}{\numberline {5.6}\slshape Write policies}{45}{section.5.6}
+\contentsline {section}{\numberline {5.7}\slshape Journal performance}{46}{section.5.7}
 \contentsline {chapter}{\numberline {6}\bfseries Conclusion}{51}{chapter.6}
 \contentsline {chapter}{\numberline {7}\bfseries Appendix}{53}{chapter.7}
 \contentsline {section}{\numberline {7.1}\slshape Testing hardware}{53}{section.7.1}

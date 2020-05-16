@@ -796,22 +796,34 @@ Setting the correct number of VDO threads is the main method for users to increa
 
 To show the effect of VDO threads tuning, we'll design a workload that could exercise VDO in a way it will benefit from thread count increase. The designed workload will mimic high-trafic, multithreaded usage. We'll use high thread count, large block size, random write workload without randommap, so the data can be randomly overwritten. To generate more traffic, occassional large discard will be triggered so the physical space becomes more fragmented.
 
-With this demanding workload, we can test various VDO volumes with various thread count. 
+We can see results from VDO threads testing below. The tests were conducted on Machine~\ref{hw:2} with VDO installed on an SSD. Each test, number of threads was increased to show the optimal performance. The conducted tests were:
 
+The prewriting should fullfill these conditions:
+\begin{itemize}
+    \item default: Logical: 1, Physical: 1, CPU: 2, Hash: 1, Ack: 1, Bio: 4
+    \item 1: Logical: 1, Physical: 1, CPU: 1, Hash: 1, Ack: 1, Bio: 1
+    \item 2: Logical: 2, Physical: 2, CPU: 2, Hash: 2, Ack: 2, Bio: 4
+    \item 3: Logical: 4, Physical: 3, CPU: 3, Hash: 3, Ack: 4, Bio: 6
+    \item 4: Logical: 6, Physical: 3, CPU: 4, Hash: 3, Ack: 6, Bio: 8
+    \item 5: Logical: 8, Physical: 6, CPU: 6, Hash: 3, Ack: 6, Bio: 8
+\end{itemize}
 
+On Figure~\ref{fig:CPUdefault} it is apparent that the thread count is insufficient. Not only does the one Logical thread use up to 80\% of CPU, usage of some other threads is nearing 40\%. This is mainly Physical threads and CPU and Hash threads (The complete results can be found in electronic appendix).
 
+Figure~\ref{fig:CPUtuning} it is observable the CPU usage of individual threads was lowered after increasing the threads number. We can examine the performance impact in Figure~\ref{fig:threads-all}.
 
+By examining the exact values in Table~\ref{tab:tuning}, we can see that the correct thread tuning improved throughput by approximately $\SI{100}{MBps}$.
 
 \begin{figure}[!htb]
 \begin{minipage}{.5\textwidth}
         \includegraphics[width=\linewidth]{../results/threads/direct/low_res/tar_753_threads.png}
-\caption[VDO threads load on default setting]{Thread load on default setting}
+\caption[VDO threads load on default setting]{Thread load before increasing number of threads (Test: default)}
 \label{fig:CPUdefault}
 \end{minipage}
 \begin{minipage}{.5\textwidth}
         \includegraphics[width=\linewidth]{../results/threads/direct/low_res/tar_132_threads.png}
-\caption[VDO threads load after tuning]{Thread load after increasing number of threads}
-\label{fig:CPUtuing}
+\caption[VDO threads load after tuning]{Thread load after increasing number of threads (Test: 5)}
+\label{fig:CPUtuning}
 
 \end{minipage}
 \end{figure}
@@ -835,8 +847,10 @@ default & 166.24 & 116.82 & 229.1 & 6.99 & 953.87 & 89 \\ \hline
 4.tar.x & 256.41 & 189.02 & 306.05 & 4.12 & 1664.54 & 141 \\ \hline
 5.tar.x & 267.29 & 163.87 & 321.38 & 4.89 & 1400.84 & 153 \\ \hline
 \end{tabular}
+\caption[Tuning VDO threads]{Results of performance tests of multiple tests with increasing number of load balancing VDO threads}
+\label{tab:tuning}
 \end{table}
-\clearpage
+
 \section{Block map cache}
 %As mentioned in Chapter~\ref{vdo}, block map cache is an internal VDO structure that keeps part of the journal in memory to provide better performance. Its default size is 
 
