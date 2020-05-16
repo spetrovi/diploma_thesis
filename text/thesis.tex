@@ -135,36 +135,35 @@ THX
 % Why do people care about storage utilization?
 Storage devices are becoming cheaper, but the storage requirements of the modern IT industry are growing faster -- even exponentially. Innovation in storage utilization has compelling cost reduction potential, but many data reduction solutions are proprietary to a single company.
 
-Linux, however, provides a framework for storage administration called the \emph{Logical Volume Manager} (LVM), providing users with an easy means of managing storage.  By using LVM to utilize storage optimization drivers available in the Linux kernel, administrators can reduce their storage costs without buying into a proprietary, difficult-to-use solution.
+Linux, however, provides a framework for storage administration called \emph{Logical Volume Manager} (LVM), providing users with easy means of managing storage. By using LVM in order to utilize storage optimization drivers available in the Linux Kernel, administrators can reduce their storage costs without having to use a proprietary, difficult-to-use solution.
 
 % Why do people care about LVM?
-The Linux kernel provides several storage optimization drivers, each of which does one thing well. Using LVM, these can be composed into a complex solution tailored to one's individual workload, combining them into a \emph{storage stack}.
+The Linux Kernel provides several storage optimization drivers. Using LVM, these can be composed into a complex solution tailored to one's individual workload, combining them into a \emph{storage stack}.
 
-For instance, \emph{thin provisioning} allows creating a virtual device much larger than the existing physical storage, reducing costs by delaying storage purchases until additional storage is actually needed for new data. Other layers include encryption, software RAID, caching, and backup/snapshot solutions.
+For instance, \emph{thin provisioning} allows creating a virtual device larger than existing physical storage, reducing costs by delaying storage purchases until additional storage is actually needed for new data. Other layers include encryption, software RAID, caching, or backup/snapshot solutions.
 
 % Why do people care about VDO?
-One of the most exciting new projects in the storage optimization area is the \emph{Virtual Data Optimizer} (VDO) driver. This layer uses deduplication (eliminating multiple copies of the same data) and compression (storing data in less space, if possible) to reduce the amount of storage required -- together, these techniques are called \emph{data reduction}. While it provides thin provisioning like thin-pool driver, deduplication and compression mean VDO can actually hold more data (if data reduction is successful) than the storage devices can hold.
+One of the most exciting new projects in the storage optimization area is the \emph{Virtual Data Optimizer} (VDO) driver. This layer uses deduplication (eliminating multiple copies of the same data) and compression (storing data in less space, if possible) to reduce the amount of storage required. Together, these techniques are called \emph{data reduction}. While this driver provides thin provisioning like a thin-pool driver, using deduplication and compression means VDO can actually hold more data (if the data reduction is successful) than the storage devices.
 
 % What are the downsides?
-Adding a data reduction solution to the storage stack is compelling since the cost of adding a new driver to a storage stack is much lower than the cost of purchasing more physical storage. However, it does come with a cost in other resources such as memory or CPU, as performing deduplication or compression requires data processing that would otherwise not be needed.
+Adding a data reduction solution to the storage stack is interesting since the cost of adding a new driver to a storage stack is much lower than the cost of purchasing of more physical storage. However, it does come with a cost of other resources such as memory or CPU, as performing deduplication or compression requires data processing that would otherwise not be needed.
 
-Previous data reduction solutions have not seen wide adoption due to the high costs relative to the storage savings, so VDO is carefully architected to reduce costs and provide tunables to optimize for specific workloads.
+Previous data reduction solutions have not seen wide adoption due to high costs relative to the storage savings, so VDO is carefully architected to reduce the costs and provide tunables in order to optimise for specific workloads.
 
 % How to tune it.
-Because poor VDO tuning can eliminate the potential cost savings, performance testing is a crucial element for both VDO developers and
-the administrators of storage stacks using VDO. VDO users and VDO developers all need to ensure the resultant performance is maximized.
+Poor VDO tuning can eliminate the potential cost savings. Therefore a performance testing is a crucial element for both VDO developers and administrators of storage stacks using VDO. VDO users and VDO developers all need to ensure that the resulting performance is maximised.
 
-However, performance testing of such complex technology requires extended knowledge of VDO's internal structures and expertise in benchmarking.
+However, performance testing of such a complex technology requires extended knowledge of VDO's internal structures and expertise in benchmarking.
 
-This thesis aims to lay a foundation for fast, efficient performance tuning of VDO: describing its workings, performance related structures and issues, and describing ways of benchmarking VDO and the effects of the most important tunables.
+This thesis aims to lay a foundation for fast, efficient performance tuning of VDO: describing its workings, performance related structures and issues, and describing ways of benchmarking of VDO and the effects of the most important tunables.
 
-Chapter~\ref{VDO} is an introduction of VDO technology, providing an in depth explanation of its terminology, device organisation, system requirements, administration, and relation to other layers in a storage stack.
+Chapter~\ref{VDO} is an introduction of VDO technology, providing an in-depth explanation of its terminology, device organisation, system requirements, and relation to other layers in a storage stack.
 
-Chapter~\ref{fs-drift} presents a benchmarking tool \fsdrift. Several new features were implemented in \fsdrift in order to better test VDO, as described here.
+Chapter~\ref{fs-drift} presents a benchmarking tool \fsdrift. Several new features were implemented in \fsdrift in order to test VDO more efficiently.
 
-Chapter~\ref{testing} is focused on performance testing of VDO, both on different VDO components and on more complex deployment cases. Results demonstrate maximizing VDO performance in different storage stacks, providing an example of testing and potential benefits from tuning VDO to a user's own hardware and workload.
+Chapter~\ref{testing} is focused on a performance testing of VDO, including testing of different VDO components as well as more complex deployment cases. Results demonstrate maximizing VDO performance in different storage stacks, providing an example of testing and potential benefits from tuning VDO to a user's own hardware and workload.
 
-In Chapter~\ref{conclusion}, high-level insight on performance testing of VDO is given with recommendation for further work.
+In Chapter~\ref{conclusion}, high-level insight into performance testing of VDO is given with recommendation for further work.
 
 \chapter{Virtual Data Optimiser}
 \label{VDO}
@@ -816,12 +815,12 @@ By examining the exact values in Table~\ref{tab:tuning}, we can see that the cor
 
 \begin{figure}[!htb]
 \begin{minipage}{.5\textwidth}
-        \includegraphics[width=\linewidth]{../results/threads/direct/low_res/tar_753_threads.png}
+        \includegraphics[width=\linewidth]{../results/threads/direct/low_res/tar_695_threads.png}
 \caption[VDO threads load on default setting]{Thread load before increasing number of threads (Test: default)}
 \label{fig:CPUdefault}
 \end{minipage}
 \begin{minipage}{.5\textwidth}
-        \includegraphics[width=\linewidth]{../results/threads/direct/low_res/tar_132_threads.png}
+        \includegraphics[width=\linewidth]{../results/threads/direct/low_res/tar_770_threads.png}
 \caption[VDO threads load after tuning]{Thread load after increasing number of threads (Test: 5)}
 \label{fig:CPUtuning}
 
@@ -841,11 +840,11 @@ By examining the exact values in Table~\ref{tab:tuning}, we can see that the cor
         \multicolumn{7}{|l|}{Throughput of random write (MB/s)} \\ \hline
         & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
 default & 166.24 & 116.82 & 229.1 & 6.99 & 953.87 & 89 \\ \hline
-1.tar.x & 149.48 & 107.79 & 221.91 & 9.08 & 1130.06 & 94 \\ \hline
-2.tar.x & 239.78 & 164.48 & 281.05 & 6.48 & 1241.21 & 125 \\ \hline
-3.tar.x & 247.74 & 181.42 & 287.65 & 11.74 & 1366.39 & 125 \\ \hline
-4.tar.x & 256.41 & 189.02 & 306.05 & 4.12 & 1664.54 & 141 \\ \hline
-5.tar.x & 267.29 & 163.87 & 321.38 & 4.89 & 1400.84 & 153 \\ \hline
+1 & 149.48 & 107.79 & 221.91 & 9.08 & 1130.06 & 94 \\ \hline
+2 & 239.78 & 164.48 & 281.05 & 6.48 & 1241.21 & 125 \\ \hline
+3 & 247.74 & 181.42 & 287.65 & 11.74 & 1366.39 & 125 \\ \hline
+4 & 256.41 & 189.02 & 306.05 & 4.12 & 1664.54 & 141 \\ \hline
+5 & 267.29 & 163.87 & 321.38 & 4.89 & 1400.84 & 153 \\ \hline
 \end{tabular}
 \caption[Tuning performance by increasing number of VDO threads]{Results of performance tests of multiple tests with increasing number of load balancing VDO threads}
 \label{tab:tuning}
@@ -1076,7 +1075,7 @@ caption={sdad},
 \centering
 \begin{tabular}{|l|l|l|l|l|l|l|}
         \hline
-        \multicolumn{7}{|l|}{Throughput of random\_write (MB/s)} \\ \hline
+        \multicolumn{7}{|l|}{Throughput of random write (MB/s)} \\ \hline
         test name & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
 vdo\_hdd\_baseline & 1.28 & 0.97 & 1.87 & 0.85 & 4.73 & 0 \\ \hline
 tail\_ssd & 16.93 & 12.27 & 25.38 & 7.29 & 152.26 & 28 \\ \hline
@@ -1094,19 +1093,19 @@ tail\_nvme & 19.08 & 13.32 & 29.67 & 8.27 & 149.68 & 21 \\ \hline
 
 \chapter{Conclusion}
 \label{conclusion}
-The purpose of this thesis was to lay foundation for performance testing of Virutal Data Optimiser driver. This goal was achieved by explaining principles of VDO space saving, VDO internal structures and tuning mechanisms and by providing workflow for performance testing as well as displaying many test results with reccommendations for correct VDO usage.
+The purpose of this thesis was to lay foundation of performance testing of Virutal Data Optimiser driver. This goal was achieved by explaining both principles of VDO space saving and VDO internal structures, then by explaining tuning mechanisms and providing workflow for performance testing as well as displaying many test results with reccomendations for correct VDO usage.
 
-In this thesis, purpose of VDO driver was explained along with mechanisms of space saving and data reduction. Following the basic principles, system requierements and VDO internal structures were introduced with emphasis on their impact on performance.
+The purpose of VDO driver was explained along with mechanisms of space saving and data reduction. Following the basic principles, system requierements and VDO internal structures were introduced with emphasis on their impact on performance.
 
-For the purposes of this thesis and future performance testing of VDO, many new features were added to a benchmark fs-drift, so that it can be used in a professional environment to test VDO and other block level layers thoroughly. These features significantly improve usability and possibilities of testing with fs-drift.
+For the purposes of this thesis and future performance testing of VDO, many new features were implemented to a benchmark fs-drift, so that it can be used in a professional environment in order to test VDO and other block level layers thoroughly. These features significantly improve usability and possibilities of testing with fs-drift.
 
-Along with developing features for fs-drift, a testing package compliant with Red Hat Kernel Performance automised workflow was created to execute tests and gather results. The results from these tests were processed by data processing library developed for this purpose.
+Along with implementation of features to fs-drift, a testing package compliant with Red Hat Kernel Performance automised workflow was created to execute tests and gather results. The results from these tests were processed by data processing library developed for this purpose.
 
-In the testing part of this thesis, principles of VDO testing and tuning were explained and explored in practice. Each set of tests illustrates and clarifies the boundaries of VDO and shows ways of performance testing of different components of VDO or means to achieve better performance. 
+In the testing part of this thesis, principles of VDO testing and tuning were explained and examined in practice. Each set of tests illustrates and clarifies the boundaries of VDO and shows different ways of performance testing of various VDO's components or a means to achieve a better performance. 
 
-Results from the tests were processed into easily readable reports available in the electronic appendix. Subset of all generated graphs and tables was included in the main text to illustrate some of the points made.
+Results from the tests were processed into easily readable reports available in the electronic appendix. Subset of all generated graphs and tables was included in the main text in order to illustrate some of the main points.
 
-Some of the tests designed for this thesis will be used for automised CI and Compose testing workflow in Red hat Kernel Performance team. By conducting regular tests in a stable testing environment, performance of VDO can be under high quality supervision and possible issues can be found and removed effectively.
+Moreover, some of the tests designed for this thesis will be used for automised CI and Compose testing workflow in Red Hat Kernel Performance team. By conducting regular tests in a stable testing environment, performance of VDO can be under high quality supervision and possible issues can be found and removed effectively.
 
 
 
@@ -1291,7 +1290,7 @@ This machine is used for regular testing of VDO and other complex layers in Red 
     Physical sector size & $\SI{512}{\byte}$ \\
     \hline   
 \end{tabular}
-\caption{Testing devices of Machine\,1}
+\caption{Testing devices instelled on Machine\,1}
 \end{table}
 
 
@@ -1314,7 +1313,7 @@ This machine is used for regular testing of various file systems and storage lay
     Memory & $\SI{49152}{\mega\byte}$ \\
     \hline
 \end{tabular}
-\caption{Testing machine 1}
+\caption{Testing machine 2}
 \end{table}
 
 
@@ -1379,7 +1378,7 @@ This machine is used for regular testing of various file systems and storage lay
     Physical sector size & $\SI{512}{\byte}$ \\
     \hline   
 \end{tabular}
-\caption{Testing devices of Machine\,1}
+\caption{Testing devices instelled on Machine\,2}
 \end{table}
 
 \clearpage
