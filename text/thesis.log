@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2019.9.30)  16 MAY 2020 15:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2019.9.30)  16 MAY 2020 15:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2391,8 +2391,8 @@ Package pdftex.def Info: ../results/half/end.png used on input line 775.
 
 LaTeX Warning: Float too large for page by 81.29163pt on input line 778.
 
-[33]
-<../results/threads/direct/low_res/tar_753_threads.png, id=688, 294.1389pt x 23
+[33] [34] [35 <../results/half/start.png> <../results/half/end.png>]
+<../results/threads/direct/low_res/tar_753_threads.png, id=699, 294.1389pt x 23
 8.491pt>
 File: ../results/threads/direct/low_res/tar_753_threads.png Graphic file (type 
 png)
@@ -2401,7 +2401,7 @@ Package pdftex.def Info: ../results/threads/direct/low_res/tar_753_threads.png
 used on input line 807.
 (pdftex.def)             Requested size: 180.67499pt x 146.49823pt.
 
-<../results/threads/direct/low_res/tar_132_threads.png, id=689, 294.1389pt x 23
+<../results/threads/direct/low_res/tar_132_threads.png, id=700, 294.1389pt x 23
 8.491pt>
 File: ../results/threads/direct/low_res/tar_132_threads.png Graphic file (type 
 png)
@@ -2415,7 +2415,7 @@ Overfull \hbox (2.00398pt too wide) in paragraph at lines 806--817
  []
 
 
-<../results/threads/direct/low_res/random_write1_compare_boxplots.png, id=690, 
+<../results/threads/direct/low_res/random_write1_compare_boxplots.png, id=701, 
 507.3354pt x 411.939pt>
 File: ../results/threads/direct/low_res/random_write1_compare_boxplots.png Grap
 hic file (type png)
@@ -2425,10 +2425,11 @@ Package pdftex.def Info: ../results/threads/direct/low_res/random_write1_compar
 e_boxplots.png used on input line 821.
 (pdftex.def)             Requested size: 361.34999pt x 293.41528pt.
 
-[34] [35] [36 <../results/half/start.png> <../results/half/end.png>] [37 <../re
-sults/threads/direct/low_res/tar_753_threads.png> <../results/threads/direct/lo
-w_res/tar_132_threads.png> <../results/threads/direct/low_res/random_write1_com
-pare_boxplots.png>] [38
+[36
+
+ <../results/threads/direct/low_res/tar_753_threads.png> <../results/threads/di
+rect/low_res/tar_132_threads.png>] [37 <../results/threads/direct/low_res/rando
+m_write1_compare_boxplots.png>] [38
 
 ]
 <../results/block_map_cache/report/random_write1_compare_boxplots.png, id=720, 
@@ -2639,6 +2640,9 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package logreq Info: Writing requests to 'thesis.run.xml'.
 \openout1 = `thesis.run.xml'.
 
@@ -2662,7 +2666,7 @@ ist/fonts/type1/public/tex-gyre/qplb.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/tex-gyre/qplr.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /tex-gyre/qplri.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/upl
 r8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (71 pages, 996581 bytes).
+Output written on thesis.pdf (71 pages, 1028675 bytes).
 PDF statistics:
  920 PDF objects out of 1000 (max. 8388607)
  768 compressed objects within 8 object streams

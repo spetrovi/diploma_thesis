@@ -59,7 +59,7 @@
 \contentsline {chapter}{\numberline {5}\bfseries Performance of VDO}{33}{chapter.5}
 \contentsline {section}{\numberline {5.1}\slshape VDO aging}{33}{section.5.1}
 \contentsline {section}{\numberline {5.2}\slshape Steady state testing}{33}{section.5.2}
-\contentsline {section}{\numberline {5.3}\slshape VDO threads}{34}{section.5.3}
+\contentsline {section}{\numberline {5.3}\slshape VDO threads}{36}{section.5.3}
 \contentsline {section}{\numberline {5.4}\slshape Block map cache}{38}{section.5.4}
 \contentsline {section}{\numberline {5.5}\slshape Maximum discard size}{39}{section.5.5}
 \contentsline {section}{\numberline {5.6}\slshape Write policies}{44}{section.5.6}
