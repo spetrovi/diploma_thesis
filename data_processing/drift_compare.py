@@ -271,7 +271,7 @@ class Compare:
                 
                 self.tables[ID].append(Boxplot(op, x, name))
             #ax.set_yscale('log')
-#            ax.set_ylim(bottom=0, top=self.lim_y)
+            #ax.set_ylim(bottom=0, top=60)
             ax.boxplot(vectors, positions)
             ax.set_xticklabels(ticks)                
             plt.savefig(self.destination + ID, bbox_inches='tight')
@@ -484,6 +484,7 @@ class Tar:
 
 
         #ax.legend(loc=2)
+        ax.set_ylim(bottom=0, top=100)
         ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         ax.set_title('CPU usage of VDO threads')
         plt.savefig(self.destination+ID_cur, bbox_inches='tight')
@@ -809,23 +810,26 @@ class Report:
     for tar in self.tars:
         	tr.td.img(src=tar.vdo_plot, align='left')
 
-    tr = table.tr
-    for tar in self.tars:
-        	tr.td.img(src=tar.vdo_plot[:-4]+'_queue.png', align='left')
+#    tr = table.tr
+#    for tar in self.tars:
+#        	tr.td.img(src=tar.vdo_plot[:-4]+'_queue.png', align='left')
 
-    tr = table.tr
-    td = tr.td
+    
+#    try:
+#        tr = table.tr
+#        td = tr.td
 
-    for tar in self.tars:
-        for l in tar.thread_analysis.split('\n'):
-            td.li(l)
-        td = tr.td
+#        for tar in self.tars:
+#            for l in tar.thread_analysis.split('\n'):
+#                td.li(l)
+#            td = tr.td
 
 
-    tr = table.tr
-    for tar in self.tars:
-        	tr.td.img(src=tar.threads_plot, align='left')
-
+#        tr = table.tr
+#        for tar in self.tars:
+#           	tr.td.img(src=tar.threads_plot, align='left')
+#    except:
+#        pass
 
     tr = table.tr
     for tar in self.tars:

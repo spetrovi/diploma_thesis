@@ -21,7 +21,7 @@ $(document).ready(function () {boxplots= new Highcharts.Chart({
     series: [{
       name: 'tail_ssd',
       type: 'boxplot',
-      data: [{low: 19.0, q1: 47.59, median: 68.14, q3: 97.01, high: 298.55 },
+      data: [{low: 7.29, q1: 12.27, median: 16.93, q3: 25.38, high: 152.26 },
 ],
       visible: true,
       tooltip: {headerFormat: '<em>Operation {point.key}</em><br/>'}
@@ -30,7 +30,7 @@ $(document).ready(function () {boxplots= new Highcharts.Chart({
 {
       name: 'tail_nvme',
       type: 'boxplot',
-      data: [{low: 17.14, q1: 54.32, median: 72.64, q3: 103.19, high: 252.84 },
+      data: [{low: 8.27, q1: 13.32, median: 19.08, q3: 29.67, high: 149.68 },
 ],
       visible: true,
       tooltip: {headerFormat: '<em>Operation {point.key}</em><br/>'}
@@ -39,7 +39,7 @@ $(document).ready(function () {boxplots= new Highcharts.Chart({
 {
       name: 'vdo_hdd_baseline',
       type: 'boxplot',
-      data: [{low: 0.85, q1: 3.89, median: 5.05, q3: 7.69, high: 14.18 },
+      data: [{low: 0.85, q1: 0.97, median: 1.28, q3: 1.87, high: 4.73 },
 ],
       visible: true,
       tooltip: {headerFormat: '<em>Operation {point.key}</em><br/>'}

@@ -30,7 +30,7 @@ $(document).ready(function () {boxplots= new Highcharts.Chart({
 {
       name: '4k',
       type: 'boxplot',
-      data: [{low: 48.4, q1: 1070.75, median: 1110.85, q3: 1149.76, high: 1334.86 },
+      data: [{low: 48.4, q1: 1075.4, median: 1114.18, q3: 1152.95, high: 1334.86 },
 ],
       visible: true,
       tooltip: {headerFormat: '<em>Operation {point.key}</em><br/>'}
@@ -39,7 +39,7 @@ $(document).ready(function () {boxplots= new Highcharts.Chart({
 {
       name: '128k',
       type: 'boxplot',
-      data: [{low: 51.29, q1: 201.54, median: 202.47, q3: 203.29, high: 223.63 },
+      data: [{low: 51.29, q1: 201.6, median: 202.49, q3: 203.29, high: 223.63 },
 ],
       visible: true,
       tooltip: {headerFormat: '<em>Operation {point.key}</em><br/>'}
@@ -48,7 +48,7 @@ $(document).ready(function () {boxplots= new Highcharts.Chart({
 {
       name: '16k',
       type: 'boxplot',
-      data: [{low: 52.48, q1: 931.13, median: 972.08, q3: 1017.31, high: 1111.36 },
+      data: [{low: 52.48, q1: 935.99, median: 977.27, q3: 1019.96, high: 1111.36 },
 ],
       visible: true,
       tooltip: {headerFormat: '<em>Operation {point.key}</em><br/>'}

@@ -58,7 +58,7 @@ no_tail = glob.glob('../results/journal/*no_tail*.tar.xz')
 tail_ssd = glob.glob('../results/journal/*tail_ssd*.tar.xz')
 tail_nvme = glob.glob('../results/journal/*tail_nvme*.tar.xz')
 
-#Report(baselines['wolverine']['VDO_HDD'] + tail_ssd + tail_nvme, '../results/journal/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=270, test_label='Various devices on tail of VDO') 
+#Report(baselines['wolverine']['VDO_HDD'] + tail_ssd + tail_nvme, '../results/journal/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=60, test_label='Various devices on tail of VDO') 
 
 
 #Experiment discards
@@ -91,7 +91,7 @@ block_map_cache['80g'] = glob.glob('../results/block_map_cache/*-80g*.tar.xz')
 half = glob.glob('../results/half/*half.tar.xz')
 seq = glob.glob('../results/half/*seq*.tar.xz')
 rand = glob.glob('../results/half/*rand*.tar.xz')
-Report(seq + half + rand, '../results/half/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['logical blocks used', 'data blocks used'] + ['current VDO IO requests in progress'], lim_y=200, test_label = 'VDO')
+Report(seq + half + rand, '../results/half/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['logical blocks used', 'data blocks used'], lim_y=200, test_label = 'VDO')
 
 tun = glob.glob('../results/tuning/*.tar.xz')
 
@@ -109,10 +109,11 @@ queue.sort()
 threads = glob.glob('../results/threads/*tar.xz')
 threads.sort()
 
-Report(threads, '../results/threads/report/', offset=(0,1000), log_window = 0.01, smooth = True, chart_vdostats = chart_vdostats + ['current VDO IO requests in progress'], lim_y=600, test_label = 'threads')
+#Report(threads, '../results/threads/report/', offset=(0,1000), log_window = 0.01, smooth = True, chart_vdostats = chart_vdostats + ['current VDO IO requests in progress'], lim_y=600, test_label = 'threads')
 
-power = glob.glob('../results/korben_baselines/OLDBAD/*/*-iodept*tar.xz')
-#Report(power, '../results/korben_baselines/POWER/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=500, test_label = 'aging')
+steady_prepare = glob.glob('../results/steady/*prepare*.tar.xz')
+steady_test = glob.glob('../results/steady/*tes*.tar.xz')
+#Report(steady_prepare + steady_test, '../results/steady/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=300, test_label = 'steady state testing phases')
 
 
 
