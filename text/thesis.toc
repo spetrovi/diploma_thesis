@@ -12,11 +12,10 @@
 \contentsline {subsection}{\numberline {2.2.2}\rmfamily Logical Size}{6}{subsection.2.2.2}
 \contentsline {subsection}{\numberline {2.2.3}\rmfamily Memory}{6}{subsection.2.2.3}
 \contentsline {subsection}{\numberline {2.2.4}\rmfamily CPU}{7}{subsection.2.2.4}
-\contentsline {section}{\numberline {2.3}\slshape Internal structures}{7}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}\rmfamily Slabs}{7}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}\rmfamily Recovery journal}{8}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}\rmfamily Block map cache}{8}{subsection.2.3.3}
-\contentsline {subsection}{\numberline {2.3.4}\rmfamily UDS index}{9}{subsection.2.3.4}
+\contentsline {section}{\numberline {2.3}\slshape Internal supporting structures}{7}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}\rmfamily Recovery journal}{7}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}\rmfamily Block map}{8}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}\rmfamily UDS index}{8}{subsection.2.3.3}
 \contentsline {section}{\numberline {2.4}\slshape Tunables}{9}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}\rmfamily VDO threads}{9}{subsection.2.4.1}
 \contentsline {subsubsection}{\rmfamily Logical zones thread}{9}{section*.8}
@@ -24,25 +23,23 @@
 \contentsline {subsubsection}{\rmfamily I/O submission threads}{10}{section*.10}
 \contentsline {subsubsection}{\rmfamily CPU and Hash zone threads}{10}{section*.11}
 \contentsline {subsubsection}{\rmfamily I/O acknowledgement threads}{10}{section*.12}
-\contentsline {subsubsection}{\rmfamily Journal thread}{10}{section*.13}
 \contentsline {subsection}{\numberline {2.4.2}\rmfamily VDO write policies}{12}{subsection.2.4.2}
-\contentsline {subsubsection}{\rmfamily Synchronous mode}{12}{section*.14}
-\contentsline {subsubsection}{\rmfamily Asynchronous mode}{13}{section*.15}
-\contentsline {subsubsection}{\rmfamily Asynchronous unsafe mode}{14}{section*.16}
+\contentsline {subsubsection}{\rmfamily Synchronous mode}{12}{section*.13}
+\contentsline {subsubsection}{\rmfamily Asynchronous mode}{13}{section*.14}
+\contentsline {subsubsection}{\rmfamily Asynchronous unsafe mode}{14}{section*.15}
 \contentsline {subsection}{\numberline {2.4.3}\rmfamily Block map cache size}{14}{subsection.2.4.3}
 \contentsline {subsection}{\numberline {2.4.4}\rmfamily Discard size}{14}{subsection.2.4.4}
 \contentsline {chapter}{\numberline {3}\bfseries Fs-drift}{15}{chapter.3}
-\contentsline {section}{\numberline {3.1}\slshape Introduction}{15}{section.3.1}
-\contentsline {section}{\numberline {3.2}\slshape Compressible data generator}{15}{section.3.2}
-\contentsline {section}{\numberline {3.3}\slshape Deduplication}{16}{section.3.3}
-\contentsline {section}{\numberline {3.4}\slshape DirectIO}{16}{section.3.4}
-\contentsline {section}{\numberline {3.5}\slshape Rawdevice}{17}{section.3.5}
-\contentsline {section}{\numberline {3.6}\slshape Random discard operation}{17}{section.3.6}
-\contentsline {section}{\numberline {3.7}\slshape Random map}{18}{section.3.7}
-\contentsline {section}{\numberline {3.8}\slshape Multithread}{19}{section.3.8}
-\contentsline {section}{\numberline {3.9}\slshape IOdepth}{19}{section.3.9}
-\contentsline {section}{\numberline {3.10}\slshape Performance measurement}{20}{section.3.10}
-\contentsline {section}{\numberline {3.11}\slshape Data reporting}{20}{section.3.11}
+\contentsline {section}{\numberline {3.1}\slshape Compressible data generator}{15}{section.3.1}
+\contentsline {section}{\numberline {3.2}\slshape Deduplication}{16}{section.3.2}
+\contentsline {section}{\numberline {3.3}\slshape DirectIO}{16}{section.3.3}
+\contentsline {section}{\numberline {3.4}\slshape Rawdevice}{17}{section.3.4}
+\contentsline {section}{\numberline {3.5}\slshape Random discard operation}{17}{section.3.5}
+\contentsline {section}{\numberline {3.6}\slshape Random map}{18}{section.3.6}
+\contentsline {section}{\numberline {3.7}\slshape Multithread}{19}{section.3.7}
+\contentsline {section}{\numberline {3.8}\slshape IOdepth}{19}{section.3.8}
+\contentsline {section}{\numberline {3.9}\slshape Performance measurement}{20}{section.3.9}
+\contentsline {section}{\numberline {3.10}\slshape Data reporting}{20}{section.3.10}
 \contentsline {chapter}{\numberline {4}\bfseries Testing methodology}{21}{chapter.4}
 \contentsline {section}{\numberline {4.1}\slshape Testing environment}{21}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}\rmfamily VDO allocation}{21}{subsection.4.1.1}
@@ -65,10 +62,15 @@
 \contentsline {section}{\numberline {5.2}\slshape Steady state testing}{31}{section.5.2}
 \contentsline {section}{\numberline {5.3}\slshape VDO threads}{32}{section.5.3}
 \contentsline {section}{\numberline {5.4}\slshape Block map cache}{32}{section.5.4}
-\contentsline {section}{\numberline {5.5}\slshape Maximum discard size}{33}{section.5.5}
+\contentsline {section}{\numberline {5.5}\slshape Maximum discard size}{34}{section.5.5}
 \contentsline {section}{\numberline {5.6}\slshape Write policies}{40}{section.5.6}
-\contentsline {section}{\numberline {5.7}\slshape Journal performance}{40}{section.5.7}
-\contentsline {chapter}{\numberline {6}\bfseries Conclusion}{45}{chapter.6}
-\contentsline {section}{\numberline {6.1}\slshape Future work}{45}{section.6.1}
-\contentsline {chapter}{\numberline {7}\bfseries Appendix}{47}{chapter.7}
-\contentsline {section}{\numberline {7.1}\slshape Supermicro X11SPL-F}{47}{section.7.1}
+\contentsline {section}{\numberline {5.7}\slshape Journal performance}{41}{section.5.7}
+\contentsline {chapter}{\numberline {6}\bfseries Conclusion}{47}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape Future work}{47}{section.6.1}
+\contentsline {chapter}{\numberline {7}\bfseries Appendix}{49}{chapter.7}
+\contentsline {section}{\numberline {7.1}\slshape Testing hardware}{49}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}\rmfamily Machine\tmspace +\thinmuskip {.1667em}1}{49}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}\rmfamily Machine\tmspace +\thinmuskip {.1667em}2}{49}{subsection.7.1.2}
+\contentsline {section}{\numberline {7.2}\slshape Additional results}{52}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}\rmfamily Discard performance of unallocated VDO}{52}{subsection.7.2.1}
+\contentsline {chapter}{Bibliography}{53}{chapter*.16}

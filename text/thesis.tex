@@ -160,7 +160,7 @@ This thesis aims to lay a foundation for fast, efficient performance tuning of V
 
 Chapter~\ref{VDO} is an introduction of VDO technology, providing an in depth explanation of its terminology, device organisation, system requirements, administration, and relation to other layers in a storage stack.
 
-Chapter~\ref{benchmarks} presents benchmarking tools \fio and \fsdrift, and their usage in testing VDO. Several new features were implemented in \fsdrift in order to better test VDO, as described here.
+Chapter~\ref{fs-drift} presents a benchmarking tool \fsdrift. Several new features were implemented in \fsdrift in order to better test VDO, as described here.
 
 Chapter~\ref{testing} is focused on performance testing of VDO, both on different VDO components and on more complex deployment cases. Results demonstrate maximizing VDO performance in different storage stacks, providing an example of testing and potential benefits from tuning VDO to a user's own hardware and workload.
 
@@ -184,8 +184,6 @@ Deduplication is a technique that, on a block level, dissalows multiple copies o
 Compression is a technique that reduces usage of physical device by identifying and eliminating redundancy in data. In VDO, lossless compression, based on a parallelized packaging algorithm is used to handle many compression operations at once. Compressed blocks are stored in a way that allows the most logical blocks to be stored in one physical block.
 
 The actual VDO technology consists of two kernel modules. First module, called \texttt{kvdo}, loads into the Linux Device Mapper layer to provide a deduplicated, compressed, and thinly provisioned block storage volume. Second module called \texttt{uds} communicates with the Universal Deduplication Service (UDS) index on the volume and analyzes data for duplicates.
-
-
 
 
 \subsection{Deduplication}
@@ -249,14 +247,9 @@ For better memory usage, UDS's Sparse Indexing feature was introduced to the uds
 
 \subsection{CPU}
 
-\section{Internal structures}
-Working VDO instance contains structures that handle the incomming events.
+\section{Internal supporting structures}
+Working VDO instance contains supporting structures that handle the incomming events. Undrestanding their purpose as function is integral to proper performance tuning.
 
-\subsection{Slabs}
-
-Physical space VDO is working with consists of Physical Block Numbers (PBNs).
-
-PBNs are divided into larger sections called Slabs
 
 \subsection{Recovery journal}
 Recovery journal provides track of all block changes that has yet to be fully, reliably written to the physical device. It provides performance improvement with bothsynchronous and asynchronous writing policies.
@@ -268,15 +261,12 @@ In asynchronous mode, the journal helps providing data loss window by ensuring t
 The recovery journal has two parts. One is stored on the physical device and the other in memory to serve as a buffer. When entry is added to the journal, it is processed by the part in memory and is regarded as an active block. An attempt to commit the block to the device is made, however, the device might be locked by another commit thats in progress which makes the commit queue. Every successfull commit will wake others waiting after it is completed.
 
 
-\subsection{Block map cache}
-Block map exists in VDO volume to maintain the mapping of logical blocks to physcial blocks and managed as pages with each page holding 812 entries of logical blocks. The entire block map is kept on disk, since it can be rather large.
+\subsection{Block map}
+Block map is a structure used by VDO to handle logical to physical block mapping. It is implemented as a B+ tree and works on a granularity of pages with every page holding mapping of 812 logical blocks.
 
-Block map cache is a subset of the entire block map that is kept in memory for performance increase. If request to access a block comes to VDO, it will check if that block is in the block map cache. In case it doesn't it needs to read the relevant page and store it in a cache. In case the request was write, it is written in the block map cache and only participates to the on-disk part later.
+The full block map is stored on a physical device, in one of the last slabs reserved for metadata and it is a cause of one of the requirements on physical space. It usually consumes about 1.25GB per 1 TB of stored physical data.
 
-The block map is a cause of one of the requirements on physical space. It usually consumes about 1.25GB per 1 TB of saved stored physical data. The subset that's kept in memory is much smaller, 128MB by default and is tunable by --vdoBlockMapCacheSize.
-
-The 128MB can cover about 100GB of logical blocks. However if users logical space is larger than 100GB and their workload is so random that it doesn't cached pages, user can observe great preformance hit. In case the block map cache is full, therefore runs out of free pages and a request comes for a page thats not contained in the cache, VDO needs to first discard some page from the cache, write it on disk and just after then load the desired page. It is obvious that this cycle is very time expensive and therefore users are encouraged to increase block map cache size if the precoditions for cache tiering are met.
-
+Since block mappings are accessed with high frequency and reading from physical device could be costly, part of the block map is stored in memory in a block map cache. When processing incomming request, the relevant page is pulled from the cache, or in case the cache doesn't contain it, it is read from physical device and pushed into the cache. Such cache misses could be costly in terms of performance, and therefore block map cache should be set up coorectly.
 
 \subsection{UDS index}
 UDS index is a structure designed specifically to identify duplicate data using hash fingerprints of data blocks. It exists in VDO to provide deduplication advice for effective deduplication. Instance of UDS index is not vital for VDO block handling. In case of losing UDS index, VDO still manages blocks and stores and compress data, only without deduplication. Even in the event of index becoming corrupted, there are different mechanisms in place to assure data correctness, so user can discard the index and start bulding a new one.
@@ -285,9 +275,11 @@ Updating index is costly, so VDO is trying to minimise the updates. That is a re
 
 
 \section{Tunables}
-
+VDO provides user with many means of tuning. Tuning consist of parallelizing workload to more processor by changin number of different threads, choosing the right block map cache size, write policy or discard size.
 
 \subsection{VDO threads}
+One of the main means of tuning VDO performance is changing number of VDO threads that are acompleting various tasks. While running a VDO volume, users should monitor the thread usage and tune it accordingly. In case there is a high thread usage (>50\,\%), users should increase the number of relevant threads. There are six tunable threads in VDO. Figure~\ref{fig:VDO-internals} displays relationship between various threads and VDO internal structures.
+
 \subsubsection{Logical zones thread}
 Logical space presented to users of VDO device consists of Logical Block Numbers (LBNs).
 
@@ -318,7 +310,7 @@ This type of thread is managing acknowledgement operations to an application abo
 
 The number of ack threads can be tuned using --vdoAckThreads.
 
-\subsubsection{Journal thread}
+%\subsubsection{Journal thread}
 
 
 
@@ -336,7 +328,7 @@ The number of ack threads can be tuned using --vdoAckThreads.
 
 
 \subsection{VDO write policies}
-VDO can operate in either synchronous or asynchronous mode. By default VDO write policy is set to $auto$ which means the the module decides automatically which write policy to use. The main difference is wether or on is the write request written immediately or not. In case of system failure while using asynchronous mode, data can be lost.
+VDO can operate in either synchronous or asynchronous mode.\cite{man:writemodes} by default VDO write policy is set to $auto$ which means the the module decides automatically which write policy to use. The main difference is wether or on is the write request written immediately or not. In case of system failure while using asynchronous mode, data can be lost.
 
 \subsubsection{Synchronous mode}
 In synchronous mode, VDO temporarily writes the block to the device and acknowledges the request. After completing the acknowledgement, it attempts to deduplciate the block. In case it's a duplicate, block map is updated in a way that the logical block points to the physical block that iss already written and releases the previously written temporary block. In case the block is not a duplicate, $kvdo$ updates the block map to make the temporary physical block permanent.
@@ -363,7 +355,13 @@ The option async-unsafe is there in case the user wants to keep the original non
 
 
 \subsection{Block map cache size}
+Block map exists in VDO volume to maintain the mapping of logical blocks to physcial blocks and managed as pages with each page holding 812 entries of logical blocks. The entire block map is kept on disk, since it can be rather large.
 
+Block map cache is a subset of the entire block map that is kept in memory for performance increase. If request to access a block comes to VDO, it will check if that block is in the block map cache. In case it doesn't it needs to read the relevant page and store it in a cache. In case the request was write, it is written in the block map cache and only participates to the on-disk part later.
+
+The block map is a cause of one of the requirements on physical space. It usually consumes about 1.25GB per 1 TB of saved stored physical data. The subset that's kept in memory is much smaller, 128MB by default and is tunable by --vdoBlockMapCacheSize.
+
+The 128MB can cover about 100GB of logical blocks. However if VDO logical space is larger than 100GB and the workload is so random that the requests doesn't hit cached pages, user can observe great preformance hit. In case the block map cache is full, therefore runs out of free pages and a request comes for a page thats not contained in the cache, VDO needs to first discard some page from the cache, write it on disk and just after then load the desired page. It is obvious that this cycle is very time expensive and therefore users are encouraged to increase block map cache size if the precoditions for cache tiering are met.
 
 \subsection{Discard size}
 
@@ -430,10 +428,9 @@ The option async-unsafe is there in case the user wants to keep the original non
 %VDO works as a thinly provisioned volume. Therefore applications or file systems that use it will only see a logical space that is provided by VDO. To monitor VDO space usage, physical space left or compression ratio and much more, $vdostats$ utility provides neccessary inspection of VDO volume.
 
 \chapter{Fs-drift}
-\label{benchmarks}
+\label{fs-drift}
 
-\section{Introduction}
-Fs-drift is an open-source benchmark developed specifically for testing heavy workload and aging performance. Being implemented in Python, it is very easy for users or contributors to add new features or change the benchmark behavior to their needs. For testing performance of VDO, several new features were added.
+Fs-drift is an open-source benchmark developed specifically for testing heavy workload and aging performance. Being implemented in Python3, it is very easy for users or contributors to add new features or change the benchmark behavior to their needs.
 
 %\subsection{New features}
 %Fs-drift was used as a main tool in a previous study of file system aging so only new features will be presented in this thesis.
@@ -879,11 +876,11 @@ While processing the data, the interesting statistic to look for from vdostats i
 \label{fig:discard-full-througput}
 \end{figure}
 
-As we can see on the Figure~\ref{discard}, while having normal VDO setup and regular discard workload, the speed of discard operation is decreasing with using larger discard sizes. This test was conducted after a previous run of fs-drift filled all the space with random writes. Filling the storage with random data before every test takes a considerably long time. To shorten the time to test discard operation, we could try testing with empty VDO.
+As we can see on the Figure~\ref{discard}, while having normal VDO setup and regular discard workload, the speed of discard operation is decreasing with using larger discard sizes. This test was conducted after a previous run of fs-drift filled all the space with random writes. Filling the storage with random data before every test takes a considerably long time. To shorten the time to test discard operation, we could try testing without prewriting the VDO.
 
 It is important to notice, that while filling the volume with random data might not be necessary, the tests should be done on fully allocated VDO volume. If there is a discard request for a block tha has not yet been allocated, the discard handling is much faster, since no work has been done. This effect could be observed by running the same test on an unallocated storage as presented in Figure~\ref{discard-unalloc}.
 
-This is once again a reason for why preallocation of the tested storage is important. The results from empty, but previously allocated VDO show the same behavior as the reults from the test where VDO was filled with random workload at the beggining.
+It is aparent, the results from empty, but previously allocated VDO show the same behavior as the reults from the test where VDO was filled with random workload at the beggining, unlike the VDO without allocation, that shows highened performance.
 
 
 \begin{figure}[!htb]
@@ -904,25 +901,22 @@ This is once again a reason for why preallocation of the tested storage is impor
 \centering
 \begin{tabular}{|l|l|l|l|l|l|l|}
         \hline
-        \multicolumn{7}{|l|}{Throughput of random discard (MB/s)} \\ \hline
-        test name & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
+        \multicolumn{7}{|l|}{Throughput of random discard (MB/s) on full VDO} \\ \hline
+         & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
 4k & 1077.65 & 1025.58 & 1119.79 & 158.12 & 1310.17 & 123 \\ \hline
 16k & 935.4 & 863.6 & 966.42 & 140.93 & 1069.8 & 120 \\ \hline
 128k & 184.27 & 179.58 & 185.94 & 105.26 & 195.25 & 9 \\ \hline
 1m & 42.4 & 42.27 & 42.57 & 38.79 & 43.11 & 0 \\ \hline
-
-        \multicolumn{7}{|l|}{Throughput of random discard (MB/s)} \\ \hline
-        test name & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
+\hline
+        \multicolumn{7}{|l|}{Throughput of random discard (MB/s) on empty but fully allocatedVDO} \\ \hline
+        & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
 4k & 1114.18 & 1075.4 & 1152.95 & 48.4 & 1334.86 & 67 \\ \hline
 16k & 977.27 & 935.99 & 1019.96 & 52.48 & 1111.36 & 62 \\ \hline
 128k & 202.49 & 201.6 & 203.29 & 51.29 & 223.63 & 8 \\ \hline
 1m & 44.87 & 44.75 & 45.03 & 44.31 & 46.67 & 0 \\ \hline
 \end{tabular}
-\caption{DiscradsII}
-
-
+\caption{Table displaying performance od discard operation on a VDO volumes with various state of utilisation}
 \end{table}
-
 
 \clearpage
 
@@ -935,6 +929,12 @@ In asynchronous mode, VDO does not guarantee the data is written to the persiste
 
 Up until lately, VDO async mode was not compliant with ACID policy, which could result in unexpected data loss. ACID policy of asynchronous mode was introduced in RHEL-8.2, however, the old ACID non-compliant version was kept in VDO under the name async-unsafe for users that don't mind minor data loss and would see a performance problem using safe async.
 
+It is important for developers to know the performance impact of writing policies, therefore performance testing should be conducted.
+
+In this section, performance testing of the three available policies was conducted and the results can be observed on Figure~\ref{fig:writepolicies} and Table~\ref{tab:writepolicies}.
+
+It is aparent that the synchronuous policy will be the slowest, since for every write request VDO have to flush data to a storage. However, more interesting observation can be made between ACID-compliant and unsafe asynchronous mode. Since VDO is an enterprised product, a lot of care needed to be taken so that the safe asynchronous mode will not slow down VDO considerably. We can see in the presented results that this effor was successfull.
+
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/write_policies/report/random_write1_compare_boxplots}
@@ -946,7 +946,7 @@ Up until lately, VDO async mode was not compliant with ACID policy, which could 
 \begin{tabular}{|l|l|l|l|l|l|l|}
         \hline
         \multicolumn{7}{|l|}{Throughput of random write (MB/s)} \\ \hline
-        test name & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
+         & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
 sync & 138.06 & 117.13 & 168.84 & 57.61 & 381.13 & 44 \\ \hline
 async-unsafe & 212.87 & 177.17 & 258.17 & 99.24 & 510.32 & 66 \\ \hline
 async & 207.14 & 172.57 & 253.68 & 92.76 & 539.94 & 69 \\ \hline
@@ -960,17 +960,45 @@ Recovery journal is an important aspect of VDO for assuring safety of user data.
 
 This experimend is aimed at exploring a use case where writing to a journal can be a bottleneck for the VDO performance.
 
-The test was conducted using slow rotational hard drive on a Machine 2. Performance of this drive is very poor and installing VDO on top of it increases the performance. However, it would be interesting to observe if journaling is posing as a bottleneck and the VDO volume could be even faster.
+The test was conducted using slow rotational hard drive on a Machine~\ref{hw:2}. Performance of this drive is very poor and installing VDO on top of it increases the performance. However, it would be interesting to observe if journaling is posing as a bottleneck and the VDO volume could be even faster.
 
 VDO stores its metadata on the last slab (or multiple last slabs) of the physical device. By having the last slabs be actually on a completely different, fast device could show how much speeding the journal increases the overall performance of VDO.
 
-We will start by creating a partition on the rotational drive. After putting this partition and the fast SSD into one volume group, we will create an LV on the partition and grow it, so the last blocks are allocated from the second device. Finally, VDO can be put on top of this configuration and the test can be conducted.
+We will start by creating a partition on the rotational drive. After putting this partition and the fast SSD into one volume group, we will create an LV on the partition and extendend it, so the last blocks are allocated from the second device. Finally, VDO can be put on top of this configuration and the test can be conducted.
+
+Because the process of creating this configuration is not very intuitive, sequence of commands to do so is presented in~\ref{ex:fast-journal}
 
 To make absolutely sure only the journal updates went to the fast device and not actual data, the test was run using seekwatcher, to examine block seeks. As can be seen on charts, data were kept strictly on the slow device part of the LV and only journal updates were handled by fast device.
 
 One additional test was conducted by backing the journal with even more powerfull device. The ending region of VDO was spread over a part of NVMe SSD in hopes it would speed up the process even further. However, power of NVMe is in its number of queues. The process that handles VDO journaling is not multithreaded, as staded in Chapter 1. That is the reason why backing VDO with NVMe doesn't bring any additional benefits compared to a normal SSD.
 
 We can observe the change in throughput using various hardware in a Figure~\ref{fig:journal-all}
+
+\lstset{language=bash, 
+numbers=none, 
+frame=single, 
+commentstyle=\color{blue}, 
+basicstyle={\scriptsize\ttfamily}, 
+keywordstyle=\color{black}, 
+identifierstyle=\color{black}, 
+stringstyle=\color{red},
+captionpos=t,
+showstringspaces=false,
+breaklines=true,
+breakatwhitespace=false,
+tabsize=3,
+caption={sdad},
+}
+
+
+\begin{lstlisting}[language=bash, label={ex:fast-journal}, caption={Creating a volume with last reagion on NVMe device}][frame=single]
+    $ # /dev/sda1 is an 8GB partition on HDD
+    $ # /dev/nvme0n1 is a 5GB partiiton on NVMe, however, size doesn't matter since we're only using first 2GB
+    $ vgcreate vg /dev/sda1 /dev/nvme0n1
+    $ lvcreate -n testLV1 -L 8g vg /dev/sda1
+    $ lvextend vg/testLV1 -L 10g
+    $ vdo create --name=testVDO --device=/dev/mapper/vg-testLV1  --vdoLogicalSize=80g
+\end{lstlisting}
 
 \begin{figure}[!htb]
         \centering
@@ -1125,10 +1153,18 @@ tail\_nvme & 19.08 & 13.32 & 29.67 & 8.27 & 149.68 & 21 \\ \hline
 
 
 \chapter{Appendix}
-\label{machines}
-\section{Supermicro X11SPL-F}
-This machine is used for regular testing of VDO and other complex technologies in Red Hat Kernel Performance team. It's equiped with 4 $\SI{10}{\tera\byte}$ SAS rotational drives and one $\SI{220}{\giga\byte}$ SATA SSD for tests that require LVM Cache. The system is always installed on an additional SSD. This machine is equiped with enough memory to handle large VDO volumes.
-\clearpage
+\section{Testing hardware}
+\label{hardware}
+Testing hardware was borrowed form Red Hat Kernel performance team laboratory. The machines are powerfull enough to testing high performing drivers and tools. All storage devices used are regularly checked for health and immediately replaced if faulty.
+
+
+\subsection{Machine\,1}
+\label{hw:1}
+This machine is used for regular testing of VDO and other complex layers in Red Hat Kernel Performance team. It's equiped with 4 $\SI{10}{\tera\byte}$ SAS rotational drives and one $\SI{220}{\giga\byte}$ SATA SSD for tests that require LVM Cache. The system is always installed on an additional SSD. This machine is equiped with enough memory to handle large VDO volumes.
+
+
+\begin{table}
+\centering
 \begin{tabular}{|l|l|}
 \hline
    \multicolumn{2}{|l|}{Machine\,1} \\ \hline %draven
@@ -1139,7 +1175,15 @@ This machine is used for regular testing of VDO and other complex technologies i
     Clock speed & $\SI{2.10}{\giga\hertz}$ (8 cores) \\
     \hline
     Memory & $\SI{49152}{\mega\byte}$ \\
+    \hline
+\end{tabular}
+\caption{Testing machine 1}
+\end{table}
 
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|}
 \hline
    \multicolumn{2}{|l|}{Testing Hard Drives (4x)} \\ \hline %draven
     Model & WD HGST Ultrastar\\
@@ -1154,8 +1198,8 @@ This machine is used for regular testing of VDO and other complex technologies i
     \hline    
     Physical sector size & $\SI{4096}{\byte}$ \\
     \hline
-    
-    \multicolumn{2}{|l|}{Testiting SSD (for LVM cache)} \\ \hline %draven
+    \hline
+    \multicolumn{2}{|l|}{Testing SSD } \\ \hline %draven
      Model & Micron 5100 MTFD \\
     \hline
      Capacity & $\SI{240}{\giga\byte}$  \\
@@ -1168,7 +1212,7 @@ This machine is used for regular testing of VDO and other complex technologies i
     \hline    
      Physical sector size & $\SI{4096}{\byte}$ \\
     \hline
-    
+    \hline
     \multicolumn{2}{|l|}{System disk} \\ \hline %draven
     Model & SuperMicro SSD  \\
     \hline
@@ -1183,22 +1227,117 @@ This machine is used for regular testing of VDO and other complex technologies i
     Physical sector size & $\SI{512}{\byte}$ \\
     \hline   
 \end{tabular}
+\caption{Testing devices of Machine\,1}
+\end{table}
+
+
+\subsection{Machine\,2}
+\label{hw:2}
+This machine is used for regular testing of various file systems and storage layers. It's equiped with 3 $\SI{220}{\giga\byte}$ SATA SSD, one $\SI{220}{\giga\byte}$ SAS rotational HDD. Additionaly, there is one NVMe device.
+
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|}
+\hline
+   \multicolumn{2}{|l|}{Machine\,1} \\ \hline %draven
+    Model & Supermicro X11SPL-F\\
+    \hline
+    Processor & Intel Xeon Silver 4110  \\
+    \hline
+    Clock speed & $\SI{2.10}{\giga\hertz}$ (8 cores) \\
+    \hline
+    Memory & $\SI{49152}{\mega\byte}$ \\
+    \hline
+\end{tabular}
+\caption{Testing machine 1}
+\end{table}
+
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|}
+\hline
+   \multicolumn{2}{|l|}{Testing Hard Drives} \\ \hline %draven
+    Model & WD HGST Ultrastar\\
+    \hline
+    Capacity & $\SI{1}{\tera\byte}$  \\
+    \hline
+    Interface & SAS $\SI{12}{\giga\byte}$  \\
+    \hline
+    Type & Rotational HDD \\
+    \hline    
+    Logical sector size & $\SI{4096}{\byte}$ \\    
+    \hline    
+    Physical sector size & $\SI{4096}{\byte}$ \\
+    \hline
+    \hline
+    \multicolumn{2}{|l|}{Testing SSDs 3x } \\ \hline %draven
+     Model & Micron 5100 MTFD \\
+    \hline
+     Capacity & $\SI{240}{\giga\byte}$  \\
+    \hline
+    Interface & SATA $\SI{6}{\giga\byte}$  \\
+    \hline
+    Type & SSD \\
+    \hline    
+    Logical sector size & $\SI{512}{\byte}$ \\    
+    \hline    
+     Physical sector size & $\SI{4096}{\byte}$ \\
+    \hline
+
+    \hline
+    \multicolumn{2}{|l|}{Tesing NVMe} \\ \hline %draven
+     Model & Micron 5100 MTFD \\
+    \hline
+     Capacity & $\SI{240}{\giga\byte}$  \\
+    \hline
+    Interface & SATA $\SI{6}{\giga\byte}$  \\
+    \hline
+    Type & SSD \\
+    \hline    
+    Logical sector size & $\SI{512}{\byte}$ \\    
+    \hline    
+     Physical sector size & $\SI{4096}{\byte}$ \\
+
+    \hline
+    \multicolumn{2}{|l|}{System disk} \\ \hline %draven
+    Model & SuperMicro SSD  \\
+    \hline
+    Capacity & $\SI{126}{\giga\byte}$  \\
+    \hline
+    Interface & PCIe Gen3 x4 Lanes  \\
+    \hline
+    Type & SSD \\
+    \hline    
+   Logical sector size & $\SI{512}{\byte}$ \\    
+    \hline    
+    Physical sector size & $\SI{512}{\byte}$ \\
+    \hline   
+\end{tabular}
+\caption{Testing devices of Machine\,1}
+\end{table}
+
+\clearpage
+\section{Additional results}
+During writing this thesis, many tests were conductend with various state of VDO and benchmark configurations thant could not have been all presented in the main text. However, some of the statements are referncing these results, so they could be viewed here.
+
+\subsection{Discard performance of unallocated VDO}
+In the Chapter~\ref{testing}, peculiar behavior discard operation of unallocated blocks in VDO was mentioned. Since VDO recognise that the discard requests are aimed on unallocated blocks, it doesn't do any work and only returns ackknowledgement. That is the reason why discard size doesn't affect VDO discard performance on unallocated storage.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots}
+\caption[Discards on unnalocated VDO]{This test was conducted on a fresh unallocated instance of VDO}
+\label{fig:discard-unalloc}
+\end{figure}
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
+\printbibliography[heading=bibintoc]
 
 
 
