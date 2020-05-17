@@ -248,10 +248,10 @@ For better memory usage, UDS's Sparse Indexing feature was introduced to the uds
 %When $kvdo$ receives a write request, it updates its block map and acknowledges the request. If the received request is either DISCARD, TRIM or a block of only zeroes, $kvdo$ only allocates a physical block for the request.
 
 
-\subsection{CPU}
-Some of the operations VDO needs to execute in order to effectively save space while remaining highly performing are CPU intensive. These operations such as computing hashes for deduplication or compressing blocks can overload a machine with low computing power
+%\subsection{CPU}
+%Some of the operations VDO needs to execute in order to effectively save space while remaining highly performing are CPU intensive. These operations such as computing hashes for deduplication or compressing blocks can overload a machine with low computing power
 
-VDO works as a multi threaded application, so it can balance load on multiple cores. Users should regularly check the usage of VDO threads. In case, any thread is using more than 50\% of its CPU, the thread count should be increased to balance the workload better.
+%VDO works as a multi threaded application, so it can balance load on multiple cores. Users should regularly check the usage of VDO threads. In case, any thread is using more than 50\% of its CPU, the thread count should be increased to balance the workload better.
 
 \section{Internal supporting structures}
 Working VDO instance contains supporting structures that handle the incoming events. Understanding their purpose as function is integral to proper performance tuning.
@@ -372,7 +372,7 @@ Block map exists in VDO volume to maintain the mapping of logical blocks to phys
 
 Block map cache is a subset of the entire block map that is kept in memory for performance increase. If request to access a block comes to VDO, it will check if that block is in the block map cache. In case it doesn't it needs to read the relevant page and store it in a cache. In case the request was write, it is written in the block map cache and only participates to the on-disk part later.
 
-The block map is a cause of one of the requirements on physical space. It usually consumes about 1.25GB per 1 TB of saved stored physical data. The subset that's kept in memory is much smaller, $\SI{128}{\mega\byte}$ by default and is tunable by --vdoBlockMapCacheSize.
+The block map is a cause of one of the requirements on physical space. It usually consumes about $\SI{1,25}{\giga\byte}$ per $\SI{1}{\tera\byte}$ of saved stored physical data. The subset that's kept in memory is much smaller, $\SI{128}{\mega\byte}$ by default and is tunable by --vdoBlockMapCacheSize.
 
 The $\SI{128}{\mega\byte}$ can cover about $\SI{100}{\giga\byte}$ of logical blocks. However if VDO logical space is larger than $\SI{100}{\giga\byte}$ and the workload is so random that the requests doesn't hit cached pages, user can observe great performance hit. In case the block map cache is full, therefore runs out of free pages and a request comes for a page that's not contained in the cache, VDO needs to first discard some page from the cache, write it on disk and just after then load the desired page. It is obvious that this cycle is very time expensive and therefore users are encouraged to increase block map cache size if the preconditions for cache tiring are met.
 
@@ -510,9 +510,9 @@ In Linux, available command for block discard is $blkdiscard$. User can specify 
 
 The pilot idea was to call blkdiscard command using the subprocess module. However, discard operations are very fast and the speed of calling subprocess module has become a significant bottleneck.
 
-Howver, Python provides a framework to execute ioctl calls directly from the Python code. First, the code for BLKDISCARD operation needs to be computed. Parameter for BLKDISCARD ioctl is an array of two u\_int64 numbers which represent the beginning offset and length to discard. This structure can be created by using Pythons module $struct$. Example~\ref{ex:blkdiscard} shows exactly how to issue block discard ioctl.
+However, Python provides a framework to execute ioctl calls directly from the Python code. First, the code for BLKDISCARD operation needs to be computed. Parameter for BLKDISCARD ioctl is an array of two u\_int64 numbers which represent the beginning offset and length to discard. This structure can be created by using Pythons module $struct$. Example~\ref{ex:blkdiscard} shows exactly how to issue block discard ioctl.
 
-If the users of fs-drift wants to test discard speed, they can specify so in the configuration file along with a probability of the event. When the event of discard is triggered, fs-drift works similar as with random writes, but intead of producing buffer and writing data, it's using discards with random offset and specified block size to call BLKDISCARD.
+If the users of fs-drift wants to test discard speed, they can specify so in the configuration file along with a probability of the event. When the event of discard is triggered, fs-drift works similar as with random writes, but instead of producing buffer and writing data, it's using discards with random offset and specified block size to call BLKDISCARD.
 
 
 \lstset{language=Python, 
@@ -571,11 +571,11 @@ Usage:
 \section{Multithread}
 Multithreaded workloads are essential for researching performance of ------.
 
-Option to run fs-drift a multithreaded benchmark was added. User will just specify the number of threads that is to be used and fs-drift will spawn that many. For this option, large parts of fs-drift needed to be re-engineered so the threads are not corrupting each other data structures, buffers, etc.
+Option to run fs-drift a multi threaded benchmark was added. User will just specify the number of threads that is to be used and fs-drift will spawn that many. For this option, large parts of fs-drift needed to be re-engineered so the threads are not corrupting each other data structures, buffers, etc.
 
 Important fact to notice is that every thread is maintaining its own performance throughput report so it is expected that the user will know how to aggregate and interpret the result.
 
-If multithreaded fs-drift is used for testing, user should limit the number of parallel IOs using iodepth parameter.
+If multi threaded fs-drift is used for testing, user should limit the number of parallel IOs using iodepth parameter.
 
 
 \begin{itemize}
@@ -585,10 +585,10 @@ If multithreaded fs-drift is used for testing, user should limit the number of p
 \section{IOdepth}
 Fs-drift threads will submit their IO requests to the device or files in parallel. By default, this behavior is unmanaged and can result in overloading the target.
 
-By using iodepth parameter, user can specify maximum amount of 4k IO units that will be in progress at the same time. This behavior is implemented by managing a counter shared between threads. The counter contains information on how many IOs are in progress. If this number is higher or the same as the specified iodepth, threads will wait randomly between 1-10ms% $\SI{1-10}{\milli\seconds}$% for the counter to be lowered. 
+By using iodepth parameter, user can specify maximum amount of $\SI{4}{\kilo\byte}$ IO units that will be in progress at the same time. This behavior is implemented by managing a counter shared between threads. The counter contains information on how many IOs are in progress. If this number is higher or the same as the specified iodepth, threads will wait randomly between one to ten miliseconds for the counter to be lowered. 
 
 \begin{itemize}
-    \item -i|--iodepth, number of 4k blocks that can be executed at the same time (default 0)
+    \item -i|--iodepth, number of $\SI{4}{\kilo\byte}$ blocks that can be executed at the same time (default 0, unmanaged)
 \end{itemize}
 
 
@@ -605,7 +605,7 @@ Another small feature added by switching to $perf\_counter()$ as a tool to log t
 \section{Data reporting}
 In previous versions, data was stored in the programs memory which increased RAM consumption during long tests. Also in case of OS or benchmark failure all the results were lost. This problem was removed by having the output files open and continually appending new entries.
 
-In fs-drift, gathering only response (completion) times introduced noise to the datapoints, since there can be variability of file or data size, that variability will directly project into the data, since working with larger files can take longer than working with smaller files.
+In fs-drift, gathering only response (completion) times introduced noise to the data points, since there can be variability of file or data size, that variability will directly project into the data, since working with larger files can take longer than working with smaller files.
 
 With this in mind, an option to store bandwidth was added as a new feature. Bandwidth is measured as a total completed size divided by the time of completion. This way, variability of data size is not affecting the measurements.
 
@@ -666,7 +666,7 @@ Fs-drift offers wide range of IO operations to be executed against a target. Mos
 
 Sequential operations are guided by an offset variable shared between threads, so that they can cooperate in processing the target. Random operations are either getting a random offset, or request one from the random map, so no overwrites can happen during the test. On top of that, random operations can wait if the target is overloaded.
 
-When testing VDO, the most interesting behavior is triggered when something changes within the VDO block mapping tree. This is the reason, mainly write and occasionaly discard operations are used in the tests conducted for this thesis. Randomized operations are used to mimic real-life access patterns
+When testing VDO, the most interesting behavior is triggered when something changes within the VDO block mapping tree. This is the reason, mainly write and occasionally discard operations are used in the tests conducted for this thesis. Randomized operations are used to mimic real-life access patterns
 
 \subsection{File size}
 File size is used both for testing on file system and testing with rawdevice. It represents the size of data that will be administered block by block to the target. Since some delay can occur between actually invoking the writing process, larger file size will mean more aggressive workload for the device or file system. 
@@ -695,11 +695,11 @@ Most testing workloads that aim to test limits of VDO technology are random writ
 However, this approach may not bet the best solution, since some blocks can be used more than once and some blocks may never be used. The act of overwriting blocks can introduce noise to the results, so in case the test is not specifically aimed at reusing blocks, it is recommended to use randommap.
 
 \subsection{Multithreading}
-VDO is a high performing layer aimed to serve intensive, multi threaded applications. As a block device, VDO serves incoming IO stream through a queue of 2000 IOs. In the test aimed to exeercise upper limits of VDO performance, the generated workloads need to be intensive enough so the full potential of VDO can be achieved.
+VDO is a high performing layer aimed to serve intensive, multi threaded applications. As a block device, VDO serves incoming IO stream through a queue of 2000 IOs. In the test aimed to exercise upper limits of VDO performance, the generated workloads need to be intensive enough so the full potential of VDO can be achieved.
 
 To generate such workload, we need to use multi threaded fs-drift with batch submission controlled by iodepth. Iodepth in fs-drift controls exactly how many $\SI{4}{\kilo\byte}$ blocks will be in progress at any given time. It is not only lower, but also upper limit of the batch size.
 
-By setting these parameters correctly, we aim at the right VDO queue exercies. If the VDO isn't engaged enough, the test is limiting itself in the performance. On the other hand, if the test has no upper limit on IO submission, the queue would be overflown at all times, which will slow down performance.
+By setting these parameters correctly, we aim at the right VDO queue exercises. If the VDO isn't engaged enough, the test is limiting itself in the performance. On the other hand, if the test has no upper limit on IO submission, the queue would be overflown at all times, which will slow down performance.
 
 Following formula references a way to compute maximal batch size with given number of threads and block size.
 
@@ -709,7 +709,7 @@ In case the maximal batch size of the test with given parameters is much larger 
 
 Fs-drift parameter iodepth limits the batch size from both size. If the user specifies iodepth of 2000, fs-drift will be submitting exactly 2000 $\SI{4}{\kilo\byte}$ blocks at the same time.
 
-However, even limiting batch size with iodepth isn't a final solution. In case the physical device under VDO is very slow, VDO might not be able to empty the queue between batches which would again cause delays and worse performance. Testers should always make sure the queue was properly excercised by inspecting vdostats during and after the tests.
+However, even limiting batch size with iodepth isn't a final solution. In case the physical device under VDO is very slow, VDO might not be able to empty the queue between batches which would again cause delays and worse performance. Testers should always make sure the queue was properly exercised by inspecting vdostats during and after the tests.
 
 \section{Testing package}
 To manage the test results and metadata as well as testing environment and to be able to include tests in more complex or automized workflows, it is beneficial to encapsulate the benchmark into a testing package. For fs-drift, there is drift\_job package.
@@ -821,7 +821,7 @@ As shown in Sections~\ref{half} and ~\ref{alloc} performance testing of VDO is s
 
 The aim of this test is to bring VDO to a hypothetical steady state where its partially fragmented and almost full. This can be done by dividing the testing to two stages. First stage will be aimed to prepare the VDO volume. Second stage will finally gather performance measurements.
 
-The pre-writting should fulfill these conditions:
+The pre-writing should fulfill these conditions:
 \begin{itemize}
     \item fill up more than half of physical space
     \item use random write across the logical space so the content is cached
@@ -912,14 +912,14 @@ The test results show performance of random write workload on three VDO instance
 
 %To test this effect, we can use random, unpredictable write workload on an instance of VDO with sufficient and insufficient cache size. The parameter to tune cache size in VDO is --blockMapCacheSize=BYTES.
 
-%To ensure the workload is truly aggresive, parameter randommap and large file size is used so the test makes lots of requests in a short amount of time and there is no chance that the requested blocks will be in the cache.
+%To ensure the workload is truly aggressive, parameter randommap and large file size is used so the test makes lots of requests in a short amount of time and there is no chance that the requested blocks will be in the cache.
 
-%To ensure the workload is truly aggresive, large file size and completely random write is used so the test makes lots of requests in a short amount of time and the effect of caching pages could be seen.
+%To ensure the workload is truly aggressive, large file size and completely random write is used so the test makes lots of requests in a short amount of time and the effect of caching pages could be seen.
 
 \begin{itemize}
-    \item Test1: logical size: 80g, block map cache size: $\SI{128}{\mega\byte}$(default)
-    \item Test2: logical size: 400g, block map cache size: $\SI{128}{\mega\byte}$(default)
-    \item Test3: logical size: 400g, block map cache size: $\SI{512}{\mega\byte}$ 
+    \item Test1: logical size: $\SI{80}{\giga\byte}$, block map cache size: $\SI{128}{\mega\byte}$(default)
+    \item Test2: logical size: $\SI{400}{\giga\byte}$, block map cache size: $\SI{128}{\mega\byte}$(default)
+    \item Test3: logical size: $\SI{400}{\giga\byte}$, block map cache size: $\SI{512}{\mega\byte}$ 
 \end{itemize}
 
 The expected results will be that on the VDO volume with insufficient cache size, performance will be significantly worse than on other two tests. The test with increased cache size will demonstrate, that the standard performance is restored to the baseline levels.
@@ -938,7 +938,7 @@ We can observe the comparison of performance on Figure~\ref{fig:blockmap-boxplot
 \begin{tabular}{|l|l|l|l|l|l|l|}
         \hline
         \multicolumn{7}{|l|}{Throughput of random write (MB/s)} \\ \hline
-        test name & median & 1th q. & 3rd q. & min & max & stdev \\ \hline 
+         & median & 1th q. & 3rd q. & min & max & stdev \\ \hline 
 80g & 67.32 & 46.16 & 151.54 & 10.57 & 188.82 & 55 \\ \hline
 400g defaul & 1.13 & 0.94 & 1.32 & 0.85 & 35.98 & 1 \\ \hline
 400g increased cache & 74.66 & 58.18 & 174.05 & 12.69 & 187.58 & 55 \\ \hline
@@ -972,7 +972,7 @@ While processing the data, the interesting statistic to look for from vdostats i
 \label{fig:discard-full-througput}
 \end{figure}
 
-As we can see on the Figure~\ref{discard}, while having normal VDO setup and regular discard workload, the speed of discard operation is decreasing with using larger discard sizes. This test was conducted after a previous run of fs-drift filled all the space with random writes. Filling the storage with random data before every test takes a considerably long time. To shorten the time to test discard operation, we could try testing without prewritting the VDO.
+As we can see on the Figure~\ref{discard}, while having normal VDO setup and regular discard workload, the speed of discard operation is decreasing with using larger discard sizes. This test was conducted after a previous run of fs-drift filled all the space with random writes. Filling the storage with random data before every test takes a considerably long time. To shorten the time to test discard operation, we could try testing without pre-writing the VDO.
 
 It is important to notice, that while filling the volume with random data might not be necessary, the tests should be done on fully allocated VDO volume. If there is a discard request for a block tha has not yet been allocated, the discard handling is much faster, since no work has been done. This effect could be observed by running the same test on an unallocated storage as presented in Figure~\ref{discard-unalloc}.
 
@@ -1004,14 +1004,14 @@ It is apparent, the results from empty, but previously allocated VDO show the sa
 128k & 184.27 & 179.58 & 185.94 & 105.26 & 195.25 & 9 \\ \hline
 1m & 42.4 & 42.27 & 42.57 & 38.79 & 43.11 & 0 \\ \hline
 \hline
-        \multicolumn{7}{|l|}{Throughput of random discard (MB/s) on empty but fully allocatedVDO} \\ \hline
+        \multicolumn{7}{|l|}{Throughput of random discard (MB/s) on empty but fully allocated VDO} \\ \hline
         & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
 4k & 1114.18 & 1075.4 & 1152.95 & 48.4 & 1334.86 & 67 \\ \hline
 16k & 977.27 & 935.99 & 1019.96 & 52.48 & 1111.36 & 62 \\ \hline
 128k & 202.49 & 201.6 & 203.29 & 51.29 & 223.63 & 8 \\ \hline
 1m & 44.87 & 44.75 & 45.03 & 44.31 & 46.67 & 0 \\ \hline
 \end{tabular}
-\caption{Table displaying performance od discard operation on a VDO volumes with various state of utilization}
+\caption{Performance of discard operation on a VDO volumes with various state of utilization}
 \end{table}
 
 \clearpage
