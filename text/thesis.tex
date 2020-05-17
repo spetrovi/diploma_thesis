@@ -761,7 +761,7 @@ Testing for this thesis was conducted on multiple machines provided by Red Hat c
 \label{testing}
 
 
-\section{VDO aging}
+\section{Performance of VDO after prolonged usage}
 \label{half}
 VDO will try to serialize the the incoming workload if possible by sequentially filling slabs to about half of their capacity. If more than half of slab is used, or if VDO is running out of free physical blocks, it will start to search for free blocks in the slab, which will appear as a change in performance. 
 
@@ -771,7 +771,10 @@ We could test this effect by setting up fresh VDO volume, preallocating it and r
 
 While running this test, performance of VDO should be reasonably stable until it uses about half of its data blocks. Performance should sharply decrease after that point.
 
-On Figure and Figure, results from such test can be examined. Physical space for this test was set to 5g with slab size of 2g, therefore this instance of VDO has one slab of data blocks. We can observe on the Figure that the workload caused the VDO to use half of its data blocks in about 12 seconds %{12}{\second}%. While looking at the Throughput graph, we can see that is the turning point for performance decrease.
+On Figure\ref{fig:half-start}and Figure\ref{fig:half-end}, results from such test can be examined. Physical space for this test was set to 5g with slab size of 2g, therefore this instance of VDO has one slab of data blocks. We can observe on the Figure that the workload caused the VDO to use half of its data blocks in about $\SI{12}{\second}$. While looking at the Throughput graph, we can see that is the turning point for performance decrease.
+
+FEevolution of performance can be observed on a Figure~\ref{fig:half-evol}. It can be clearly seen, that the performance started to drop at approximately $\SI{150}{\second}$ mark. This test was conducted on a VDO with physical volume of $\SI{12}{\giga\byte}$. Space for the user data has 4 slabs, which is $\SI{8}{\giga\byte}$. By examining Figure~\ref{fig:half-evol-vdostats}, we can observe, that after $\SI{150}{\second}$,the test passed half of VDO's physical volume.
+
 
 
 \begin{figure}[!htb]
@@ -785,6 +788,17 @@ On Figure and Figure, results from such test can be examined. Physical space for
 \label{fig:half-end}
 \end{figure}
 
+
+\begin{figure}[!htb]
+        \centering
+        \includegraphics[width=\textwidth]{../results/steady/korben/nice/report/tar_829_bw.png}
+\caption[Evolution of VDO performance while filling the medium]{Evolution of VDO performance while filling the medium. The performance decreases after writing 50\% of data blocks.}
+\label{fig:half-start}
+        \centering
+        \includegraphics[width=\textwidth]{../results/steady/korben/nice/report/tar_829_vdostats.png}
+\caption[[Evolution of VDO block utilization while filling the medium]{Evolution of logical, physical and deduplicated blocks while filling the medium.}
+\label{fig:half-end}
+\end{figure}
 
 \section{Steady state testing}
 As shown in Sections~\ref{half} and ~\ref{alloc} performance testing of VDO is susceptible to various testing preconditions. Most of the VDO instances created by users won't be unallocated nor will they be only half empty most of the time. To find out, how could VDO perform while being used in real-life, we should be able to create a testing instance that would show qualities of used VDO.

@@ -59,17 +59,17 @@
 \contentsline {section}{\numberline {4.5}\slshape Testing hardware}{31}{section.4.5}
 \contentsline {chapter}{\numberline {5}\bfseries Performance of VDO}{33}{chapter.5}
 \contentsline {section}{\numberline {5.1}\slshape VDO aging}{33}{section.5.1}
-\contentsline {section}{\numberline {5.2}\slshape Steady state testing}{33}{section.5.2}
-\contentsline {section}{\numberline {5.3}\slshape VDO threads}{36}{section.5.3}
-\contentsline {section}{\numberline {5.4}\slshape Block map cache}{37}{section.5.4}
-\contentsline {section}{\numberline {5.5}\slshape Maximum discard size}{39}{section.5.5}
-\contentsline {section}{\numberline {5.6}\slshape Write policies}{45}{section.5.6}
-\contentsline {section}{\numberline {5.7}\slshape Journal performance}{46}{section.5.7}
-\contentsline {chapter}{\numberline {6}\bfseries Conclusion}{51}{chapter.6}
-\contentsline {chapter}{\numberline {7}\bfseries Appendix}{53}{chapter.7}
-\contentsline {section}{\numberline {7.1}\slshape Testing hardware}{53}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}\rmfamily Machine\tmspace +\thinmuskip {.1667em}1}{53}{subsection.7.1.1}
-\contentsline {subsection}{\numberline {7.1.2}\rmfamily Machine\tmspace +\thinmuskip {.1667em}2}{53}{subsection.7.1.2}
-\contentsline {section}{\numberline {7.2}\slshape Additional results}{56}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}\rmfamily Discard performance of unallocated VDO}{56}{subsection.7.2.1}
-\contentsline {chapter}{Bibliography}{59}{chapter*.16}
+\contentsline {section}{\numberline {5.2}\slshape Steady state testing}{34}{section.5.2}
+\contentsline {section}{\numberline {5.3}\slshape VDO threads}{37}{section.5.3}
+\contentsline {section}{\numberline {5.4}\slshape Block map cache}{38}{section.5.4}
+\contentsline {section}{\numberline {5.5}\slshape Maximum discard size}{40}{section.5.5}
+\contentsline {section}{\numberline {5.6}\slshape Write policies}{46}{section.5.6}
+\contentsline {section}{\numberline {5.7}\slshape Journal performance}{47}{section.5.7}
+\contentsline {chapter}{\numberline {6}\bfseries Conclusion}{53}{chapter.6}
+\contentsline {chapter}{\numberline {7}\bfseries Appendix}{55}{chapter.7}
+\contentsline {section}{\numberline {7.1}\slshape Testing hardware}{55}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}\rmfamily Machine\tmspace +\thinmuskip {.1667em}1}{55}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}\rmfamily Machine\tmspace +\thinmuskip {.1667em}2}{55}{subsection.7.1.2}
+\contentsline {section}{\numberline {7.2}\slshape Additional results}{58}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}\rmfamily Discard performance of unallocated VDO}{58}{subsection.7.2.1}
+\contentsline {chapter}{Bibliography}{61}{chapter*.16}
