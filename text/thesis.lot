@@ -10,7 +10,7 @@
 \contentsline {table}{\numberline {5.2}{\ignorespaces Testing of VDO volume created with various with sufficient and insufficient block map}}{39}{table.5.2}
 \contentsline {table}{\numberline {5.3}{\ignorespaces Table displaying performance od discard operation on a VDO volumes with various state of utilisation}}{42}{table.5.3}
 \contentsline {table}{\numberline {5.4}{\ignorespaces Performance of various write policies}}{47}{table.5.4}
-\contentsline {table}{\numberline {5.5}{\ignorespaces Performance of VDO with ending regions placed on different devices.}}{48}{table.5.5}
+\contentsline {table}{\numberline {5.5}{\ignorespaces Performance of VDO with the ending regions placed on different devices.}}{48}{table.5.5}
 \addvspace {4\p@ }
 \addvspace {4\p@ }
 \contentsline {table}{\numberline {7.1}{\ignorespaces Testing machine 1}}{53}{table.7.1}

@@ -30,14 +30,14 @@
 \contentsline {subsection}{\numberline {2.4.3}\rmfamily Block map cache size}{15}{subsection.2.4.3}
 \contentsline {chapter}{\numberline {3}\bfseries Fs-drift}{17}{chapter.3}
 \contentsline {section}{\numberline {3.1}\slshape Compressible data generator}{17}{section.3.1}
-\contentsline {section}{\numberline {3.2}\slshape Deduplication}{18}{section.3.2}
+\contentsline {section}{\numberline {3.2}\slshape Deduplication}{17}{section.3.2}
 \contentsline {section}{\numberline {3.3}\slshape DirectIO}{18}{section.3.3}
-\contentsline {section}{\numberline {3.4}\slshape Rawdevice}{19}{section.3.4}
+\contentsline {section}{\numberline {3.4}\slshape Rawdevice}{18}{section.3.4}
 \contentsline {section}{\numberline {3.5}\slshape Random discard operation}{19}{section.3.5}
 \contentsline {section}{\numberline {3.6}\slshape Random map}{20}{section.3.6}
-\contentsline {section}{\numberline {3.7}\slshape Multithread}{21}{section.3.7}
+\contentsline {section}{\numberline {3.7}\slshape Multithread}{20}{section.3.7}
 \contentsline {section}{\numberline {3.8}\slshape IOdepth}{21}{section.3.8}
-\contentsline {section}{\numberline {3.9}\slshape Performance measurement}{22}{section.3.9}
+\contentsline {section}{\numberline {3.9}\slshape Performance measurement}{21}{section.3.9}
 \contentsline {section}{\numberline {3.10}\slshape Data reporting}{22}{section.3.10}
 \contentsline {chapter}{\numberline {4}\bfseries Testing methodology}{23}{chapter.4}
 \contentsline {section}{\numberline {4.1}\slshape Testing environment}{23}{section.4.1}

@@ -439,26 +439,27 @@ Fs-drift is an open-source benchmark developed specifically for testing heavy wo
 For performance testing of VDO, new features and behavior needed to be implemented to fs-drift to enable more precise control over IOs and testing process.
 
 \section{Compressible data generator}
-While testing compression and deduplication technology as VDO, data generated for testing need to be specificaly shaped. The benchmark needs to be able to generate the testing data in a way that corresponds to examined cases. A restriction for VDO testing is that the repeating patterns in compressible data cannot be composed entirely of zeroes, because the way VDO deals with zero blocks (see, Zero blocks elimination). For this reason, new parameter was added to fs-drift, that enables the user to produce buffers using $lzdatagenerator$ with specified compressibility.
+While testing compression and deduplication technology as VDO, data generated for testing need to be specificaly shaped. The benchmark needs to be able to generate the testing data in a way that corresponds to examined cases. A restriction for VDO testing is that the repeating patterns in compressible data cannot be composed entirely of zeroes, because the way VDO deals with zero blocks (see, Zero blocks elimination). For this reason, new parameter was added to fs-drift, that enables the user to produce buffers with specified compressibility.
 
-This feature was implemented using alternative IO buffer behavior which works with another open source project called $lzdatagen$.
+Compressible blocks are achieved by filling the desired number of bytes with random data and filling the rest with zeroes. This way, any generated block is always compressible in desired manner.
+%LZ data generator (i.e. lzdatagen) is a simple but powerfull tool for generating data with desired compressibility. The user can specify compression ratio, size and output file and obtains data with those qualities. Seed for repeatable output can be also specified, which is useful for producing deduplicable workload.
 
-LZ data generator (i.e. lzdatagen) is a simple but powerfull tool for generating data with desired compressibility. The user can specify compression ratio, size and output file and obtains data with those qualities. Seed for repeatable output can be also specified, which is useful for producing deduplicable workload.
+%If there is a compression ratio set other than 0.0, the buffer is filled using lzdatagen call with the desired compression ratio. Otherwise the buffers are filled the same way as in previous versions of fs-drift.
 
-If there is a compression ratio set other than 0.0, the buffer is filled using lzdatagen call with the desired compression ratio. Otherwise the buffers are filled the same way as in previous versions of fs-drift.
-
-This simple but powerfull feature now empowers the benchmark user to specify the compressibility of written data and therefore makes the user able to measure performance of any technology that deals with compression feature such as ZFS or VDO.
+%This simple but powerfull feature now empowers the benchmark user to specify the compressibility of written data and therefore makes the user able to measure performance of any technology that deals with compression feature such as ZFS or VDO.
 
 Usage:
 \begin{itemize}
-    \item -c|--compression-ratio, number that is a desired compress ratio, e.g. 4.0 is 1/4.0, therefore compressibility will be 75\%~(default~0.0)
+    \item -c|--compression-ratio, number that is a desired compress ratio, e.g. 4.0 is a compressibility of 75\%, so the compressed block occupies 25\% of the original space~(default~0.0)
 \end{itemize}
 
 
 \section{Deduplication}
-While some of the data from lzdatagen will be naturally deduplicable, more precise control of deduplicibility of the data could result in more precise performance measuerment.
+Sometimes it is needed to produce deduplicable data for correct workload shaping. Fs-drift provides this option to users by repeating generated random blocks. Outputed data is therefore deduplicable to a specified amount.
 
-As mentioned in the section above, user can input seed value to lzdatagen to produce the same output. Fs-drift uses this parameter to produce deduplicable data. Based on the inputed probability, fs-drift will either produce new data by obtaining new seed from os.urandom() function and saving it for later. In case fs-drift needs to produce data that will deduplicate, it uses one of the stored seed from the previously generated data.
+%While some of the data from lzdatagen will be naturally deduplicable, more precise control of deduplicibility of the data could result in more precise performance measuerment.
+
+%As mentioned in the section above, user can input seed value to lzdatagen to produce the same output. Fs-drift uses this parameter to produce deduplicable data. Based on the inputed probability, fs-drift will either produce new data by obtaining new seed from os.urandom() function and saving it for later. In case fs-drift needs to produce data that will deduplicate, it uses one of the stored seed from the previously generated data.
 
 Usage:
 \begin{itemize}
@@ -1081,7 +1082,7 @@ vdo\_hdd\_baseline & 1.28 & 0.97 & 1.87 & 0.85 & 4.73 & 0 \\ \hline
 tail\_ssd & 16.93 & 12.27 & 25.38 & 7.29 & 152.26 & 28 \\ \hline
 tail\_nvme & 19.08 & 13.32 & 29.67 & 8.27 & 149.68 & 21 \\ \hline
 \end{tabular}
-\caption[Performance of VDO with ending regions placed on different devices.]{Performance of VDO with ending regions placed on different devices. In the first test, the recovery journal is together with data blocks on an HDD. In the second and third test, the journal is forced on SSD and NVMe device respectively.}
+\caption[Performance of VDO with the ending regions placed on different devices.]{Performance of VDO with ending regions placed on different devices. In the first test, the recovery journal is together with data blocks on an HDD. In the second and third test, the journal is forced on SSD and NVMe device respectively.}
 \label{tab:journal}
 \end{table}
 %\section{Aging testing}
