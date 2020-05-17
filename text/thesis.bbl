@@ -23,5 +23,38 @@
     \field{note}{Accessed: 2020-10-05}
     \field{title}{VDO write policies}
   \endentry
+
+  \entry{Haerder83principlesof}{article}{}
+    \name{author}{2}{}{%
+      {{hash=HT}{%
+         family={Haerder},
+         familyi={H\bibinitperiod},
+         given={Theo},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=RA}{%
+         family={Reuter},
+         familyi={R\bibinitperiod},
+         given={Andreas},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HTRA1}
+    \strng{fullhash}{HTRA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{pages}{287\bibrangedash 317}
+    \field{title}{Principles of Transaction-Oriented Database Recovery}
+    \field{volume}{15}
+    \field{journaltitle}{ACM Computing Surveys}
+    \field{year}{1983}
+  \endentry
+
+  \entry{seekwatcher}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://oss.oracle.com/~mason/seekwatcher/}}
+    \field{note}{Accessed: 2020-22-02}
+    \field{title}{Seekwatcher}
+  \endentry
 \endsortlist
 \endinput

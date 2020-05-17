@@ -50,7 +50,7 @@
     university    = mu,
     faculty       = fi,
     type          = mgr,
-    author        = Samuel Petrovič,
+    author        = Bc.Samuel Petrovič,
     gender        = m,
     advisor       = Adam Rambousek,
     title         = {Performance testing of Virtual Data Optimizer storage layer},
@@ -173,7 +173,7 @@ Virtual Data Optimizer (VDO) is a block layer virtualization service in Linux st
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{graphics/diagrams/space_saving.png}
-        \caption[Space saving methods in VDO]{Diagram of space saving methods of VDO. In the first step, duplicate data and zero blocks are eliminated. In the second step, remaining unique blocks are compressed and stored as a single block.}
+        \caption[Space saving methods in VDO]{Space saving methods of VDO. In the first step, duplicate data and zero blocks are eliminated. In the second step, remaining unique blocks are compressed and stored as a single block.}
 \label{fig:space_saving}
 \end{figure}
 
@@ -321,7 +321,7 @@ The number of acknowledgment threads can be tuned using vdoAckThreads option.
 \begin{figure}[!hb]
         \centering
         \includegraphics[width=\columnwidth]{graphics/diagrams/vdo_internal.png}
-\caption[VDO threads and internal structures]{This diagram displays VDO internal structures and their relationship with VDO threads.}
+\caption[VDO threads and internal structures]{VDO internal structures and their relationship with VDO threads.}
 \label{fig:VDO-internals}
 \end{figure}
 \end{landscape}
@@ -338,7 +338,7 @@ In synchronous mode, VDO temporarily writes the block to the device and acknowle
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{graphics/diagrams/sync.png}
-\caption[Synchronous write mode]{This diagram shows a flowchart of asynchronous diagram processing}
+\caption[Synchronous write mode]{Flowchart of asynchronous diagram processing}
 \label{fig:sync}
 \end{figure}
 
@@ -348,12 +348,14 @@ In asynchronous mode, instead of writing the data immediately, physical block is
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{graphics/diagrams/async.png}
-\caption[Asynchronous write mode]{This diagram shows a flowchart of asynchronous diagram processing}
+\caption[Asynchronous write mode]{Flowchart of asynchronous diagram processing}
 \label{fig:async}
 \end{figure}
 
 \subsubsection{Asynchronous unsafe mode}
-The option async-unsafe is there in case the user wants to keep the original non-ACID async write policy.
+In older versions of VDO, asynchronous write mode was not compliand with ACID~\cite{Haerder83principlesof} policies. In case an application written data to a g
+
+Async-unsafe option is there in case the user wants to keep the original non-ACID async write policy.
 
 
 \subsection{Block map cache size}
@@ -467,7 +469,7 @@ Usage:
 \end{itemize}
 
 
-\section{DirectIO}
+\section{Direct\,IO}
 When researching behavior of random operations in fs-drift, file system cache can often skew considerable amount od measurements.
 
 %This could affect reads, since the blocks could be read from the cache instead of the device.
@@ -668,7 +670,7 @@ However, by increasing block size, we're increasing the smallest continuous chun
 Blocksize is a granularity at which fs-drift collect data, one record for one administered IO, so setting it too high can mean lowering the data points in results.
 
 \subsection{Compression ratio}
-Compression ratio is a very important factor while testing VDO. Generally, it is good to use some compression, so the VDO can exercise all its components. However there can be cases where lowering the compression ratio would benefit the user, f.e. if the goal of a test run is to fill as much of physical space as possible, it would be counter-productive to let a portion of the data be deduplicated and compressed.
+Compression ratio is an important factor in testing VDO. Generally, the test should use some compression, so the VDO can exercise all its components. However there can be cases where lowering the compression ratio would benefit the user, f.e. if the goal of a test run is to fill as much of physical space as possible, it would be counter-productive to let a portion of the data be deduplicated and compressed.
 
 While testing VDO, it is important to remember that it's using packaging compression and storing compressed fragments in one block. In case the compression ratio of written blocks is lower than 50\%, therefore resulting compressed blocks would occupy more than 50\% of their original size, there will be no apparent compression during the test, because the packaging algorithm would not be able to fit multiple blocks into one.
 
@@ -771,10 +773,9 @@ We could test this effect by setting up fresh VDO volume, preallocating it and r
 
 While running this test, performance of VDO should be reasonably stable until it uses about half of its data blocks. Performance should sharply decrease after that point.
 
-On Figure\ref{fig:half-start}and Figure\ref{fig:half-end}, results from such test can be examined. Physical space for this test was set to 5g with slab size of 2g, therefore this instance of VDO has one slab of data blocks. We can observe on the Figure that the workload caused the VDO to use half of its data blocks in about $\SI{12}{\second}$. While looking at the Throughput graph, we can see that is the turning point for performance decrease.
+On Figure\ref{fig:half-start}and Figure\ref{fig:half-end}, results from such test can be examined. Physical space for this test was set to $\SI{5}{\giga\byte}$ with slab size of $\SI{2}{\giga\byte}$, therefore this instance of VDO has one slab of data blocks. We can observe on the Figure that the workload caused the VDO to use half of its data blocks in about $\SI{12}{\second}$. While looking at the Throughput graph, we can see that is the turning point for performance decrease.\footnotemark[1]
 
-FEevolution of performance can be observed on a Figure~\ref{fig:half-evol}. It can be clearly seen, that the performance started to drop at approximately $\SI{150}{\second}$ mark. This test was conducted on a VDO with physical volume of $\SI{12}{\giga\byte}$. Space for the user data has 4 slabs, which is $\SI{8}{\giga\byte}$. By examining Figure~\ref{fig:half-evol-vdostats}, we can observe, that after $\SI{150}{\second}$,the test passed half of VDO's physical volume.
-
+Eevolution of performance can be observed on a Figure~\ref{fig:half-evol}. It can be clearly seen, that the performance started to drop at approximately $\SI{150}{\second}$ mark. This test was conducted on a VDO with physical volume of $\SI{12}{\giga\byte}$. Space for the user data has 4 slabs, which is $\SI{8}{\giga\byte}$. By examining Figure~\ref{fig:half-evol-vdostats}, we can observe, that after $\SI{150}{\second}$,the test passed half of VDO's physical volume.
 
 
 \begin{figure}[!htb]
@@ -788,7 +789,9 @@ FEevolution of performance can be observed on a Figure~\ref{fig:half-evol}. It c
 \label{fig:half-end}
 \end{figure}
 
+\footnotetext[1]{Figures were created using block trace visualisator Seekwatcher~\cite{seekwatcher}}
 
+Charts were created using JavaScript charting library Highcharts.
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/steady/korben/nice/report/tar_829_bw.png}
@@ -799,6 +802,8 @@ FEevolution of performance can be observed on a Figure~\ref{fig:half-evol}. It c
 \caption[[Evolution of VDO block utilization while filling the medium]{Evolution of logical, physical and deduplicated blocks while filling the medium.}
 \label{fig:half-end}
 \end{figure}
+
+\clearpage
 
 \section{Steady state testing}
 As shown in Sections~\ref{half} and ~\ref{alloc} performance testing of VDO is susceptible to various testing preconditions. Most of the VDO instances created by users won't be unallocated nor will they be only half empty most of the time. To find out, how could VDO perform while being used in real-life, we should be able to create a testing instance that would show qualities of used VDO.
