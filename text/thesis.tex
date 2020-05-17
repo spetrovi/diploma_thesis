@@ -55,15 +55,17 @@
     advisor       = Adam Rambousek,
     title         = {Performance testing of Virtual Data Optimizer storage layer},
     TeXtitle      = {Performance testing of Virtual Data Optimizer storage layer},
-    keywords      = {VDO, deduplication, compression, storage, fs-drift},
-    TeXkeywords   = {VDO, deduplication, compression, storage, fs-drift},
+    keywords      = {VDO, deduplication, compression, storage, fs-drift, virtualization, LVM Red, Hat},
+    TeXkeywords   = {VDO, deduplication, compression, storage, fs-drift, virtualization, LVM, Red, Hat},
 assignment = {}
 }
 \thesislong{abstract}{
 Abstrakt sa pise nakoniec
 }
 \thesislong{thanks}{
-THX
+I would like to express my deepest gratitude to Tea Dorminy for excellent and constant aid he provided during the time of writing this thesis.
+
+I'm also thankful to my amazing fiance for her loving support and care.
 }
 %% The following section sets up the bibliography.
 
@@ -133,7 +135,7 @@ THX
 % Drill down from high level to low level about VDO, then zoom back ut again from low level VDO details to performance testing...
 
 % Why do people care about storage utilization?
-Storage devices are becoming cheaper, but the storage requirements of the modern IT industry are growing faster -- even exponentially. Innovation in storage utilization has compelling cost reduction potential, but many data reduction solutions are proprietary to a single company.
+Storage devices are becoming cheaper, but the storage requirements of the modern IT industry are growing faster, even exponentially. Innovation in storage utilization has compelling cost reduction potential, but many data reduction solutions are proprietary to a single company.
 
 Linux, however, provides a framework for storage administration called \emph{Logical Volume Manager} (LVM), providing users with easy means of managing storage. By using LVM in order to utilize storage optimization drivers available in the Linux Kernel, administrators can reduce their storage costs without having to use a proprietary, difficult-to-use solution.
 
@@ -157,9 +159,11 @@ However, performance testing of such a complex technology requires extended know
 
 This thesis aims to lay a foundation for fast, efficient performance tuning of VDO: describing its workings, performance related structures and issues, and describing ways of benchmarking of VDO and the effects of the most important tunables.
 
-Chapter~\ref{VDO} is an introduction of VDO technology, providing an in-depth explanation of its terminology, device organisation, system requirements, and relation to other layers in a storage stack.
+Chapter~\ref{VDO} is an introduction of VDO technology, providing an in-depth explanation of its terminology, device organization, system requirements, and relation to other layers in a storage stack.
 
-Chapter~\ref{fs-drift} presents a benchmarking tool \fsdrift. Several new features were implemented in \fsdrift in order to test VDO more efficiently.
+Chapter~\ref{fs-drift} presents a benchmarking tool \fsdrift. Several new features were implemented in \fsdrift  in order to test VDO more efficiently.
+
+Chapter~\ref{methodology} describes testing workflow design, methodology of measurements and data processing.
 
 Chapter~\ref{testing} is focused on a performance testing of VDO, including testing of different VDO components as well as more complex deployment cases. Results demonstrate maximizing VDO performance in different storage stacks, providing an example of testing and potential benefits from tuning VDO to a user's own hardware and workload.
 
@@ -168,7 +172,7 @@ In Chapter~\ref{conclusion}, high-level insight into performance testing of VDO 
 \chapter{Virtual Data Optimiser}
 \label{VDO}
 \section{Introduction}
-Virtual Data Optimizer (VDO) is a block layer virtualization service in Linux storage stack. VDO enables user to operate with greater logical volume than is physically available. This is achieved by using deduplication, compression and elimination of zero-blocks.
+Virtual Data Optimizer (VDO) is a block layer virtualization service in Linux storage stack. VDO enables users to operate with greater logical volume than is physically available. This is achieved by using deduplication, compression and elimination of zero-blocks.
 
 \begin{figure}[!htb]
         \centering
@@ -178,7 +182,7 @@ Virtual Data Optimizer (VDO) is a block layer virtualization service in Linux st
 \end{figure}
 
 
-Deduplication is a technique that, on a block level, dissalows multiple copies of the same data to be written to physical device. In VDO, duplicate blocks are detected but only one copy is physically stored. Subsequent copies then only reference the address of the stored block. Blocks that are deduplicated therefore share one physical address.
+Deduplication is a technique that, on a block level, disallows multiple copies of the same data to be written to physical device. In VDO, duplicate blocks are detected but only one copy is physically stored. Subsequent copies then only reference the address of the stored block. Blocks that are deduplicated therefore share one physical address.
 
 Compression is a technique that reduces usage of physical device by identifying and eliminating redundancy in data. In VDO, lossless compression, based on a parallelized packaging algorithm is used to handle many compression operations at once. Compressed blocks are stored in a way that allows the most logical blocks to be stored in one physical block.
 
@@ -216,7 +220,7 @@ VDO layer is in fact another block device that can aggregate physical storage, p
 \subsection{Physical Size}
 The VDO volume for physically storing date is divided into continuous regions of physical space of constant size. These regions are called $slabs$ and maybe of size of any power of 2 multiple of $\SI{128}{\mega\byte}$  up to $\SI{32}{\giga\byte}$. After creating VDO volume, the slab size cannot be changed. However, a single VDO volume can contain only up to 8096 slabs, so the configured size of slab at VDO volume creation determines its maximum allowed physical size. Since the maximum slab size is $\SI{32}{\giga\byte}$ and maximum number of slabs is 8096, the maximum volume of physical storage usable by VDO is $\SI{256}{\tera\byte}$. Important thing to notice is that at least one slab will be reserved for VDO metadata and wouldn't be used for storing data. Slab size does not affect VDO performance. As mentioned, at least one $slab$ is reserved for VDO metadata and UDS on-disk index.
 
-VDO module keeps two kinds of metadata which differ in the scale of required space.
+VDO module keeps two kinds of metadata which differ in the scale of required space.~\cite{man:requierements}
 \begin{compactenum}
 \item type scales with physical size and uses about $\SI{1}{\mega\byte}$ per every $\SI{4}{\giga\byte}$ of managed physical storage and also additional $\SI{1}{\mega\byte}$ per $slab$. 
 \item type scales with logical size and uses approximately $\SI{1.25}{\mega\byte}$ for every $\SI{1}{\giga\byte}$ of logical storage, rounded up to the nearest slab.
@@ -271,9 +275,15 @@ The full block map is stored on a physical device, in one of the last slabs rese
 Since block mappings are accessed with high frequency and reading from physical device could be costly, part of the block map is stored in memory in a block map cache. When processing incoming request, the relevant page is pulled from the cache, or in case the cache doesn't contain it, it is read from physical device and pushed into the cache. Such cache misses could be costly in terms of performance, and therefore block map cache should be set up correctly.
 
 \subsection{UDS index}
-UDS index is a structure designed specifically to identify duplicate data using hash fingerprints of data blocks. It exists in VDO to provide deduplication advice for effective deduplication. Instance of UDS index is not vital for VDO block handling. In case of losing UDS index, VDO still manages blocks and stores and compress data, only without deduplication. Even in the event of index becoming corrupted, there are different mechanisms in place to assure data correctness, so user can discard the index and start building a new one.
+VDO uses a high performance UDS index for data reduction. UDS index is a structure designed specifically to identify duplicate data using hash fingerprints of data blocks. It exists in VDO to provide deduplication advice for effective deduplication.~\cite{man:udsindex}.
 
-Updating index is costly, so VDO is trying to minimize the updates. That is a reason the index can contain references to blocks that are no longer present in data. Those blocks are called stale blocks.
+VDO computes hashes of incoming blocks and checks them against an index, to retrieve potential matches. Any newly computed hash is placed at the beginning of the index.
+
+The index itself consists of two parts. One part is stored in memory and the second part is stored on the physical device in slabs reserved for metadata. The part in memory is so called $deduplication window$, which contains fingerprints of the most recent blocks VD processed. 
+
+Instance of UDS index is not vital for VDO block handling. In case of losing UDS index, VDO still manages blocks and stores and compress data, only without deduplication. Even in the event of index becoming corrupted, there are different mechanisms in place to assure data correctness, so user can discard the index and start building a new one.
+
+Updating index is costly, so VDO is trying to minimize the updates. That is a reason the index can contain references to blocks that are no longer present in the data.
 
 
 \section{Tunables}
@@ -353,10 +363,9 @@ In asynchronous mode, instead of writing the data immediately, physical block is
 \end{figure}
 
 \subsubsection{Asynchronous unsafe mode}
-In older versions of VDO, asynchronous write mode was not compliand with ACID~\cite{Haerder83principlesof} policies. In case an application written data to a g
+In older versions of VDO, asynchronous write mode was not compliant with ACID~\cite{Haerder83principlesof} policies. In case an application attempted to asynchronously write data into a given block while the system failed, the block's contents could not be warrantied. Most of the applications expect the underlying devices to be ACID compliant and can end up corrupted after a recovery.
 
-Async-unsafe option is there in case the user wants to keep the original non-ACID async write policy.
-
+For this reason, asynchronous mode was re-engineered to be ACID-compliant, however, old implementation is being kept in VDO under the name async-unsafe.~\cite{asyncunsafe}
 
 \subsection{Block map cache size}
 Block map exists in VDO volume to maintain the mapping of logical blocks to physical blocks and managed as pages with each page holding 812 entries of logical blocks. The entire block map is kept on disk, since it can be rather large.
@@ -422,14 +431,14 @@ The $\SI{128}{\mega\byte}$ can cover about $\SI{100}{\giga\byte}$ of logical blo
 %    \item --vdoLogicalSize=logicalsize
 %\end{itemize}
 
-%When specifying block device, it is reccommended to use persistent device name. Otherwise, VDO might fail to start properly in case the name of the device changes.
+%When specifying block device, it is recommended to use persistent device name. Otherwise, VDO might fail to start properly in case the name of the device changes.
 
-%While specifying the logical space, user should be aware what kind of data will be written into the VDO block device and set the logical size accordingly. If heavily compressible data are expected, user can specify logical size as large as ten times the physical size. If the data are expected to be less compressible, it is reccomended to lower the ratio accordingly.
+%While specifying the logical space, user should be aware what kind of data will be written into the VDO block device and set the logical size accordingly. If heavily compressible data are expected, user can specify logical size as large as ten times the physical size. If the data are expected to be less compressible, it is recommended to lower the ratio accordingly.
 
-%After succesfull VDO creation, the layer is prepared to be used as an ordinary block device. That means, either file system can be created on top of it, or a more complex structure can be installed above. All within the contstrains specified in section~\ref{stack}.
+%After successful VDO creation, the layer is prepared to be used as an ordinary block device. That means, either file system can be created on top of it, or a more complex structure can be installed above. All within the constrains specified in section~\ref{stack}.
 
 %\subsection{Monitoring VDO}
-%VDO works as a thinly provisioned volume. Therefore applications or file systems that use it will only see a logical space that is provided by VDO. To monitor VDO space usage, physical space left or compression ratio and much more, $vdostats$ utility provides neccessary inspection of VDO volume.
+%VDO works as a thinly provisioned volume. Therefore applications or file systems that use it will only see a logical space that is provided by VDO. To monitor VDO space usage, physical space left or compression ratio and much more, $vdostats$ utility provides necessary inspection of VDO volume.
 
 \chapter{Fs-drift}
 \label{fs-drift}
@@ -612,11 +621,11 @@ This chapter presents used testing hardware, setup of testing environment and pe
 
 
 \section{Testing environment}
-While testing performance, usage of clean testing environment is strongly encouraged. In time of testing, no other applications should run in the environment to ensure low noise levels. Running tests on clean installation of OS is preferred to ensure no performance impacts caused OS aging, memory shortage, etc.
+While testing performance, usage of clean testing environment is strongly encouraged.~\cite{Traeger:2008:NYS:1367829.1367831} In time of testing, no other applications should run in the environment to ensure low noise levels. Running tests on clean installation of OS is preferred to ensure no performance impacts caused OS aging, memory shortage, etc.
 
-For this thesis, testing was conducted on instances of RHEL-8.1 and RHEL-8.2 to gain access to the most recent features. Tuning options for the systems were set to $throughput-performance$. Other options for the OS are left to be default.
+For this thesis, testing was conducted on instances of RHEL-8.1~\cite{notes:rhel81} and RHEL-8.2~\cite{notes:rhel82} to gain access to the most recent features. Tuning options for the systems were set to $throughput-performance$. Other options for the OS are left to be default.
 
-Storage stack for testing purposes is always prepared by executing a seuqence of LVM commands. For the simplest tests, one volume group and one logical volume was used to be a block device for VDO layer.
+Storage stack for testing purposes is always prepared by executing a sequence of LVM commands. For the simplest tests, one volume group and one logical volume was used to be a block device for VDO layer.
 
 The storage stack can be tested either as a raw device, or file system can be installed on top of it when working with files, or relationship between stack and file system needs to be examined.
 
@@ -626,7 +635,7 @@ It is important to create a fresh instance of stack before the test to ensure st
 \label{alloc}
 Reproducibility of results is an important aspect of any kind of testing. As mentioned, new test environment is prepared before every test to achieve stable, reproducible results. However, when VDO instance just started, it's mapping information is not fully allocated yet. VDO stores its mapping information in a tree, which is allocated as needed.
 
-This could pose a problem for performance testing, since the allocation takes some to complete and therefore some amount of testing time will be testing the allocation latency. We can observe this effect on a Figure~\ref{fig:emptyVDO}. This test was conducted on a empty instance of VDO on top of HDD device. As could be observed, it took about 150ms %{150}{\second}% for VDO to reach stable performance.
+This could pose a problem for performance testing, since the allocation takes some to complete and therefore some amount of testing time will be testing the allocation latency. We can observe this effect on a Figure~\ref{fig:emptyVDO}. This test was conducted on a empty instance of VDO on top of HDD device. As could be observed, it took about $\SI{150}{\second}$ for VDO to reach stable performance.
 
 In case we don't want to specifically test VDO allocation latency, by testing on unallocated VDO a large of testing time is effectively wasted. This could be avoided by forcing VDO to allocate all of its mapping tree before the test. VDO logical space is divided into regions of 812 4k blocks. Every region is covered by the same set of mapping blocks. Therefore executing a write request to each region will force VDO to allocate the whole needed mapping tree. 
 
@@ -683,7 +692,7 @@ Some of the tests that will try to mimic real-life usage should increase dedupul
 \subsection{Random map}
 Most testing workloads that aim to test limits of VDO technology are random writes. This also exercises the ability of VDO to serialize workload for the device underneath. By default, fs-drift is randomly choosing the offset to write the next block of data.
 
-However, this approach may not be best, since some blocks can be used more than once and some blocks may never be used. The act of overwriting blocks can introduce noise to the results, so in case the test is not specifically aimed at reusing blocks, it is recommended to use randommap.
+However, this approach may not bet the best solution, since some blocks can be used more than once and some blocks may never be used. The act of overwriting blocks can introduce noise to the results, so in case the test is not specifically aimed at reusing blocks, it is recommended to use randommap.
 
 \subsection{Multithreading}
 VDO is a high performing layer aimed to serve intensive, multi threaded applications. As a block device, VDO serves incoming IO stream through a queue of 2000 IOs. In the test aimed to exeercise upper limits of VDO performance, the generated workloads need to be intensive enough so the full potential of VDO can be achieved.
@@ -714,9 +723,9 @@ If specified, the package also asynchronously gathers information while the test
 %This makes it possible to actually run multithreaded tests using this testing package. Drift\_job takes a parameter THREADNUM and the it runs that many instances of fs-drift as concurent threads. All the results are stored in a single package, but as multiple files, so then they might be examined in different ways.
 
 \section{Data processing}
-Data processing is accomplished by using library written for processing drift\_job packages. The main object Report will process data from all the specified result packages and creates easy to view HTML report.
+Data processing is accomplished by using library written for processing drift\_job packages. The main object Report will process data from all the specified result packages and creates easy to view HTML report. HTML code is generated by an external library. ~\cite{html}
 
-The html report consists of two parts. First part is presenting individual report for given results. The second part is comparing the inputted results in an easily digestible manner.
+The HTML report consists of two parts. First part is presenting individual report for given results. The second part is comparing the inputted results in an easily digestible manner.
 
 The report output can be tuned with several parameters:
 
@@ -728,7 +737,7 @@ The report output can be tuned with several parameters:
     \item smooth, to let the object know if interpolation and filtering should be used
     \item chart\_vdostats, list of vdostats attributes to plot
     \item lim\_Y to set the upper limit of Y axis
-    \item test\_label, to label outputed comparing charts
+    \item test\_label, to label outputted comparing charts
 \end{itemize}
 
 %Data processing script is working exclusively with the files generated by the testing package drift\_job. It will open the package and create its own data objects producing a report.
@@ -742,17 +751,19 @@ The report output can be tuned with several parameters:
 In case the test was run on a VDO volume, the resulting tarball will contain a file with vdostats logs. The data processing script will find all the statistics the user inputs and produces a chart. This chart therefore shows the state of VDO in time, while the test was running. We use it mainly to view how many logical and physical blocks were used. But with testing specific components like block map cache or journal, we can view their statistics easily on this chart
 
 \subsection{Throughput progression chart}
-This chart is a simple representation of a measured throughput during the test. Since the data can be sometimes noisy, filtering and interpolation is used to obtain a smooth curve. The way filtering with Savitzky-Golay filter works, if there are revolting data points on the extremes of the X axis, it will cause the curve to turn up or down in hyperbolical manners. If this happens and it hinders the visibility of the results, offset can be set accordingly so the revolting values are excluded.
+This chart is a simple representation of a measured throughput during the test. Since the data can be sometimes noisy, filtering and interpolation is used to obtain a smooth curve. The way filtering with Savitzky-Golay filter\footnotemark[1] works, if there are revolting data points on the extremes of the X axis, it will cause the curve to turn up or down in hyperbolic manners. If this happens and it hinders the visibility of the results, offset can be set accordingly so the revolting values are excluded.
+
+\footnotetext[1]{Available in SciPy.~\cite{scipy}}
 
 This chart is mainly used to confirm there was no event that would speed up or slow down the test. If there is a dramatic change in a throughput progression that was unexpected, the test might be faulty.
 
 However, it is very useful, when there is an expected change in behavior of the underlying device such as Empty VDO or Half-Full VDO test
 
 \subsection{Histograms}
-%Histogram of measured throughput is an excellent tool to observe some effects when testing. On this chart, we can usually observe if there are different structures servicing IOs during our workload such as cache.
+Histogram of measured throughput is used to evaluate possible deviations in the measurements that could not be observed on other charts. Caching effects are usually easily visible on histograms as well different behavior patterns of a tested target.
 
 \subsection{Boxplots}
-Boxplots are the main tool used to visually compare performance of different tests. The part in focus is the median, which is the main metrics considered when comparing multiple test runs.
+Box plots are the main tool used to visually compare performance of different tests. The part in focus is the median, which is the main metrics considered when comparing multiple test runs.
 
 \section{Testing hardware}
 Testing for this thesis was conducted on multiple machines provided by Red Hat company. I will introduce testing systems which will be used for multitude of tests with or without the VDO layer installed. These machines were chosen by their computing power, provided memory and by useful storage hardware they are equipped with. These machines are stable systems used by Red Hat Kernel Performance team for regular testing.
@@ -761,7 +772,7 @@ Testing for this thesis was conducted on multiple machines provided by Red Hat c
 
 \chapter{Performance of VDO}
 \label{testing}
-
+This chapter presents testing of different components of VDO and performance tuning of some possible user cases. Presented results were obtained using methodology from Chapter~\ref{methodology}.
 
 \section{Performance of VDO after prolonged usage}
 \label{half}
@@ -773,9 +784,9 @@ We could test this effect by setting up fresh VDO volume, preallocating it and r
 
 While running this test, performance of VDO should be reasonably stable until it uses about half of its data blocks. Performance should sharply decrease after that point.
 
-On Figure\ref{fig:half-start}and Figure\ref{fig:half-end}, results from such test can be examined. Physical space for this test was set to $\SI{5}{\giga\byte}$ with slab size of $\SI{2}{\giga\byte}$, therefore this instance of VDO has one slab of data blocks. We can observe on the Figure that the workload caused the VDO to use half of its data blocks in about $\SI{12}{\second}$. While looking at the Throughput graph, we can see that is the turning point for performance decrease.\footnotemark[1]
+On Figure\ref{fig:half-start} and Figure\ref{fig:half-end}, results from such test can be examined. Physical space for this test was set to $\SI{5}{\giga\byte}$ with slab size of $\SI{2}{\giga\byte}$, therefore this instance of VDO has one slab of data blocks. We can observe on the Figure that the workload caused the VDO to use half of its data blocks in about $\SI{12}{\second}$. While looking at the Throughput graph, we can see that is the turning point for performance decrease.\footnotemark[1]
 
-Eevolution of performance can be observed on a Figure~\ref{fig:half-evol}. It can be clearly seen, that the performance started to drop at approximately $\SI{150}{\second}$ mark. This test was conducted on a VDO with physical volume of $\SI{12}{\giga\byte}$. Space for the user data has 4 slabs, which is $\SI{8}{\giga\byte}$. By examining Figure~\ref{fig:half-evol-vdostats}, we can observe, that after $\SI{150}{\second}$,the test passed half of VDO's physical volume.
+Evolution of performance can be observed on a Figure~\ref{fig:half-evol}. It can be clearly seen, that the performance started to drop at approximately $\SI{150}{\second}$ mark. This test was conducted on a VDO with physical volume of $\SI{12}{\giga\byte}$. Space for the user data has 4 slabs, which is $\SI{8}{\giga\byte}$. By examining Figure~\ref{fig:half-evol-vdostats}, we can observe, that after $\SI{150}{\second}$,the test passed half of VDO's physical volume.
 
 
 \begin{figure}[!htb]
@@ -805,25 +816,29 @@ Charts were created using JavaScript charting library Highcharts.
 
 \clearpage
 
-\section{Steady state testing}
+\subsection{Steady state testing}
 As shown in Sections~\ref{half} and ~\ref{alloc} performance testing of VDO is susceptible to various testing preconditions. Most of the VDO instances created by users won't be unallocated nor will they be only half empty most of the time. To find out, how could VDO perform while being used in real-life, we should be able to create a testing instance that would show qualities of used VDO.
 
 The aim of this test is to bring VDO to a hypothetical steady state where its partially fragmented and almost full. This can be done by dividing the testing to two stages. First stage will be aimed to prepare the VDO volume. Second stage will finally gather performance measurements.
 
-The prewritting should fulfill these conditions:
+The pre-writting should fulfill these conditions:
 \begin{itemize}
     \item fill up more than half of physical space
     \item use random write across the logical space so the content is cached
-    \item no compression and deduplication
+    \item using only non-compressible and non-deduplicable data
 \end{itemize}
+
+This test, based on principles of aging testing may equip users with efficient means to predict the average performance of VDO volumes,
+
+
 
 \clearpage
 \section{VDO threads}
-Setting the correct number of VDO threads is the main method for users to increase performance. Incorrect amout of threads can result in unwanted performance penalty.
+Setting the correct number of VDO threads is the main method for users to increase performance. Incorrect amount of threads can result in unwanted performance penalty.
 
 To show the effect of VDO threads tuning, we'll design a workload that could exercise VDO in a way it will benefit from thread count increase. The designed workload will mimic high-traffic, multi threaded usage. We'll use high thread count, large block size, random write workload without randommap, so the data can be randomly overwritten. To generate more traffic, occasional large discard will be triggered so the physical space becomes more fragmented.
 
-We can see results from VDO threads testing below. The tests were conducted on Machine~\ref{hw:2} with VDO installed on an SSD. Each test, number of threads was increased to show the optimal performance. The conducted tests were:
+We can see results from VDO threads testing below. The tests were conducted on Machine~\ref{hw:2} with VDO installed on an SSD. Each test, number of threads was increased to show the optimal performance. The tests were conducted on VDO volumes with following settings of VDO threads:
 
 Conducted tests:
 \begin{itemize}
@@ -889,7 +904,7 @@ The default size of block map cache is $\SI{128}{\mega\byte}$, which is XXX page
 
 To test this effect, an unpredictable, aggressive random write workload can be run on VDO instances with various sizes and various block map cache sizes.
 
-The test results show performance of random write workload on three VDO instances. Al the parameters of VDO were kept the same except logical size, and block map cache size:
+The test results show performance of random write workload on three VDO instances. All parameters of VDO were kept the same except logical size, and block map cache size:
 %In case the logical space is large enough and the workload access pattern causes the cache to fill up completely in a way the block map cache is tired out. If the block map cache fills up, (runs out of free pages), and there is a write request to a non-cached page, the cache is forced to discard one page from its pool to make room for the relevant page. This operation is very costly and this could become a bottleneck for VDO performance.
 
 
@@ -1004,7 +1019,7 @@ It is apparent, the results from empty, but previously allocated VDO show the sa
 \section{Write policies}
 VDO provides for different options for writing policies that are chosen with regard to the underlying device. 
 
-In synchronized mode, VDO user assumes the data is written written to the persistent storage and no further commands are needed to make it persistent. User should set this option only when device under the VDO guarantees the data is written persistently when the write request is completed. If a volatile device is used with synchronous mode, user could potentially lose data. This option should be used only when the used device has persistent write cache or a write-through cache.
+In synchronized mode, VDO user assumes the data is written to the persistent storage and no further commands are needed to make it persistent. User should set this option only when device under the VDO guarantees the data is written persistently when the write request is completed. If a volatile device is used with synchronous mode, user could potentially lose data. This option should be used only when the used device has persistent write cache or a write-through cache.
 
 In asynchronous mode, VDO does not guarantee the data is written to the persistent storage after the completion of write request. Only when the user or a structure using VDO issues flush command, it can be sure the data is written persistently.
 
@@ -1121,19 +1136,52 @@ tail\_nvme & 19.08 & 13.32 & 29.67 & 8.27 & 149.68 & 21 \\ \hline
 
 \chapter{Conclusion}
 \label{conclusion}
-The purpose of this thesis was to lay foundation of performance testing of Virtual Data Optimizer driver. This goal was achieved by explaining both principles of VDO space saving and VDO internal structures, then by explaining tuning mechanisms and providing workflow for performance testing as well as displaying many test results with recommendations for correct VDO usage.
 
-The purpose of VDO driver was explained along with mechanisms of space saving and data reduction. Following the basic principles, system requierements and VDO internal structures were introduced with emphasis on their impact on performance.
+VDO is a carefully designed structure that focuses on minimizing usage of other resources in order to save storage capacity. It is a complex technology that should be understood on at least basic level by anyone looking to use it. This thesis provides overview and explanation of VDO internal structures and their purposes.
 
-For the purposes of this thesis and future performance testing of VDO, many new features were implemented to a benchmark fs-drift, so that it can be used in a professional environment in order to test VDO and other block level layers thoroughly. These features significantly improve usability and possibilities of testing with fs-drift.
+Space saving and reducing the cost of storage is quite attractive to many professional, but also non-professional users. However, the cost of running and maintaining such technology should not be high enough to outweigh the advantages. That is the reason why performance testing should be considered by anyone interested in adopting the technology.
 
-Along with implementation of features to fs-drift, a testing package compliant with Red Hat Kernel Performance automated workflow was created to execute tests and gather results. The results from these tests were processed by data processing library developed for this purpose.
+Users attempting to test performance of VDO for their deployment purposes should understand it's tuning mechanisms and their relationship with VDO internal structures and finally the outputed performance.
 
-In the testing part of this thesis, principles of VDO testing and tuning were explained and examined in practice. Each set of tests illustrates and clarifies the boundaries of VDO and shows different ways of performance testing of various VDO's components or a means to achieve a better performance. 
+Many features were developed to user-friendly and easy-to-use benchmark fs-drift, so that anyone can test the block layer effectively. However, the terminology used in documentation of fs-drift is parallel to the terminology of other IO issuing benchmarks, so the explained principles can be transferred to multiple other frameworks.
 
-Results from the tests were processed into easily readable reports available in the electronic appendix. Subset of all generated graphs and tables was included in the main text in order to illustrate some of the main points.
+Testing package using fs-drift was developed in a manner compliant with Red Hat Kernel Performance team. Along with the data processing library, it will be used to conduct regular tests of all major VDO releases. This effort should help developers to catch performance issues early on, so that the consistent, high-preforming product can be delivered to the community. Results from the tests were processed into easily readable reports available in the electronic appendix. Subset of all generated graphs and tables was included in the main text in order to illustrate some of the main points.
 
-Moreover, some of the tests designed for this thesis will be used for automated CI and Compose testing workflow in Red Hat Kernel Performance team. By conducting regular tests in a stable testing environment, performance of VDO can be under high quality supervision and possible issues can be found and removed effectively.
+Using the created testing package, data processing library and explained methodology, various performance tests were conducted. Goal of some of the test was to further explain principles and internal logic of VDO. Following tests were aimed at performance tuning of VDO, by testing the most commonly used tunables as well as more advanced strategies. Commentaries accompanying the presented results presented useful advice for performance testing and tuning VDO.
+
+Testing of VDO with unallocated mapping tree demonstrated the importance to set the right preconditions prior to the testing. By performing a simple preallocation operation, the test can achieve stable results much sooner, which saves the testing time.
+
+Demonstration of a steady state test design represents a valuable advice to potential VDO users. It is important that anyone looking to deploy VDO know about it's behavior under loaded conditions. The performance of VDO observably decreases after a critical point of futilization and it's mapping space becomes fragmented.
+
+Number of VDO threads is the main parameter users will use in attempts to increase performance. In the text, purpose of all tunable VDO threads is explained as well as their relationship with internal structures and performance. Testing the VDO under heavy load with various thread counts shows how increasing number of VDO threads can have positive effect on it's performance.
+
+Users can also run into problems with overloading VDO's block map cache. Problem of small block map cache was demonstrated along with thorough explanation of it's cause and recommendation for additional tuning.
+
+Testing of various writing policies can help users to decide which option to employ and what could be the expected consequences. Moreover, some users could be worried that re-engineering asynchronous writing policy to be ACID-compliant can decrease the performance of VDO. From the obtained test results, it appears not to be a problem, which was the aim of developers after all.
+
+
+Discard operation is important for additional reclaiming of unused, but inaccessible parts of the volume. It is expected the users will issue discards on their own since there is no mechanism for VDO to automatically do that. However, discarding large amounts of space can take a lot of time, so it's important to be know how VDO discards work and how to tune them.
+
+Last set of tests demonstrates advanced method of VDO performance tuning. In case a user will identify a journaling mechanism as bottleneck of VDO performance, possible remedy was introduced and explained along with example of exact commands for achieving it. This testing was an exciting way to show many possibilities of performance tuning and working with LVM.
+
+
+
+
+
+
+%The purpose of this thesis was to lay foundation of performance testing of Virtual Data Optimizer driver. This goal was achieved by explaining both principles of VDO space saving and VDO internal structures, then by explaining tuning mechanisms and providing workflow for performance testing as well as displaying many test results with recommendations for correct VDO usage.
+
+%The purpose of VDO driver was explained along with mechanisms of space saving and data reduction. Following the basic principles, system requierements and VDO internal structures were introduced with emphasis on their impact on performance.
+
+%For the purposes of this thesis and future performance testing of VDO, many new features were implemented to a benchmark fs-drift, so that it can be used in a professional environment in order to test VDO and other block level layers thoroughly. These features significantly improve usability and possibilities of testing with fs-drift.
+
+%Along with implementation of features to fs-drift, a testing package compliant with Red Hat Kernel Performance automated workflow was created to execute tests and gather results. The results from these tests were processed by data processing library developed for this purpose.
+
+%In the testing part of this thesis, principles of VDO testing and tuning were explained and examined in practice. Each set of tests illustrates and clarifies the boundaries of VDO and shows different ways of performance testing of various VDO's components or a means to achieve a better performance. 
+
+
+
+%Moreover, some of the tests designed for this thesis will be used for automated CI and Compose testing workflow in Red Hat Kernel Performance team. By conducting regular tests in a stable testing environment, performance of VDO can be under high quality supervision and possible issues can be found and removed effectively.
 
 
 
@@ -1240,6 +1288,10 @@ Moreover, some of the tests designed for this thesis will be used for automated 
 
 %\section{Single vs. Multithread}
 %Since VDO usage is meant for simple users as well as for complex cases, it is important to know the differences between single-user load and heavy multithreaded traffic.
+
+
+
+\printbibliography[heading=bibintoc]
 
 
 
@@ -1422,14 +1474,6 @@ In the Chapter~\ref{testing}, peculiar behavior discard operation of unallocated
 \caption[Performance of discard operation on an unnallocated VDO volume.]{This test was conducted on a fresh, unallocated instance of VDO volume. The performance appears to be high because of attempts are being made to discard blocks that are not in the mapping tree.}
 \label{fig:discard-unalloc}
 \end{figure}
-
-
-
-
-
-
-\printbibliography[heading=bibintoc]
-
 
 
 

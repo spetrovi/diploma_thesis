@@ -17,6 +17,20 @@
 \endgroup
 
 \sortlist[entry]{none/global/}
+  \entry{man:requierements}{misc}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/deduplicating_and_compressing_storage/deploying-vdo_deduplicating-and-compressing-storage\#vdo-requirements_deploying-vdo}}
+    \field{note}{Accessed: 2020-10-05}
+    \field{title}{VDO memory and storage requierements}
+  \endentry
+
+  \entry{man:udsindex}{misc}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/deduplicating_and_compressing_storage/maintaining-vdo_deduplicating-and-compressing-storage}}
+    \field{note}{Accessed: 2020-10-05}
+    \field{title}{UDS index in VDO}
+  \endentry
+
   \entry{man:writemodes}{misc}{}
     \field{labeltitlesource}{title}
   \field{howpublished}{\url{https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/deduplicating_and_compressing_storage/maintaining-vdo_deduplicating-and-compressing-storage\#selecting-a-vdo-write-mode_maintaining-vdo}}
@@ -48,6 +62,102 @@
     \field{volume}{15}
     \field{journaltitle}{ACM Computing Surveys}
     \field{year}{1983}
+  \endentry
+
+  \entry{asyncunsafe}{misc}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://www.redhat.com/archives/vdo-devel/2020-May/msg00001.html}}
+    \field{note}{Accessed: 2020-10-05}
+    \field{title}{Async-unsafe write policy}
+  \endentry
+
+  \entry{Traeger:2008:NYS:1367829.1367831}{article}{}
+    \true{moreauthor}
+    \name{author}{1}{}{%
+      {{hash=TA}{%
+         family={Traeger},
+         familyi={T\bibinitperiod},
+         given={Avishay},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {ACM}%
+    }
+    \keyw{Benchmarks, file systems, storage systems}
+    \strng{namehash}{TA+1}
+    \strng{fullhash}{TA+1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \verb{doi}
+    \verb 10.1145/1367829.1367831
+    \endverb
+    \field{issn}{1553-3077}
+    \field{number}{2}
+    \field{pages}{5:1\bibrangedash 5:56}
+    \field{title}{A Nine Year Study of File System and Storage Benchmarking}
+    \field{volume}{4}
+    \list{location}{1}{%
+      {New York, NY, USA}%
+    }
+    \field{journaltitle}{Trans. Storage}
+    \field{month}{05}
+    \field{year}{2008}
+  \endentry
+
+  \entry{notes:rhel81}{misc}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/8.1_release_notes/index}}
+    \field{note}{Accessed: 2020-10-05}
+    \field{title}{RHEL-8.1 release notes}
+  \endentry
+
+  \entry{notes:rhel82}{misc}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/8.2_release_notes/index}}
+    \field{note}{Accessed: 2020-10-05}
+    \field{title}{RHEL-8.2 release notes}
+  \endentry
+
+  \entry{html}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=JR}{%
+         family={Jones},
+         familyi={J\bibinitperiod},
+         given={Richard},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{JR1}
+    \strng{fullhash}{JR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{Library for generating HTML code}
+    \verb{url}
+    \verb https://pypi.python.org/pypi/html
+    \endverb
+    \field{year}{2017}
+  \endentry
+
+  \entry{scipy}{misc}{}
+    \true{moreauthor}
+    \name{author}{1}{}{%
+      {{hash=JE}{%
+         family={Jones},
+         familyi={J\bibinitperiod},
+         given={Eric},
+         giveni={E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{JE+1}
+    \strng{fullhash}{JE+1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{{SciPy}: Open source scientific tools for {Python}}
+    \verb{url}
+    \verb http://www.scipy.org/
+    \endverb
+    \field{year}{2001--}
   \endentry
 
   \entry{seekwatcher}{misc}{}

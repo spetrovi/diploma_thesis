@@ -17,11 +17,11 @@
 \contentsline {subsection}{\numberline {2.3.2}\rmfamily Block map}{8}{subsection.2.3.2}
 \contentsline {subsection}{\numberline {2.3.3}\rmfamily UDS index}{9}{subsection.2.3.3}
 \contentsline {section}{\numberline {2.4}\slshape Tunables}{9}{section.2.4}
-\contentsline {subsection}{\numberline {2.4.1}\rmfamily VDO threads}{9}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.1}\rmfamily VDO threads}{10}{subsection.2.4.1}
 \contentsline {subsubsection}{\rmfamily Logical zones thread}{10}{section*.8}
 \contentsline {subsubsection}{\rmfamily Physical zones thread}{10}{section*.9}
 \contentsline {subsubsection}{\rmfamily I/O submission threads}{10}{section*.10}
-\contentsline {subsubsection}{\rmfamily CPU and Hash zone threads}{10}{section*.11}
+\contentsline {subsubsection}{\rmfamily CPU and Hash zone threads}{11}{section*.11}
 \contentsline {subsubsection}{\rmfamily I/O acknowledgment threads}{11}{section*.12}
 \contentsline {subsection}{\numberline {2.4.2}\rmfamily VDO write policies}{13}{subsection.2.4.2}
 \contentsline {subsubsection}{\rmfamily Synchronous mode}{13}{section*.13}
@@ -59,17 +59,17 @@
 \contentsline {section}{\numberline {4.5}\slshape Testing hardware}{31}{section.4.5}
 \contentsline {chapter}{\numberline {5}\bfseries Performance of VDO}{33}{chapter.5}
 \contentsline {section}{\numberline {5.1}\slshape Performance of VDO after prolonged usage}{33}{section.5.1}
-\contentsline {section}{\numberline {5.2}\slshape Steady state testing}{37}{section.5.2}
-\contentsline {section}{\numberline {5.3}\slshape VDO threads}{38}{section.5.3}
-\contentsline {section}{\numberline {5.4}\slshape Block map cache}{39}{section.5.4}
-\contentsline {section}{\numberline {5.5}\slshape Maximum discard size}{41}{section.5.5}
-\contentsline {section}{\numberline {5.6}\slshape Write policies}{47}{section.5.6}
-\contentsline {section}{\numberline {5.7}\slshape Journal performance}{48}{section.5.7}
+\contentsline {subsection}{\numberline {5.1.1}\rmfamily Steady state testing}{37}{subsection.5.1.1}
+\contentsline {section}{\numberline {5.2}\slshape VDO threads}{38}{section.5.2}
+\contentsline {section}{\numberline {5.3}\slshape Block map cache}{39}{section.5.3}
+\contentsline {section}{\numberline {5.4}\slshape Maximum discard size}{41}{section.5.4}
+\contentsline {section}{\numberline {5.5}\slshape Write policies}{47}{section.5.5}
+\contentsline {section}{\numberline {5.6}\slshape Journal performance}{48}{section.5.6}
 \contentsline {chapter}{\numberline {6}\bfseries Conclusion}{53}{chapter.6}
-\contentsline {chapter}{\numberline {7}\bfseries Appendix}{55}{chapter.7}
-\contentsline {section}{\numberline {7.1}\slshape Testing hardware}{55}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}\rmfamily Machine\tmspace +\thinmuskip {.1667em}1}{55}{subsection.7.1.1}
-\contentsline {subsection}{\numberline {7.1.2}\rmfamily Machine\tmspace +\thinmuskip {.1667em}2}{55}{subsection.7.1.2}
-\contentsline {section}{\numberline {7.2}\slshape Additional results}{58}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}\rmfamily Discard performance of unallocated VDO}{58}{subsection.7.2.1}
-\contentsline {chapter}{Bibliography}{61}{chapter*.16}
+\contentsline {chapter}{Bibliography}{57}{chapter*.16}
+\contentsline {chapter}{\numberline {7}\bfseries Appendix}{59}{chapter.7}
+\contentsline {section}{\numberline {7.1}\slshape Testing hardware}{59}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}\rmfamily Machine\tmspace +\thinmuskip {.1667em}1}{59}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}\rmfamily Machine\tmspace +\thinmuskip {.1667em}2}{59}{subsection.7.1.2}
+\contentsline {section}{\numberline {7.2}\slshape Additional results}{62}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}\rmfamily Discard performance of unallocated VDO}{62}{subsection.7.2.1}
