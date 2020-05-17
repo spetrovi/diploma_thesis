@@ -58,7 +58,7 @@
 \@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Physical zones thread}{10}{section*.9}}
 \@writefile{toc}{\contentsline {subsubsection}{\rmfamily   I/O submission threads}{10}{section*.10}}
 \@writefile{toc}{\contentsline {subsubsection}{\rmfamily   CPU and Hash zone threads}{10}{section*.11}}
-\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   I/O acknowledgement threads}{11}{section*.12}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   I/O acknowledgment threads}{11}{section*.12}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces VDO threads and internal structures}}{12}{figure.2.2}}
 \newlabel{fig:VDO-internals}{{2.2}{12}{VDO threads and internal structures}{figure.2.2}{}}
 \citation{man:writemodes}
@@ -66,13 +66,13 @@
 \abx@aux@segm{0}{0}{man:writemodes}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}\rmfamily   VDO write policies}{13}{subsection.2.4.2}}
 \@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Synchronous mode}{13}{section*.13}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Synchronous write mode}}{13}{figure.2.3}}
-\newlabel{fig:sync}{{2.3}{13}{Synchronous write mode}{figure.2.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Asynchronous mode}{14}{section*.14}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Asynchronous write mode}}{14}{figure.2.4}}
-\newlabel{fig:async}{{2.4}{14}{Asynchronous write mode}{figure.2.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Asynchronous unsafe mode}{15}{section*.15}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}\rmfamily   Block map cache size}{15}{subsection.2.4.3}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Asynchronous mode}{13}{section*.14}}
+\@writefile{toc}{\contentsline {subsubsection}{\rmfamily   Asynchronous unsafe mode}{13}{section*.15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}\rmfamily   Block map cache size}{13}{subsection.2.4.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Synchronous write mode}}{14}{figure.2.3}}
+\newlabel{fig:sync}{{2.3}{14}{Synchronous write mode}{figure.2.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Asynchronous write mode}}{15}{figure.2.4}}
+\newlabel{fig:async}{{2.4}{15}{Asynchronous write mode}{figure.2.4}{}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {3}\bfseries  Fs-drift}{17}{chapter.3}}
 \@writefile{lof}{\addvspace {4\p@ }}
 \@writefile{lot}{\addvspace {4\p@ }}
@@ -100,20 +100,21 @@
 \newlabel{fig:emptyVDO}{{4.1}{25}{Performance of unallocated VDO storage}{figure.4.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Performance of allocated VDO storage}}{25}{figure.4.2}}
 \newlabel{fig:preallocatedVDO}{{4.2}{25}{Performance of allocated VDO storage}{figure.4.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}\slshape   Testing with fs-drift}{26}{section.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}\rmfamily   File size}{26}{subsection.4.2.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}\rmfamily   Block size}{26}{subsection.4.2.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}\rmfamily   Compression ratio}{26}{subsection.4.2.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}\rmfamily   Deduplication}{27}{subsection.4.2.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}\rmfamily   Random map}{27}{subsection.4.2.5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.6}\rmfamily   Multithread and maximal performance}{27}{subsection.4.2.6}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}\slshape   Testing package}{28}{section.4.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}\slshape   Benchmark settings}{26}{section.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}\rmfamily   IO operations}{26}{subsection.4.2.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}\rmfamily   File size}{26}{subsection.4.2.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}\rmfamily   Block size}{26}{subsection.4.2.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}\rmfamily   Compression ratio}{27}{subsection.4.2.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}\rmfamily   Deduplication}{27}{subsection.4.2.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.6}\rmfamily   Random map}{27}{subsection.4.2.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.7}\rmfamily   Multithreading}{28}{subsection.4.2.7}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}\slshape   Testing package}{29}{section.4.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.4}\slshape   Data processing}{29}{section.4.4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}\rmfamily   VDO chart}{30}{subsection.4.4.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}\rmfamily   Throughput progression chart}{30}{subsection.4.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}\rmfamily   Histograms}{30}{subsection.4.4.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.4}\rmfamily   Boxplots}{30}{subsection.4.4.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}\slshape   Testing hardware}{30}{section.4.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}\rmfamily   Histograms}{31}{subsection.4.4.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.4}\rmfamily   Boxplots}{31}{subsection.4.4.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}\slshape   Testing hardware}{31}{section.4.5}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}\bfseries  Performance of VDO}{33}{chapter.5}}
 \@writefile{lof}{\addvspace {4\p@ }}
 \@writefile{lot}{\addvspace {4\p@ }}
@@ -140,7 +141,7 @@
 \@writefile{toc}{\contentsline {section}{\numberline {5.5}\slshape   Maximum discard size}{39}{section.5.5}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Block map cache size testing}}{40}{figure.5.6}}
 \newlabel{fig:blockmap-boxplots}{{5.6}{40}{Block map cache size testing}{figure.5.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Table displaying performance od discard operation on a VDO volumes with various state of utilisation}}{42}{table.5.3}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Table displaying performance od discard operation on a VDO volumes with various state of utilization}}{42}{table.5.3}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Evolution of VDO stats during random discard workload}}{43}{figure.5.7}}
 \newlabel{fig:discard-full-vdostats}{{5.7}{43}{Evolution of VDO stats during random discard workload}{figure.5.7}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Evolution of throughput during random discard workload}}{43}{figure.5.8}}
@@ -187,7 +188,6 @@
 \newlabel{fig:discard-unalloc}{{7.1}{57}{Performance of discard operation on an unnallocated VDO volume}{figure.7.1}{}}
 \@ifundefined{unitindent}{\newdimen\unitindent\let \@indentset\relax }{}
 \global \unitindent=32.39998pt\relax\@indentset\relax
-\abx@aux@refcontextdefaultsdone
 \abx@aux@defaultrefcontext{0}{man:writemodes}{none/global/}
 \gdef \thesis@pages@postamble {59}
 \gdef \thesis@pages {59}

@@ -22,12 +22,12 @@
 \contentsline {subsubsection}{\rmfamily Physical zones thread}{10}{section*.9}
 \contentsline {subsubsection}{\rmfamily I/O submission threads}{10}{section*.10}
 \contentsline {subsubsection}{\rmfamily CPU and Hash zone threads}{10}{section*.11}
-\contentsline {subsubsection}{\rmfamily I/O acknowledgement threads}{11}{section*.12}
+\contentsline {subsubsection}{\rmfamily I/O acknowledgment threads}{11}{section*.12}
 \contentsline {subsection}{\numberline {2.4.2}\rmfamily VDO write policies}{13}{subsection.2.4.2}
 \contentsline {subsubsection}{\rmfamily Synchronous mode}{13}{section*.13}
-\contentsline {subsubsection}{\rmfamily Asynchronous mode}{14}{section*.14}
-\contentsline {subsubsection}{\rmfamily Asynchronous unsafe mode}{15}{section*.15}
-\contentsline {subsection}{\numberline {2.4.3}\rmfamily Block map cache size}{15}{subsection.2.4.3}
+\contentsline {subsubsection}{\rmfamily Asynchronous mode}{13}{section*.14}
+\contentsline {subsubsection}{\rmfamily Asynchronous unsafe mode}{13}{section*.15}
+\contentsline {subsection}{\numberline {2.4.3}\rmfamily Block map cache size}{13}{subsection.2.4.3}
 \contentsline {chapter}{\numberline {3}\bfseries Fs-drift}{17}{chapter.3}
 \contentsline {section}{\numberline {3.1}\slshape Compressible data generator}{17}{section.3.1}
 \contentsline {section}{\numberline {3.2}\slshape Deduplication}{17}{section.3.2}
@@ -42,20 +42,21 @@
 \contentsline {chapter}{\numberline {4}\bfseries Testing methodology}{23}{chapter.4}
 \contentsline {section}{\numberline {4.1}\slshape Testing environment}{23}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}\rmfamily VDO allocation}{23}{subsection.4.1.1}
-\contentsline {section}{\numberline {4.2}\slshape Testing with fs-drift}{26}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}\rmfamily File size}{26}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}\rmfamily Block size}{26}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}\rmfamily Compression ratio}{26}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}\rmfamily Deduplication}{27}{subsection.4.2.4}
-\contentsline {subsection}{\numberline {4.2.5}\rmfamily Random map}{27}{subsection.4.2.5}
-\contentsline {subsection}{\numberline {4.2.6}\rmfamily Multithread and maximal performance}{27}{subsection.4.2.6}
-\contentsline {section}{\numberline {4.3}\slshape Testing package}{28}{section.4.3}
+\contentsline {section}{\numberline {4.2}\slshape Benchmark settings}{26}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\rmfamily IO operations}{26}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\rmfamily File size}{26}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\rmfamily Block size}{26}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\rmfamily Compression ratio}{27}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\rmfamily Deduplication}{27}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}\rmfamily Random map}{27}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}\rmfamily Multithreading}{28}{subsection.4.2.7}
+\contentsline {section}{\numberline {4.3}\slshape Testing package}{29}{section.4.3}
 \contentsline {section}{\numberline {4.4}\slshape Data processing}{29}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}\rmfamily VDO chart}{30}{subsection.4.4.1}
 \contentsline {subsection}{\numberline {4.4.2}\rmfamily Throughput progression chart}{30}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}\rmfamily Histograms}{30}{subsection.4.4.3}
-\contentsline {subsection}{\numberline {4.4.4}\rmfamily Boxplots}{30}{subsection.4.4.4}
-\contentsline {section}{\numberline {4.5}\slshape Testing hardware}{30}{section.4.5}
+\contentsline {subsection}{\numberline {4.4.3}\rmfamily Histograms}{31}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}\rmfamily Boxplots}{31}{subsection.4.4.4}
+\contentsline {section}{\numberline {4.5}\slshape Testing hardware}{31}{section.4.5}
 \contentsline {chapter}{\numberline {5}\bfseries Performance of VDO}{33}{chapter.5}
 \contentsline {section}{\numberline {5.1}\slshape VDO aging}{33}{section.5.1}
 \contentsline {section}{\numberline {5.2}\slshape Steady state testing}{33}{section.5.2}
