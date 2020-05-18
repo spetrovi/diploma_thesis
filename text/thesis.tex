@@ -55,12 +55,12 @@
     advisor       = Adam Rambousek,
     title         = {Performance testing of Virtual Data Optimizer storage layer},
     TeXtitle      = {Performance testing of Virtual Data Optimizer storage layer},
-    keywords      = {VDO, deduplication, compression, storage, fs-drift, virtualization, LVM Red, Hat},
-    TeXkeywords   = {VDO, deduplication, compression, storage, fs-drift, virtualization, LVM, Red, Hat},
+    keywords      = {VDO, deduplication, compression, storage, fs-drift, virtualization, LVM Red Hat},
+    TeXkeywords   = {VDO, deduplication, compression, storage, fs-drift, virtualization, LVM, Red Hat},
 assignment = {}
 }
 \thesislong{abstract}{
-The purpose of this thesis is to lay foundation in VDO performance testing. Theoretical overview of VDO and it's components is presented with special emphasis on performance related structures. Opens source benchmark fs-drift was augmented with many features making it possible to test a block layer, specifically a VDO driver. Automated testing package and data processing tools were implemented to gather and process results from performance testing. Finally, many tests were conducted exploring performance of VDO while offering recommendation for VDO usage and performance testing.
+The purpose of this thesis is to lay foundation in VDO performance testing. Theoretical overview of VDO and it's components is presented with special emphasis on performance related structures. Open source benchmark fs-drift was augmented with many features making it possible to test a block layer, specifically a VDO driver. Automated testing package and data processing tools were implemented to gather and process results from performance testing. Finally, various tests were conducted exploring performance of VDO while offering recommendation for VDO usage and performance testing.
 
 }
 \thesislong{thanks}{
@@ -459,7 +459,7 @@ The $\SI{128}{\mega\byte}$ can cover about $\SI{100}{\giga\byte}$ of logical blo
 \chapter{Fs-drift}
 \label{fs-drift}
 
-Fs-drift is an open-source benchmark developed specifically for testing heavy workload and aging performance. Being implemented in Python\,3, it is very easy for users or contributors to add new features or change the benchmark behavior to their needs.
+Fs-drift is an open-source benchmark developed specifically for testing heavy workload and aging performance. Being implemented in Python\,3, it is very easy for users or contributors to add new features or change the benchmark behavior to their needs.~\cite{aginfs}
 
 %\subsection{New features}
 %Fs-drift was used as a main tool in a previous study of file system aging so only new features will be presented in this thesis.
@@ -795,7 +795,7 @@ Histogram of measured throughput is used to evaluate possible deviations in the 
 Box plots are the main tool used to visually compare performance of different tests. The part in focus is the median, which is the main metrics considered when comparing multiple test runs.
 
 \section{Testing hardware}
-Testing for this thesis was conducted on multiple machines provided by Red Hat company. I will introduce testing systems which will be used for multitude of tests with or without the VDO layer installed. These machines were chosen by their computing power, provided memory and by useful storage hardware they are equipped with. These machines are stable systems used by Red Hat Kernel Performance team for regular testing.
+Testing for this thesis was conducted on multiple machines provided by Red Hat company. I will introduce testing systems which will be used for multitude of tests with or without the VDO layer installed. These machines were chosen by their computing power, provided memory and by useful storage hardware they are equipped with. These machines are stable systems used by Red Hat Kernel Performance team for regular testing. The overview of used hardware can be found in Appendix~\ref{hardware}.
 
 
 
@@ -813,7 +813,7 @@ We could test this effect by setting up fresh VDO volume, preallocating it and r
 
 While running this test, performance of VDO should be reasonably stable until it uses about half of its data blocks. Performance should sharply decrease after that point.
 
-On Figure\ref{fig:half-start} and Figure\ref{fig:half-end}, results from such test can be examined. Physical space for this test was set to $\SI{5}{\giga\byte}$ with slab size of $\SI{2}{\giga\byte}$, therefore this instance of VDO has one slab of data blocks. We can observe on the Figure that the workload caused the VDO to use half of its data blocks in about $\SI{12}{\second}$. While looking at the Throughput graph, we can see that is the turning point for performance decrease.\footnotemark[1]
+On Figure~\ref{fig:half-start} and Figure~\ref{fig:half-end}, results from such test can be examined. Physical space for this test was set to $\SI{5}{\giga\byte}$ with slab size of $\SI{2}{\giga\byte}$, therefore this instance of VDO has one slab of data blocks. We can observe on the Figure that the workload caused the VDO to use half of its data blocks in about $\SI{12}{\second}$. While looking at the Throughput graph, we can see that is the turning point for performance decrease.\footnotemark[1]
 
 \footnotetext[1]{Figures were created using block trace visualisator Seekwatcher~\cite{seekwatcher}}
 \clearpage
@@ -888,15 +888,16 @@ By examining the exact values in Table~\ref{tab:tuning}, we can see that the cor
 \begin{figure}[!htb]
 \begin{minipage}{.5\textwidth}
         \includegraphics[width=\linewidth]{../results/threads/direct/low_res/tar_695_threads.png}
-\caption[VDO threads load on default setting]{Thread load before increasing number of threads (Test: default)}
+%\caption[VDO threads load on default setting]{Thread load before increasing number of threads (Test: default)}
 \label{fig:CPUdefault}
 \end{minipage}
 \begin{minipage}{.5\textwidth}
         \includegraphics[width=\linewidth]{../results/threads/direct/low_res/tar_770_threads.png}
-\caption[VDO threads load after tuning]{Thread load after increasing number of threads (Test: 5)}
+%\caption[VDO threads load after tuning]{Thread load after increasing number of threads (Test: 5)}
 \label{fig:CPUtuning}
 
 \end{minipage}
+\caption[VDO threads load on default setting]{Thread load before and after increasing number of threads.}
 \end{figure}
 
 \begin{figure}[!htb]
@@ -1004,7 +1005,7 @@ While processing the data, the interesting statistic to look for from vdostats i
 
 As we can see on the Figure~\ref{discard}, while having normal VDO setup and regular discard workload, the speed of discard operation is decreasing with using larger discard sizes. This test was conducted after a previous run of fs-drift filled all the space with random writes. Filling the storage with random data before every test takes a considerably long time. To shorten the time to test discard operation, we could try testing without pre-writing the VDO.
 
-It is important to notice, that while filling the volume with random data might not be necessary, the tests should be done on fully allocated VDO volume. If there is a discard request for a block that has not yet been allocated, the discard handling is much faster, since no work has been done. This effect could be observed by running the same test on an unallocated storage as presented in Figure~\ref{discard-unalloc}.
+It is important to notice, that while filling the volume with random data might not be necessary, the tests should be done on fully allocated VDO volume. If there is a discard request for a block that has not yet been allocated, the discard handling is much faster, since no work has been done. This effect could be observed by running the same test on an unallocated storage as presented in Figure~\ref{fig:discard-unalloc}.
 
 It is apparent, the results from empty, but previously allocated VDO show the same behavior as the results from the test where VDO was filled with random workload at the beginning, unlike the VDO without allocation, that shows heightened performance.
 
@@ -1045,7 +1046,7 @@ It is apparent, the results from empty, but previously allocated VDO show the sa
 \begin{figure}[!htb]
         \centering
 \includegraphics[width=\textwidth]{../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots}
-caption[Testing of VDO volume created with variable maximum discard size on an empty VDO, unallocated]{Testing of VDO volume created with various maximum discard size parameters. This test was conducted on a fresh, unallocated instance of VDO}
+\caption[Testing of VDO volume created with variable maximum discard size on an empty VDO, unallocated]{Testing of VDO volume created with various maximum discard size parameters. This test was conducted on a fresh, unallocated instance of VDO}
 \label{fig:discard-unalloc}
 \end{figure}
 
@@ -1100,7 +1101,7 @@ VDO stores the recovery journal in the final $\SI{130}{\mega\byte}$ of the physi
 
 We will start by creating a partition on the rotational drive. After putting this partition and the fast SSD into one volume group, we will create an LV on the partition and extended it, so the last blocks are allocated from the second device. Finally, VDO can be put on top of this configuration and the test can be conducted.
 
-Because the process of creating this configuration is not very intuitive, sequence of commands to do so is presented in~\ref{ex:fast-journal}
+Because the process of creating this configuration is not very intuitive, sequence of commands to do so is presented in Example~\ref{ex:fast-journal}
 
 To make absolutely sure only the journal updates went to the fast device and not actual data, the test was run using seekwatcher, to examine block seeks. As can be seen on charts, data were kept strictly on the slow device part of the LV and only journal updates were handled by fast device.
 
@@ -1185,6 +1186,7 @@ Many features were developed to user-friendly and easy-to-use benchmark fs-drift
 
 Testing package using fs-drift was developed in a manner compliant with Red Hat Kernel Performance team. Along with the data processing library, it will be used to conduct regular tests of all major VDO releases. This effort should help developers to catch performance issues early on, so that the consistent, high-preforming product can be delivered to the community. Results from the tests were processed into easily readable reports available in the electronic appendix. Subset of all generated graphs and tables was included in the main text in order to illustrate some of the main points.
 
+\section{Test results and recommendations for usage}
 Using the created testing package, data processing library and explained methodology, various performance tests were conducted. Goal of some of the test was to further explain principles and internal logic of VDO. Following tests were aimed at performance tuning of VDO, by testing the most commonly used tunables as well as more advanced strategies. Commentaries accompanying the presented results presented useful advice for performance testing and tuning VDO.
 
 Testing of VDO with unallocated mapping tree demonstrated the importance to set the right preconditions prior to the testing. By performing a simple preallocation operation, the test can achieve stable results much sooner, which saves the testing time.
@@ -1202,13 +1204,15 @@ Discard operation is important for additional reclaiming of unused, but inaccess
 
 Last set of tests demonstrates advanced method of VDO performance tuning. In case a user will identify a journaling mechanism as bottleneck of VDO performance, possible remedy was introduced and explained along with example of exact commands for achieving it. This testing was an exciting way to show many possibilities of performance tuning and working with LVM.
 
-All the results from the conducter tests were discussed with VDO developers. The developed tools and testing packages will be incorporated to the Kernel Performance testing workflow, so regular, high-quality tests can be conducted automatically on a scheduled basis.
+\section{Future work}
+
+All the results from the conducted tests were discussed with VDO developers. The developed tools and testing packages will be incorporated to the Kernel Performance testing workflow, so high-quality tests can be conducted automatically on a regular basis.
 
 
 
 %The purpose of this thesis was to lay foundation of performance testing of Virtual Data Optimizer driver. This goal was achieved by explaining both principles of VDO space saving and VDO internal structures, then by explaining tuning mechanisms and providing workflow for performance testing as well as displaying many test results with recommendations for correct VDO usage.
 
-%The purpose of VDO driver was explained along with mechanisms of space saving and data reduction. Following the basic principles, system requierements and VDO internal structures were introduced with emphasis on their impact on performance.
+%The purpose of VDO driver was explained along with mechanisms of space saving and data reduction. Following the basic principles, system requirements and VDO internal structures were introduced with emphasis on their impact on performance.
 
 %For the purposes of this thesis and future performance testing of VDO, many new features were implemented to a benchmark fs-drift, so that it can be used in a professional environment in order to test VDO and other block level layers thoroughly. These features significantly improve usability and possibilities of testing with fs-drift.
 

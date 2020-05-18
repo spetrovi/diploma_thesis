@@ -93,6 +93,27 @@
     \field{title}{Async-unsafe write policy}
   \endentry
 
+  \entry{aginfs}{thesis}{}
+    \name{author}{1}{}{%
+      {{hash=PS}{%
+         family={Petrovič},
+         familyi={P\bibinitperiod},
+         given={Samuel},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{PS1}
+    \strng{fullhash}{PS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{The Effects of Ageon File System Performance}
+    \list{institution}{1}{%
+      {Masaryk University}%
+    }
+    \field{type}{Bachelor's Thesis}
+    \field{year}{2017}
+  \endentry
+
   \entry{Traeger:2008:NYS:1367829.1367831}{article}{}
     \true{moreauthor}
     \name{author}{1}{}{%

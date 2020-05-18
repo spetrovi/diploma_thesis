@@ -65,6 +65,8 @@
 \contentsline {section}{\numberline {5.5}\slshape Write policies}{48}{section.5.5}
 \contentsline {section}{\numberline {5.6}\slshape Journal performance}{49}{section.5.6}
 \contentsline {chapter}{\numberline {6}\bfseries Conclusion}{55}{chapter.6}
+\contentsline {section}{\numberline {6.1}\slshape Test results and recommendations for usage}{55}{section.6.1}
+\contentsline {section}{\numberline {6.2}\slshape Future work}{57}{section.6.2}
 \contentsline {chapter}{Bibliography}{59}{chapter*.16}
 \contentsline {chapter}{\numberline {A}\bfseries Testing hardware}{61}{appendix.A}
 \contentsline {subsection}{\numberline {A.0.1}\rmfamily Machine\tmspace +\thinmuskip {.1667em}1}{61}{subsection.A.0.1}
