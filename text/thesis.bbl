@@ -17,6 +17,64 @@
 \endgroup
 
 \sortlist[entry]{none/global/}
+  \entry{ghori2020rhcsa}{book}{}
+    \name{author}{1}{}{%
+      {{hash=GA}{%
+         family={Ghori},
+         familyi={G\bibinitperiod},
+         given={A.},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Endeavor Technologies Incorporated}%
+    }
+    \strng{namehash}{GA1}
+    \strng{fullhash}{GA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{isbn}{9781775062127}
+    \field{title}{RHCSA Red Hat Enterprise Linux 8:: Training and Exam
+  Preparation Guide (EX200), First Edition}
+    \verb{url}
+    \verb https://books.google.cz/books?id=QjTJDwAAQBAJ
+    \endverb
+    \field{year}{2020}
+  \endentry
+
+  \entry{9074463}{inproceedings}{}
+    \name{author}{3}{}{%
+      {{hash=NSS}{%
+         family={{Nair}},
+         familyi={N\bibinitperiod},
+         given={S.\bibnamedelima S.},
+         giveni={S\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+      {{hash=SMM}{%
+         family={{Sherin}},
+         familyi={S\bibinitperiod},
+         given={M.\bibnamedelima M.},
+         giveni={M\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+      {{hash=ST}{%
+         family={{Santha}},
+         familyi={S\bibinitperiod},
+         given={T.},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{NSSSMMST1}
+    \strng{fullhash}{NSSSMMST1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{booktitle}{2020 6th International Conference on Advanced Computing
+  and Communication Systems (ICACCS)}
+    \field{pages}{270\bibrangedash 275}
+    \field{title}{Deduplication Enabled Secure E-mail Server on Cloud
+  Environment using Virtual Data Optimizer}
+    \field{year}{2020}
+  \endentry
+
   \entry{github:lz4}{misc}{}
     \name{author}{1}{}{%
       {{hash=CY}{%

@@ -141,7 +141,7 @@ Storage devices are becoming cheaper, but the storage requirements of the modern
 Linux, however, provides a framework for storage administration called \emph{Logical Volume Manager} (LVM), providing users with easy means of managing storage. By using LVM in order to utilize storage optimization drivers available in the Linux Kernel, administrators can reduce their storage costs without having to use a proprietary, difficult-to-use solution.
 
 % Why do people care about LVM?
-The Linux Kernel provides several storage optimization drivers. Using LVM, these can be composed into a complex solution tailored to one's individual workload, combining them into a \emph{storage stack}.
+The Linux Kernel provides several storage optimization drivers. Using LVM, these can be composed into a complex solution tailored to one's individual workload, combining them into a \emph{storage stack}.~\cite{ghori2020rhcsa}
 
 For instance, \emph{thin provisioning} allows creating a virtual device larger than existing physical storage, reducing costs by delaying storage purchases until additional storage is actually needed for new data. Other layers include encryption, software RAID, caching, or backup/snapshot solutions.
 
@@ -191,7 +191,7 @@ The actual VDO technology consists of two kernel modules. First module, called \
 
 
 \subsection{Deduplication}
-Deduplicaton limits writing multiple copies of the same data by detecting duplicate blocks. Blocks that are duplicate of a block that VDO has already seen are stored as references for that block, which saves space on the underlying device.
+Deduplicaton limits writing multiple copies of the same data by detecting duplicate blocks. Blocks that are duplicate of a block that VDO has already seen are stored as references for that block, which saves space on the underlying device. Possible use cases emerge, when users need to store large quantities of deduplicable data, such as on email servers.~\cite{9074463} 
 
 Deduplication in VDO relies on growing UDS index. Hash from any incoming block, requested to be written, is searched for in the UDS index. In case the index contains an entry with the same hash, $kvdo$ reads the block from physical device and compare it to the requested block byte-by-byte to ensure they are actually identical.
 
