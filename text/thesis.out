@@ -55,7 +55,11 @@
 \BOOKMARK [1][-]{section.5.6}{\040Journal\040performance}{chapter.5}% 55
 \BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 56
 \BOOKMARK [0][-]{chapter*.16}{Bibliography}{}% 57
-\BOOKMARK [0][-]{chapter.7}{Appendix}{}% 58
-\BOOKMARK [1][-]{section.7.1}{\040Testing\040hardware}{chapter.7}% 59
-\BOOKMARK [2][-]{subsection.7.1.1}{\040Machine1}{section.7.1}% 60
-\BOOKMARK [2][-]{subsection.7.1.2}{\040Machine2}{section.7.1}% 61
+\BOOKMARK [0][-]{appendix.A}{Testing\040hardware}{}% 58
+\BOOKMARK [1][-]{subsection.A.0.1}{\040Machine1}{appendix.A}% 59
+\BOOKMARK [2][-]{subsection.A.0.2}{\040Machine2}{subsection.A.0.1}% 60
+\BOOKMARK [0][-]{appendix.B}{Virtual\040appendix}{}% 61
+\BOOKMARK [1][-]{subsection.B.0.1}{\040fs-drift}{appendix.B}% 62
+\BOOKMARK [2][-]{subsection.B.0.2}{\040drift_job}{subsection.B.0.1}% 63
+\BOOKMARK [2][-]{subsection.B.0.3}{\040drift_compare}{subsection.B.0.1}% 64
+\BOOKMARK [2][-]{subsection.B.0.4}{\040results}{subsection.B.0.1}% 65
