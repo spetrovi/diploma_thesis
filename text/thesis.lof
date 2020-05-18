@@ -15,7 +15,7 @@
 \contentsline {figure}{\numberline {5.1}{\ignorespaces Access pattern of VDO with enough free space}}{35}{figure.5.1}
 \contentsline {figure}{\numberline {5.2}{\ignorespaces Access pattern of VDO running out of free space}}{35}{figure.5.2}
 \contentsline {figure}{\numberline {5.3}{\ignorespaces Evolution of VDO performance while filling the medium}}{36}{figure.5.3}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces [Evolution of VDO block utilization while filling the medium}}{36}{figure.5.4}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Evolution of VDO block utilization while filling the medium}}{36}{figure.5.4}
 \contentsline {figure}{\numberline {5.5}{\ignorespaces VDO threads load on default setting}}{39}{figure.5.5}
 \contentsline {figure}{\numberline {5.6}{\ignorespaces VDO threads load after tuning}}{39}{figure.5.6}
 \contentsline {figure}{\numberline {5.7}{\ignorespaces Tuning performance by increasing number of VDO threads}}{40}{figure.5.7}

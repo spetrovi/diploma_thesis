@@ -839,7 +839,7 @@ Evolution of performance can be observed on a Figure~\ref{fig:half-evol}. It can
 \label{fig:half-evol}
         \centering
         \includegraphics[width=\textwidth]{../results/steady/korben/nice/report/tar_829_vdostats.png}
-\caption[[Evolution of VDO block utilization while filling the medium]{Evolution of logical, physical and deduplicated blocks while filling the medium.}
+\caption[Evolution of VDO block utilization while filling the medium]{Evolution of logical, physical and deduplicated blocks while filling the medium.}
 \label{fig:half-evol-vdostats}
 \end{figure}
 
@@ -934,7 +934,7 @@ The default size of block map cache is $\SI{128}{\mega\byte}$, which is 32768 pa
 
 To test this effect, an unpredictable, aggressive random write workload can be run on VDO instances with various sizes and various block map cache sizes.
 
-The test results show performance of random write workload on three VDO instances. All parameters of VDO were kept the same except logical size, and block map cache size:
+The test results show performance of random write workload on three VDO instances. Test were conducted on Machine\,1. All parameters of VDO were kept the same except logical size, and block map cache size:
 %In case the logical space is large enough and the workload access pattern causes the cache to fill up completely in a way the block map cache is tired out. If the block map cache fills up, (runs out of free pages), and there is a write request to a non-cached page, the cache is forced to discard one page from its pool to make room for the relevant page. This operation is very costly and this could become a bottleneck for VDO performance.
 
 
@@ -986,7 +986,7 @@ VDO offers an option to change the maximum allowed discard size with a parameter
 
 The tests of maximum discard size throughput were conducted on four different VDO volumes created with various --maxDiscardSize parameter. This progression was tested on empty VDO, full VDO and empty VDO with preallocation.
 
-The results from unallocated empty VDO are not considered, since it is not expected for users to work (and perform discards) on unallocated space.
+The results from unallocated empty VDO are not considered, since it is not expected for users to work (and perform discards) on unallocated space. The tests were conducted on Machine\,1.
 
 While processing the data, the interesting statistic to look for from vdostats is \texttt{bios in discard}. By observing bios in discard together with logical blocks used and with the progression of throughput, we can see the relationship between performance of discarding data and performance of discarding empty blocks.
 
@@ -1065,7 +1065,7 @@ It is important for developers to know the performance impact of writing policie
 
 In this section, performance testing of the three available policies was conducted and the results can be observed on Figure~\ref{fig:writepolicies} and Table~\ref{tab:writepolicies}.
 
-It is apparent that the synchronous policy will be the slowest, since for every write request VDO have to flush data to a storage. However, more interesting observation can be made between ACID-compliant and unsafe asynchronous mode. Since VDO is an enterprises product, a lot of care needed to be taken so that the safe asynchronous mode will not slow down VDO considerably. We can see in the presented results that this effort was successful.
+It is apparent that the synchronous policy will be the slowest, since for every write request VDO have to flush data to a storage. However, more interesting observation can be made between ACID-compliant and unsafe asynchronous mode. Since VDO is an enterprises product, a lot of care needed to be taken so that the safe asynchronous mode will not slow down VDO considerably. We can see in the presented results that this effort was successful. These tests were conducted on Machine\,3.
 
 \begin{figure}[!htb]
         \centering
@@ -1334,12 +1334,13 @@ All the results from the conducter tests were discussed with VDO developers. The
 \appendix
 \chapter{Testing hardware}
 \label{hardware}
-Testing hardware was borrowed form Red Hat Kernel performance team laboratory. The machines are powerful enough to testing high performing drivers and tools. All storage devices used are regularly checked for health and immediately replaced if faulty.
+%Testing hardware was borrowed form Red Hat Kernel performance team laboratory. The machines are powerful enough to testing high performing drivers and tools. All storage devices used are regularly checked for health and immediately replaced if faulty.
 
-
+\addtolength{\textheight}{1.75in}
+\addtolength{\topmargin}{-1in}
 \subsection{Machine\,1}
 \label{hw:1}
-\begin{table}
+\begin{table}[!htb]
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -1357,7 +1358,7 @@ Testing hardware was borrowed form Red Hat Kernel performance team laboratory. T
 \end{table}
 
 
-\begin{table}
+\begin{table}[!htb]
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -1388,68 +1389,52 @@ Testing hardware was borrowed form Red Hat Kernel performance team laboratory. T
     \hline    
      Physical sector size & $\SI{4096}{\byte}$ \\
     \hline
-    \hline
-    \multicolumn{2}{|l|}{System disk} \\ \hline %draven
-    Model & SuperMicro SSD  \\
-    \hline
-    Capacity & $\SI{126}{\giga\byte}$  \\
-    \hline
-    Interface & PCIe Gen3 x4 Lanes  \\
-    \hline
-    Type & SSD \\
-    \hline    
-   Logical sector size & $\SI{512}{\byte}$ \\    
-    \hline    
-    Physical sector size & $\SI{512}{\byte}$ \\
-    \hline   
+ 
 \end{tabular}
-\caption{Testing devices instelled on Machine\,1}
+\caption{Testing devices installed on Machine\,1}
 \end{table}
 
-
-\subsection{Machine\,2}
+\clearpage
+\section{Machine\,2}
 \label{hw:2}
-This machine is used for regular testing of various file systems and storage layers. It's equipped with 3 $\SI{220}{\giga\byte}$ SATA SSD, one $\SI{220}{\giga\byte}$ SAS rotational HDD. Additionally, there is one NVMe device.
-
-
-\begin{table}
+\begin{table}[!htb]
 \centering
 \begin{tabular}{|l|l|}
 \hline
-   \multicolumn{2}{|l|}{Machine\,1} \\ \hline %draven
-    Model & Supermicro X11SPL-F\\
+   \multicolumn{2}{|l|}{Machine\,2} \\ \hline %draven
+    Model & Lenovo System x3550 M5\\
     \hline
-    Processor & Intel Xeon Silver 4110  \\
+    Processor & Intel Xeon E5-2630 v4  \\
     \hline
-    Clock speed & $\SI{2.10}{\giga\hertz}$ (8 cores) \\
+    Clock speed & $\SI{2.20}{\giga\hertz}$ (8 cores) \\
     \hline
-    Memory & $\SI{49152}{\mega\byte}$ \\
+    Memory & $\SI{32758}{\mega\byte}$ \\
     \hline
 \end{tabular}
 \caption{Testing machine 2}
 \end{table}
 
 
-\begin{table}
+\begin{table}[!htb]
 \centering
 \begin{tabular}{|l|l|}
 \hline
-   \multicolumn{2}{|l|}{Testing Hard Drives} \\ \hline %draven
-    Model & WD HGST Ultrastar\\
+   \multicolumn{2}{|l|}{Testing Hard Drive} \\ \hline %draven
+    Model & HUC156030CS420 X\\
     \hline
-    Capacity & $\SI{1}{\tera\byte}$  \\
+    Capacity & $\SI{300}{\giga\byte}$  \\
     \hline
     Interface & SAS $\SI{12}{\giga\byte}$  \\
     \hline
     Type & Rotational HDD \\
     \hline    
-    Logical sector size & $\SI{4096}{\byte}$ \\    
+    Logical sector size & $\SI{512}{\byte}$ \\    
     \hline    
     Physical sector size & $\SI{4096}{\byte}$ \\
     \hline
     \hline
     \multicolumn{2}{|l|}{Testing SSDs 3x } \\ \hline %draven
-     Model & Micron 5100 MTFD \\
+     Model & Lenovo PM863 \\
     \hline
      Capacity & $\SI{240}{\giga\byte}$  \\
     \hline
@@ -1464,37 +1449,66 @@ This machine is used for regular testing of various file systems and storage lay
 
     \hline
     \multicolumn{2}{|l|}{Tesing NVMe} \\ \hline %draven
-     Model & Micron 5100 MTFD \\
+     Model & Intel PCI Data Center SSD \\
     \hline
-     Capacity & $\SI{240}{\giga\byte}$  \\
+     Capacity & $\SI{280}{\giga\byte}$  \\
     \hline
-    Interface & SATA $\SI{6}{\giga\byte}$  \\
-    \hline
-    Type & SSD \\
+    Type & NVMe \\
     \hline    
     Logical sector size & $\SI{512}{\byte}$ \\    
     \hline    
      Physical sector size & $\SI{4096}{\byte}$ \\
 
     \hline
-    \multicolumn{2}{|l|}{System disk} \\ \hline %draven
-    Model & SuperMicro SSD  \\
-    \hline
-    Capacity & $\SI{126}{\giga\byte}$  \\
-    \hline
-    Interface & PCIe Gen3 x4 Lanes  \\
-    \hline
-    Type & SSD \\
-    \hline    
-   Logical sector size & $\SI{512}{\byte}$ \\    
-    \hline    
-    Physical sector size & $\SI{512}{\byte}$ \\
-    \hline   
 \end{tabular}
 \caption{Testing devices installed on Machine\,2}
 \end{table}
 
-%\clearpage
+\clearpage
+\section{Machine\,3}
+\label{hw:3}
+\begin{table}[!htb]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+   \multicolumn{2}{|l|}{Machine\,3} \\ \hline %draven
+    Model & Supermicro H11SSL-i\\
+    \hline
+    Processor & AMD EPYC 7251  \\
+    \hline
+    Clock speed & $\SI{2.10}{\giga\hertz}$ (8 cores) \\
+    \hline
+    Memory & $\SI{65536}{\mega\byte}$ \\
+    \hline
+\end{tabular}
+\caption{Testing machine 3}
+\end{table}
+
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{|l|l|}
+
+    \hline
+    \multicolumn{2}{|l|}{Tesing NVMe 4x} \\ \hline %draven
+     Model & Samsung 172Xa/172Xb \\
+    \hline
+     Capacity & $\SI{300}{\giga\byte}$  \\
+    \hline
+    Type & NVMe \\
+    \hline    
+    Logical sector size & $\SI{512}{\byte}$ \\    
+    \hline    
+     Physical sector size & $\SI{4096}{\byte}$ \\
+
+    \hline
+\end{tabular}
+\caption{Testing devices installed on Machine\,3}
+\end{table}
+\addtolength{\textheight}{-1.75in}
+\addtolength{\topmargin}{1in}
+
+\clearpage
 %\section{Additional results}
 %During writing this thesis, many tests were conducted with various state of VDO and benchmark configurations that could not have been all presented in the main text. However, some of the statements are referencing these results, so they could be viewed here.
 

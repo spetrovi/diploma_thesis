@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2019.9.30)  18 MAY 2020 11:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2019.9.30)  18 MAY 2020 11:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2094,7 +2094,7 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/qpl/m/sc/17.28'.
 (microtype)             Ignoring protrusion settings for this character.
 
-<fithesis/logo/mu/fithesis-fi-color.pdf, id=294, 291.0875pt x 291.0875pt>
+<fithesis/logo/mu/fithesis-fi-color.pdf, id=298, 291.0875pt x 291.0875pt>
 File: fithesis/logo/mu/fithesis-fi-color.pdf Graphic file (type pdf)
 
 <use fithesis/logo/mu/fithesis-fi-color.pdf>
@@ -2254,7 +2254,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             See the microtype manual for details.
  [2]
 Chapter 2.
-<graphics/diagrams/space_saving.png, id=523, 483.8075pt x 433.62pt>
+<graphics/diagrams/space_saving.png, id=532, 483.8075pt x 433.62pt>
 File: graphics/diagrams/space_saving.png Graphic file (type png)
 
 <use graphics/diagrams/space_saving.png>
@@ -2286,7 +2286,7 @@ Overfull \hbox (5.8901pt too wide) in paragraph at lines 336--337
 -ing vdoAck-
  []
 
-[11] <graphics/diagrams/vdo_internal.png, id=580, 1049.9225pt x 471.7625pt>
+[11] <graphics/diagrams/vdo_internal.png, id=589, 1049.9225pt x 471.7625pt>
 File: graphics/diagrams/vdo_internal.png Graphic file (type png)
 
 <use graphics/diagrams/vdo_internal.png>
@@ -2295,7 +2295,7 @@ Package pdftex.def Info: graphics/diagrams/vdo_internal.png used on input line
 (pdftex.def)             Requested size: 672.97249pt x 302.39487pt.
  [12
 
- <./graphics/diagrams/vdo_internal.png>] <graphics/diagrams/sync.png, id=587, 4
+ <./graphics/diagrams/vdo_internal.png>] <graphics/diagrams/sync.png, id=596, 4
 02.50375pt x 412.54124pt>
 File: graphics/diagrams/sync.png Graphic file (type png)
 
@@ -2305,7 +2305,7 @@ Package pdftex.def Info: graphics/diagrams/sync.png used on input line 363.
  [13
 
  <./graphics/diagrams/sync.png>]
-<graphics/diagrams/async.png, id=595, 402.50375pt x 407.5225pt>
+<graphics/diagrams/async.png, id=604, 402.50375pt x 407.5225pt>
 File: graphics/diagrams/async.png Graphic file (type png)
 
 <use graphics/diagrams/async.png>
@@ -2365,7 +2365,7 @@ Overfull \hbox (4.95164pt too wide) in paragraph at lines 671--672
 yte ev-ery 812*4096
  []
 
-[24] <../results/empty_VDO/HDD/tar_467_bw.png, id=684, 518.1759pt x 411.939pt>
+[24] <../results/empty_VDO/HDD/tar_467_bw.png, id=693, 518.1759pt x 411.939pt>
 File: ../results/empty_VDO/HDD/tar_467_bw.png Graphic file (type png)
 
 <use ../results/empty_VDO/HDD/tar_467_bw.png>
@@ -2373,7 +2373,7 @@ Package pdftex.def Info: ../results/empty_VDO/HDD/tar_467_bw.png used on input
 line 678.
 (pdftex.def)             Requested size: 361.34999pt x 287.27419pt.
 
-<../results/empty_VDO/HDD/tar_224_bw.png, id=685, 518.1759pt x 411.939pt>
+<../results/empty_VDO/HDD/tar_224_bw.png, id=694, 518.1759pt x 411.939pt>
 File: ../results/empty_VDO/HDD/tar_224_bw.png Graphic file (type png)
 
 <use ../results/empty_VDO/HDD/tar_224_bw.png>
@@ -2401,14 +2401,14 @@ e, multi threaded
 
 ]
 Chapter 5.
-[33] <../results/half/start.png, id=739, 578.16pt x 433.62pt>
+[33] <../results/half/start.png, id=748, 578.16pt x 433.62pt>
 File: ../results/half/start.png Graphic file (type png)
 
 <use ../results/half/start.png>
 Package pdftex.def Info: ../results/half/start.png used on input line 825.
 (pdftex.def)             Requested size: 361.34999pt x 271.01183pt.
 
-<../results/half/end.png, id=740, 578.16pt x 433.62pt>
+<../results/half/end.png, id=749, 578.16pt x 433.62pt>
 File: ../results/half/end.png Graphic file (type png)
 
 <use ../results/half/end.png>
@@ -2419,7 +2419,7 @@ Package pdftex.def Info: ../results/half/end.png used on input line 829.
 LaTeX Warning: Float too large for page by 81.29163pt on input line 832.
 
 
-<../results/steady/korben/nice/report/tar_829_bw.png, id=741, 518.1759pt x 411.
+<../results/steady/korben/nice/report/tar_829_bw.png, id=750, 518.1759pt x 411.
 939pt>
 File: ../results/steady/korben/nice/report/tar_829_bw.png Graphic file (type pn
 g)
@@ -2428,7 +2428,7 @@ Package pdftex.def Info: ../results/steady/korben/nice/report/tar_829_bw.png us
 ed on input line 837.
 (pdftex.def)             Requested size: 361.34999pt x 287.27419pt.
 
-<../results/steady/korben/nice/report/tar_829_vdostats.png, id=742, 502.9992pt 
+<../results/steady/korben/nice/report/tar_829_vdostats.png, id=751, 502.9992pt 
 x 411.939pt>
 File: ../results/steady/korben/nice/report/tar_829_vdostats.png Graphic file (t
 ype png)
@@ -2447,7 +2447,7 @@ eady/korben/nice/report/tar_829_bw.png> <../results/steady/korben/nice/report/t
 ar_829_vdostats.png>] [37
 
 ]
-<../results/threads/direct/low_res/tar_695_threads.png, id=770, 294.1389pt x 23
+<../results/threads/direct/low_res/tar_695_threads.png, id=779, 294.1389pt x 23
 8.491pt>
 File: ../results/threads/direct/low_res/tar_695_threads.png Graphic file (type 
 png)
@@ -2456,7 +2456,7 @@ Package pdftex.def Info: ../results/threads/direct/low_res/tar_695_threads.png
 used on input line 890.
 (pdftex.def)             Requested size: 180.67499pt x 146.49823pt.
 
-<../results/threads/direct/low_res/tar_770_threads.png, id=771, 294.1389pt x 23
+<../results/threads/direct/low_res/tar_770_threads.png, id=780, 294.1389pt x 23
 8.491pt>
 File: ../results/threads/direct/low_res/tar_770_threads.png Graphic file (type 
 png)
@@ -2470,7 +2470,7 @@ Overfull \hbox (2.00398pt too wide) in paragraph at lines 889--900
  []
 
 
-<../results/threads/direct/low_res/random_write1_compare_boxplots.png, id=772, 
+<../results/threads/direct/low_res/random_write1_compare_boxplots.png, id=781, 
 507.3354pt x 411.939pt>
 File: ../results/threads/direct/low_res/random_write1_compare_boxplots.png Grap
 hic file (type png)
@@ -2488,7 +2488,7 @@ Underfull \vbox (badness 4713) has occurred while \output is active []
  [39 <../results/threads/direct/low_res/tar_695_threads.png> <../results/thread
 s/direct/low_res/tar_770_threads.png>] [40 <../results/threads/direct/low_res/r
 andom_write1_compare_boxplots.png>]
-<../results/block_map_cache/report/random_write1_compare_boxplots.png, id=790, 
+<../results/block_map_cache/report/random_write1_compare_boxplots.png, id=799, 
 507.3354pt x 411.939pt>
 File: ../results/block_map_cache/report/random_write1_compare_boxplots.png Grap
 hic file (type png)
@@ -2504,7 +2504,7 @@ Overfull \hbox (27.87787pt too wide) in paragraph at lines 968--976
 
 [41] [42 <../results/block_map_cache/report/random_write1_compare_boxplots.png>
 ]
-<../results/discards/full_VDO/report/tar_184_vdostats.png, id=801, 507.3354pt x
+<../results/discards/full_VDO/report/tar_184_vdostats.png, id=810, 507.3354pt x
  411.939pt>
 File: ../results/discards/full_VDO/report/tar_184_vdostats.png Graphic file (ty
 pe png)
@@ -2513,7 +2513,7 @@ Package pdftex.def Info: ../results/discards/full_VDO/report/tar_184_vdostats.p
 ng used on input line 996.
 (pdftex.def)             Requested size: 361.34999pt x 293.41528pt.
 
-<../results/discards/full_VDO/report/tar_184_bw.png, id=802, 522.5121pt x 411.9
+<../results/discards/full_VDO/report/tar_184_bw.png, id=811, 522.5121pt x 411.9
 39pt>
 File: ../results/discards/full_VDO/report/tar_184_bw.png Graphic file (type png
 )
@@ -2534,7 +2534,7 @@ LaTeX Warning: Reference `discard-unalloc' on page 43 undefined on input line 1
 
 
 <../results/discards/full_VDO/report/random_discard1_compare_boxplots.png, id=8
-03, 514.5624pt x 411.939pt>
+12, 514.5624pt x 411.939pt>
 File: ../results/discards/full_VDO/report/random_discard1_compare_boxplots.png 
 Graphic file (type png)
 
@@ -2544,7 +2544,7 @@ mpare_boxplots.png used on input line 1014.
 (pdftex.def)             Requested size: 361.34999pt x 289.29817pt.
 
 <../results/discards/empty_VDO/report/random_discard1_compare_boxplots.png, id=
-804, 514.5624pt x 411.939pt>
+813, 514.5624pt x 411.939pt>
 File: ../results/discards/empty_VDO/report/random_discard1_compare_boxplots.png
  Graphic file (type png)
 
@@ -2562,7 +2562,7 @@ Overfull \hbox (41.88187pt too wide) in paragraph at lines 1025--1041
 
 
 <../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots.png, i
-d=805, 514.5624pt x 411.939pt>
+d=814, 514.5624pt x 411.939pt>
 File: ../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots.p
 ng Graphic file (type png)
 
@@ -2576,7 +2576,7 @@ esults/discards/full_VDO/report/tar_184_bw.png>] [46 <../results/discards/full_
 VDO/report/random_discard1_compare_boxplots.png> <../results/discards/empty_VDO
 /report/random_discard1_compare_boxplots.png>] [47 <../results/discards/unalloc
 _VDO/report/random_discard1_compare_boxplots.png>]
-<../results/write_policies/report/random_write1_compare_boxplots.png, id=834, 5
+<../results/write_policies/report/random_write1_compare_boxplots.png, id=843, 5
 07.3354pt x 411.939pt>
 File: ../results/write_policies/report/random_write1_compare_boxplots.png Graph
 ic file (type png)
@@ -2607,7 +2607,7 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 Package Listings Warning: Text dropped after begin of listing on input line 112
 8.
 
-<../results/journal/seeks/snaps/ssd_testlv.png, id=851, 578.16pt x 433.62pt>
+<../results/journal/seeks/snaps/ssd_testlv.png, id=861, 578.16pt x 433.62pt>
 File: ../results/journal/seeks/snaps/ssd_testlv.png Graphic file (type png)
 
 <use ../results/journal/seeks/snaps/ssd_testlv.png>
@@ -2615,7 +2615,7 @@ Package pdftex.def Info: ../results/journal/seeks/snaps/ssd_testlv.png used on
 input line 1139.
 (pdftex.def)             Requested size: 361.34999pt x 271.01183pt.
 
-<../results/journal/seeks/snaps/ssd.png, id=852, 578.16pt x 433.62pt>
+<../results/journal/seeks/snaps/ssd.png, id=862, 578.16pt x 433.62pt>
 File: ../results/journal/seeks/snaps/ssd.png Graphic file (type png)
 
 <use ../results/journal/seeks/snaps/ssd.png>
@@ -2627,7 +2627,7 @@ ine 1143.
 LaTeX Warning: Float too large for page by 77.90764pt on input line 1146.
 
 
-<../results/journal/report/random_write1_compare_boxplots.png, id=853, 499.3857
+<../results/journal/report/random_write1_compare_boxplots.png, id=863, 499.3857
 pt x 411.939pt>
 File: ../results/journal/report/random_write1_compare_boxplots.png Graphic file
  (type png)
@@ -2690,28 +2690,40 @@ tt/m/n/12 https : / / access . redhat . com / documentation /
 Appendix A.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 1340.
+(hyperref)                than one, level fixed on input line 1341.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00043pt
-(hyperref)                removed on input line 1340.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.00043pt
-(hyperref)                removed on input line 1410.
+(hyperref)                removed on input line 1341.
 
 [61
 
-] [62] [63] [64
+]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00043pt
+(hyperref)                removed on input line 1398.
+
+[62
+
+]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 2.00043pt
+(hyperref)                removed on input line 1468.
+
+[63
+
+] [64
+
 
 
 ]
 Appendix B.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 1516.
+(hyperref)                than one, level fixed on input line 1530.
 
 [65]
 
@@ -2720,14 +2732,14 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1543.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1543.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1557.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1557.
 (./thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1543.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1543.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1557.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1557.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: A1ADF7821D02895BA6DE3561D6D44858;4531.
+(rerunfilecheck)             Checksum: AD7E85DDC39EFC589FC792277C10E31D;4580.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -2740,10 +2752,10 @@ Package logreq Info: Writing requests to 'thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45649 strings out of 494946
- 846940 string characters out of 6180981
+ 45654 strings out of 494946
+ 846978 string characters out of 6180981
  1287508 words of memory out of 5000000
- 47842 multiletter control sequences out of 15000+600000
+ 47844 multiletter control sequences out of 15000+600000
  86706 words of font info for 132 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  62i,16n,93p,10379b,2411s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2758,10 +2770,10 @@ ist/fonts/type1/public/tex-gyre/qplb.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/tex-gyre/qplr.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /tex-gyre/qplri.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/upl
 r8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (79 pages, 1106509 bytes).
+Output written on thesis.pdf (79 pages, 1106494 bytes).
 PDF statistics:
- 1048 PDF objects out of 1200 (max. 8388607)
- 883 compressed objects within 9 object streams
- 232 named destinations out of 1000 (max. 500000)
- 30969 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 1058 PDF objects out of 1200 (max. 8388607)
+ 893 compressed objects within 9 object streams
+ 235 named destinations out of 1000 (max. 500000)
+ 30977 words of extra memory for PDF output out of 35830 (max. 10000000)
 

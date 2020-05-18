@@ -68,7 +68,8 @@
 \contentsline {chapter}{Bibliography}{59}{chapter*.16}
 \contentsline {chapter}{\numberline {A}\bfseries Testing hardware}{61}{appendix.A}
 \contentsline {subsection}{\numberline {A.0.1}\rmfamily Machine\tmspace +\thinmuskip {.1667em}1}{61}{subsection.A.0.1}
-\contentsline {subsection}{\numberline {A.0.2}\rmfamily Machine\tmspace +\thinmuskip {.1667em}2}{61}{subsection.A.0.2}
+\contentsline {section}{\numberline {A.1}\slshape Machine\tmspace +\thinmuskip {.1667em}2}{62}{section.A.1}
+\contentsline {section}{\numberline {A.2}\slshape Machine\tmspace +\thinmuskip {.1667em}3}{63}{section.A.2}
 \contentsline {chapter}{\numberline {B}\bfseries Virtual appendix}{65}{appendix.B}
 \contentsline {subsection}{\numberline {B.0.1}\rmfamily fs-drift}{65}{subsection.B.0.1}
 \contentsline {subsection}{\numberline {B.0.2}\rmfamily drift\_job}{65}{subsection.B.0.2}
