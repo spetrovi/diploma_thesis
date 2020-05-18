@@ -271,7 +271,7 @@ class Compare:
                 
                 self.tables[ID].append(Boxplot(op, x, name))
             #ax.set_yscale('log')
-            ax.set_ylim(bottom=0, top=400)
+            #ax.set_ylim(bottom=0, top=400)
             ax.boxplot(vectors, positions)
             ax.set_xticklabels(ticks)                
             plt.savefig(self.destination + ID, bbox_inches='tight')
@@ -398,6 +398,7 @@ class Tar:
         
             ax.legend(loc='center left')#, bbox_to_anchor=(1, 0.5))
             ax.set_title('queue utilisation')
+            ax.set_ylim(bottom=0, top=2100)
             plt.savefig(self.destination + ID_cur + '_queue.png', bbox_inches='tight')
             plt.close()
 
@@ -643,10 +644,10 @@ class Report:
     subprocess.call('mkdir '+self.destination,shell=True)
     self.tars = []
     for path in paths:
-        #try:
+        try:
             self.tars.append(Tar(path, self.destination, offset, log_window, smooth, chart_vdostats, lim_y))
-        #except:
-        #    print('Bad tar: ' + path)
+        except:
+            print('Bad tar: ' + path)
     if self.tars:
         self.compare = Compare(self.tars, self.destination, offset, log_window, test_label)
         self.report = self.make_report()

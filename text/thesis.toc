@@ -34,7 +34,7 @@
 \contentsline {section}{\numberline {3.4}\slshape Rawdevice}{16}{section.3.4}
 \contentsline {section}{\numberline {3.5}\slshape Random discard operation}{17}{section.3.5}
 \contentsline {section}{\numberline {3.6}\slshape Random map}{18}{section.3.6}
-\contentsline {section}{\numberline {3.7}\slshape Multithread}{18}{section.3.7}
+\contentsline {section}{\numberline {3.7}\slshape Multithread}{19}{section.3.7}
 \contentsline {section}{\numberline {3.8}\slshape IOdepth}{19}{section.3.8}
 \contentsline {section}{\numberline {3.9}\slshape Performance measurement}{19}{section.3.9}
 \contentsline {section}{\numberline {3.10}\slshape Data reporting}{20}{section.3.10}
@@ -70,5 +70,3 @@
 \contentsline {section}{\numberline {7.1}\slshape Testing hardware}{57}{section.7.1}
 \contentsline {subsection}{\numberline {7.1.1}\rmfamily Machine\tmspace +\thinmuskip {.1667em}1}{57}{subsection.7.1.1}
 \contentsline {subsection}{\numberline {7.1.2}\rmfamily Machine\tmspace +\thinmuskip {.1667em}2}{57}{subsection.7.1.2}
-\contentsline {section}{\numberline {7.2}\slshape Additional results}{60}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}\rmfamily Discard performance of unallocated VDO}{60}{subsection.7.2.1}

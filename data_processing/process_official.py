@@ -91,7 +91,7 @@ block_map_cache['80g'] = glob.glob('../results/block_map_cache/*-80g*.tar.xz')
 half = glob.glob('../results/half/*half.tar.xz')
 seq = glob.glob('../results/half/*seq*.tar.xz')
 rand = glob.glob('../results/half/*rand*.tar.xz')
-Report(seq + half + rand, '../results/half/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['logical blocks used', 'data blocks used'], lim_y=200, test_label = 'VDO')
+#Report(seq + half + rand, '../results/half/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = ['logical blocks used', 'data blocks used'], lim_y=200, test_label = 'VDO')
 
 tun = glob.glob('../results/tuning/*.tar.xz')
 
@@ -110,12 +110,44 @@ threads = glob.glob('../results/threads/*tar.xz')
 threads.sort()
 
 #Report(threads, '../results/threads/report/', offset=(0,1000), log_window = 0.01, smooth = True, chart_vdostats = chart_vdostats + ['current VDO IO requests in progress'], lim_y=600, test_label = 'threads')
+threads_direct = glob.glob('../results/threads/direct/*tar.xz')
+threads_direct.sort()
+#Report(threads_direct, '../results/threads/direct/low_res/', offset=(0,1000), log_window = 0.01, smooth = True, chart_vdostats = chart_vdostats + ['current VDO IO requests in progress'], lim_y=600, test_label = 'threads')
 
-steady_prepare = glob.glob('../results/steady/*prepare*.tar.xz')
-steady_test = glob.glob('../results/steady/*tes*.tar.xz')
-#Report(steady_prepare + steady_test, '../results/steady/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=300, test_label = 'steady state testing phases')
 
 
+steady_prepare_wolverine = glob.glob('../results/steady/wolverine/*prepare*.tar.xz')
+steady_test_wolverine = glob.glob('../results/steady/wolverine/*tes*.tar.xz')
+#Report(steady_prepare_wolverine + steady_test_wolverine, '../results/steady/wolverine/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats, lim_y=300, test_label = 'steady state testing phases')
+
+#teady_prepare_korben = glob.glob('../results/steady/korben/*prepare*.tar.xz')
+#steady_test_korben = glob.glob('../reports/korben/*tes*.tar.xz')
+std_hdd_prp = glob.glob('../reports/korben/*HDD*prepare*.tar.xz')
+std_hdd_tst = glob.glob('../reports/korben/*HDD*test*.tar.xz')
+#Report(std_hdd_prp + std_hdd_tst, '../reports/korben/steady_HDD/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats+ ['current VDO IO requests in progress'], lim_y=300, test_label = 'res')
+
+
+bas = glob.glob('../reports/korben/*.tar.xz')
+bas.sort()
+#Report(bas, '../reports/korben/bas/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats+ ['current VDO IO requests in progress'], lim_y=1000, test_label = 'res')
+
+wolvernie_nvme_baselines = glob.glob('../reports/wolverine/NVMe/*.tar.xz')
+wolvernie_nvme_baselines.sort()
+#Report(wolvernie_nvme_baselines, '../reports/wolverine/NVMe/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats+ ['current VDO IO requests in progress'], lim_y=300, test_label = 'res')
+
+wolvernie_ssd_baselines = glob.glob('../reports/wolverine/SSD/*.tar.xz')
+wolvernie_ssd_baselines.sort()
+#Report(wolvernie_ssd_baselines, '../reports/wolverine/SSD/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats+ ['current VDO IO requests in progress'], lim_y=300, test_label = 'res')
+
+
+
+hulk_nvme_baselines = glob.glob('../reports/hulk/NVMe/*.tar.xz')
+hulk_nvme_baselines.sort()
+Report(hulk_nvme_baselines, '../reports/hulk/NVMe/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats+ ['current VDO IO requests in progress'], lim_y=300, test_label = 'res')
+
+hulk_nvme_baselines = glob.glob('../reports/hulk/*.tar.xz')
+hulk_nvme_baselines.sort()
+#Report(hulk_nvme_baselines, '../reports/hulk/report/', offset=(0,1000), log_window = 0.001, smooth = True, chart_vdostats = chart_vdostats+ ['current VDO IO requests in progress'], lim_y=300, test_label = 'res')
 
 
 

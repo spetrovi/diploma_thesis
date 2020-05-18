@@ -23,11 +23,11 @@
 \contentsline {figure}{\numberline {5.9}{\ignorespaces Evolution of VDO stats during random discard workload}}{43}{figure.5.9}
 \contentsline {figure}{\numberline {5.10}{\ignorespaces Evolution of throughput during random discard workload}}{43}{figure.5.10}
 \contentsline {figure}{\numberline {5.11}{\ignorespaces Testing of VDO volume created with variable maximum discard size}}{44}{figure.5.11}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Testing of VDO volume created with variable maximum discard size on an empty VDO}}{44}{figure.5.12}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Performance of various write policies}}{46}{figure.5.13}
-\contentsline {figure}{\numberline {5.14}{\ignorespaces Access pattern of VDO to data blocks on an underlying device}}{49}{figure.5.14}
-\contentsline {figure}{\numberline {5.15}{\ignorespaces Access pattern of VDO to the recovery journal.}}{49}{figure.5.15}
-\contentsline {figure}{\numberline {5.16}{\ignorespaces Performance of VDO with ending regions placed on different devices.}}{50}{figure.5.16}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Discards}}{44}{figure.5.12}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Testing of VDO volume created with variable maximum discard size on an empty VDO}}{44}{figure.5.13}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Performance of various write policies}}{46}{figure.5.14}
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Access pattern of VDO to data blocks on an underlying device}}{49}{figure.5.15}
+\contentsline {figure}{\numberline {5.16}{\ignorespaces Access pattern of VDO to the recovery journal.}}{49}{figure.5.16}
+\contentsline {figure}{\numberline {5.17}{\ignorespaces Performance of VDO with ending regions placed on different devices.}}{50}{figure.5.17}
 \addvspace {4\p@ }
 \addvspace {4\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Performance of discard operation on an unnallocated VDO volume.}}{61}{figure.7.1}

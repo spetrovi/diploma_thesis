@@ -531,8 +531,8 @@ tabsize=3,
 caption={sdad},
 }
 
-
-\begin{lstlisting}[language=Python, caption={Using BLKDISCARD ioctl to discard first 4096 bytes of a device /dev/sde},label={ex:blkdiscard}][frame=single]
+\clearpage
+\begin{lstlisting}[language=Python, caption={Using BLKDISCARD ioctl to discard first $\SI{4096}{\byte}$ of a device /dev/sde},label={ex:blkdiscard}][frame=single]
 import os
 import struct
 from fnctl import ioctl
@@ -567,9 +567,9 @@ Usage:
 \begin{itemize}
     \item -r|--randommap, if true, use random map to get random offsets (default False)
 \end{itemize}
-
+\clearpage
 \section{Multithread}
-Multithreaded workloads are essential for researching performance of ------.
+Multithreaded workloads are essential for researching high-performing technology.
 
 Option to run fs-drift a multi threaded benchmark was added. User will just specify the number of threads that is to be used and fs-drift will spawn that many. For this option, large parts of fs-drift needed to be re-engineered so the threads are not corrupting each other data structures, buffers, etc.
 
@@ -757,7 +757,7 @@ This chart is a simple representation of a measured throughput during the test. 
 
 This chart is mainly used to confirm there was no event that would speed up or slow down the test. If there is a dramatic change in a throughput progression that was unexpected, the test might be faulty.
 
-However, it is very useful, when there is an expected change in behavior of the underlying device such as Empty VDO or Half-Full VDO test
+However, it is very useful, when there is an expected change in behavior of the targeted device.
 
 \subsection{Histograms}
 Histogram of measured throughput is used to evaluate possible deviations in the measurements that could not be observed on other charts. Caching effects are usually easily visible on histograms as well different behavior patterns of a tested target.
@@ -786,6 +786,8 @@ While running this test, performance of VDO should be reasonably stable until it
 
 On Figure\ref{fig:half-start} and Figure\ref{fig:half-end}, results from such test can be examined. Physical space for this test was set to $\SI{5}{\giga\byte}$ with slab size of $\SI{2}{\giga\byte}$, therefore this instance of VDO has one slab of data blocks. We can observe on the Figure that the workload caused the VDO to use half of its data blocks in about $\SI{12}{\second}$. While looking at the Throughput graph, we can see that is the turning point for performance decrease.\footnotemark[1]
 
+\footnotetext[1]{Figures were created using block trace visualisator Seekwatcher~\cite{seekwatcher}}
+\clearpage
 Evolution of performance can be observed on a Figure~\ref{fig:half-evol}. It can be clearly seen, that the performance started to drop at approximately $\SI{150}{\second}$ mark. This test was conducted on a VDO with physical volume of $\SI{12}{\giga\byte}$. Space for the user data has 4 slabs, which is $\SI{8}{\giga\byte}$. By examining Figure~\ref{fig:half-evol-vdostats}, we can observe, that after $\SI{150}{\second}$,the test passed half of VDO's physical volume.
 
 
@@ -800,18 +802,16 @@ Evolution of performance can be observed on a Figure~\ref{fig:half-evol}. It can
 \label{fig:half-end}
 \end{figure}
 
-\footnotetext[1]{Figures were created using block trace visualisator Seekwatcher~\cite{seekwatcher}}
 
-Charts were created using JavaScript charting library Highcharts.
 \begin{figure}[!htb]
         \centering
         \includegraphics[width=\textwidth]{../results/steady/korben/nice/report/tar_829_bw.png}
 \caption[Evolution of VDO performance while filling the medium]{Evolution of VDO performance while filling the medium. The performance decreases after writing 50\% of data blocks.}
-\label{fig:half-start}
+\label{fig:half-evol}
         \centering
         \includegraphics[width=\textwidth]{../results/steady/korben/nice/report/tar_829_vdostats.png}
 \caption[[Evolution of VDO block utilization while filling the medium]{Evolution of logical, physical and deduplicated blocks while filling the medium.}
-\label{fig:half-end}
+\label{fig:half-evol-vdostats}
 \end{figure}
 
 \clearpage
@@ -838,7 +838,7 @@ Setting the correct number of VDO threads is the main method for users to increa
 
 To show the effect of VDO threads tuning, we'll design a workload that could exercise VDO in a way it will benefit from thread count increase. The designed workload will mimic high-traffic, multi threaded usage. We'll use high thread count, large block size, random write workload without randommap, so the data can be randomly overwritten. To generate more traffic, occasional large discard will be triggered so the physical space becomes more fragmented.
 
-We can see results from VDO threads testing below. The tests were conducted on Machine~\ref{hw:2} with VDO installed on an SSD. Each test, number of threads was increased to show the optimal performance. The tests were conducted on VDO volumes with following settings of VDO threads:
+We can see results from VDO threads testing below. The tests were conducted on Machine\,2 with VDO installed on an SSD. Each test, number of threads was increased to show the optimal performance. The tests were conducted on VDO volumes with following settings of VDO threads:
 
 Conducted tests:
 \begin{itemize}
@@ -985,9 +985,9 @@ It is apparent, the results from empty, but previously allocated VDO show the sa
 \caption[Testing of VDO volume created with variable maximum discard size]{Testing of VDO volume created with variable maximum discard size. Prior to the test, the device was filled with random write workload}
 \label{fig:discard-full}
         \centering
-%        \includegraphics[width=\textwidth]{../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots}
-%\caption[Discards]{Testing of VDO volume created with various maxDiscardSize parameters. This test was conducted on a fresh unallocated instance of VDO}
-%\label{fig:discard-unalloc}
+        \includegraphics[width=\textwidth]{../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots}
+\caption[Discards]{Testing of VDO volume created with various maxDiscardSize parameters. This test was conducted on a fresh unallocated instance of VDO}
+\label{fig:discard-unalloc}
         \includegraphics[width=\textwidth]{../results/discards/empty_VDO/report/random_discard1_compare_boxplots}
 \caption[Testing of VDO volume created with variable maximum discard size on an empty VDO]{Testing of VDO volume created with variable maximum discard size on an empty VDO. The volume has been preallocated, but no additional data was written.}
 \label{fig:discard-empty}
@@ -1056,7 +1056,7 @@ Recovery journal is an important aspect of VDO for assuring safety of user data.
 
 This experiment is aimed at exploring a use case where writing to a journal can be a bottleneck for the VDO performance.
 
-The test was conducted using slow rotational hard drive on a Machine~\ref{hw:2}. Performance of this drive is very poor and installing VDO on top of it increases the performance. However, it would be interesting to observe if journaling is posing as a bottleneck and the VDO volume could be even faster.
+The test was conducted using slow rotational hard drive on a Machine\,2. Performance of this drive is very poor and installing VDO on top of it increases the performance. However, it would be interesting to observe if journaling is posing as a bottleneck and the VDO volume could be even faster.
 
 VDO stores its metadata on the last slab (or multiple last slabs) of the physical device. By having the last slabs be actually on a completely different, fast device could show how much speeding the journal increases the overall performance of VDO.
 
@@ -1461,19 +1461,19 @@ This machine is used for regular testing of various file systems and storage lay
 \caption{Testing devices instelled on Machine\,2}
 \end{table}
 
-\clearpage
-\section{Additional results}
-During writing this thesis, many tests were conducted with various state of VDO and benchmark configurations that could not have been all presented in the main text. However, some of the statements are referencing these results, so they could be viewed here.
+%\clearpage
+%\section{Additional results}
+%During writing this thesis, many tests were conducted with various state of VDO and benchmark configurations that could not have been all presented in the main text. However, some of the statements are referencing these results, so they could be viewed here.
 
-\subsection{Discard performance of unallocated VDO}
-In the Chapter~\ref{testing}, peculiar behavior discard operation of unallocated blocks in VDO was mentioned. Since VDO recognize that the discard requests are aimed on unallocated blocks, it doesn't do any work and only returns acknowledgment. That is the reason why discard size doesn't affect VDO discard performance on unallocated storage.
+%\subsection{Discard performance of unallocated VDO}
+%In the Chapter~\ref{testing}, peculiar behavior discard operation of unallocated blocks in VDO was mentioned. Since VDO recognize that the discard requests are aimed on unallocated blocks, it doesn't do any work and only returns acknowledgment. That is the reason why discard size doesn't affect VDO discard performance on unallocated storage.
 
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots}
-\caption[Performance of discard operation on an unnallocated VDO volume.]{This test was conducted on a fresh, unallocated instance of VDO volume. The performance appears to be high because of attempts are being made to discard blocks that are not in the mapping tree.}
-\label{fig:discard-unalloc}
-\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[width=\textwidth]{../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots}
+%\caption[Performance of discard operation on an unnallocated VDO volume.]{This test was conducted on a fresh, unallocated instance of VDO volume. The performance appears to be high because of attempts are being made to discard blocks that are not in the mapping tree.}
+%\label{fig:discard-unalloc}
+%\end{figure}
 
 
 

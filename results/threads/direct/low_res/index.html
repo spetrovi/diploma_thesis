@@ -1,0 +1,177 @@
+<html>
+<head>
+<title>Results of drif_job test</title>
+<script src="http://code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
+</head>
+<body>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="//rawgithub.com/phpepe/highcharts-regression/master/highcharts-regression.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<link href="stylesheet.css" type="text/css" rel="stylesheet">
+<br>
+<font size="3">
+<style>
+    body {
+	 font-family: "Arial", Helvetica, Sans-serif;
+    }
+    table {
+        width:20%;
+    }
+    table, th, td{
+        border: 1px solid black;
+        border-collapse: collapse;
+        font-size: 14px;
+    }
+    th, td{
+        padding: 5px;
+        text-align: left;
+    }
+    table#t01 tr:nth-child(even) {
+        background-color: #eee;
+    }
+    table#t01 tr:nth-child(odd) {
+        background-color:#fff;
+    }
+    table#t01 th	{
+        background-color: white;
+        color: black;
+    }
+    .plot {
+        display: inline-block;
+    }
+    .noborder, .noborder tr, .noborder th, .noborder td {
+        border: none;
+    }
+    #top_bar {
+        background-color: #1d3b72;
+	padding: 14px 16px;
+	margin: 0px 0px 0px 0px;
+    }
+    .options {
+	       float: right;
+    }
+    .menu {
+        display: inline;
+        padding: 14px 16px;
+        font-size: 30px;
+        color: white;
+
+    }
+    .animatedFading{ opacity: 0.0; }
+    .info_panel {
+    padding: 50px;
+    }
+    .menu a{
+        text-decoration: none;
+        color: white;
+
+    }
+    #fail:hover {
+        background-color: #ff0000;
+    }
+    #pass:hover {
+        background-color: #5cb55f;
+    }
+    #invalid:hover {
+        background-color: #F4DC15;
+    }
+    #needs_review:hover {
+        background-color: #eee;
+        color: black;
+    }
+    #name {
+	float: left
+        text-transform: uppercase;
+    }
+</style>
+<dt>
+<strong>Results of drift_job test</strong>
+<br>
+<br>
+<dt><strong>Tar name</strong></dt>
+<ul>
+<li>set0: 2020-May-15_18h23m41s-drift_job-rawdevice-VDO_SSD-default</li>
+<li>set1: 2020-May-15_18h25m33s-drift_job-rawdevice-VDO_SSD-1</li>
+<li>set2: 2020-May-15_18h27m29s-drift_job-rawdevice-VDO_SSD-2</li>
+<li>set3: 2020-May-15_18h29m20s-drift_job-rawdevice-VDO_SSD-3</li>
+<li>set4: 2020-May-15_18h31m12s-drift_job-rawdevice-VDO_SSD-4</li>
+<li>set5: 2020-May-15_18h47m57s-drift_job-rawdevice-VDO_SSD-5</li>
+</ul>
+<dt><strong>Machine</strong></dt>
+<dt><strong>Result</strong></dt>
+<script src="tar_695.js" type="text/javascript"></script>
+<script src="afaf.js" type="text/javascript"></script>
+<script src="boxplots.js" type="text/javascript"></script>
+<script src="tar_399.js" type="text/javascript"></script>
+<script src="afaf.js" type="text/javascript"></script>
+<script src="boxplots.js" type="text/javascript"></script>
+<script src="tar_753.js" type="text/javascript"></script>
+<script src="afaf.js" type="text/javascript"></script>
+<script src="boxplots.js" type="text/javascript"></script>
+<script src="tar_840.js" type="text/javascript"></script>
+<script src="afaf.js" type="text/javascript"></script>
+<script src="boxplots.js" type="text/javascript"></script>
+<script src="tar_922.js" type="text/javascript"></script>
+<script src="afaf.js" type="text/javascript"></script>
+<script src="boxplots.js" type="text/javascript"></script>
+<script src="tar_770.js" type="text/javascript"></script>
+<script src="afaf.js" type="text/javascript"></script>
+<script src="boxplots.js" type="text/javascript"></script>
+<table>
+<tr><td><li>storage_info=</li><li>benchmark=fs-drift</li><li>recipe=file-size_65536--report-interval_5--duration_100--bandwidth_out--blocksize_1024--workload-table_aging.csv--compression-ratio_2.0--fsync_0--fdatasync_0--rawdevice_/dev/mapper/testVDO--dedupe-percentage_1--threads_16--direct_1--iodepth_512</li><li>build=</li><li>kernel=4.18.0-193.el8.x86_64</li><li>jobid=00000</li><li>taskid=</li><li>hostname=wolverine</li><li>result_time=May-15-2020_18:23:41</li><li>filesystem=rawdevice</li><li>rpm=kernel-4.18.0-193.el8.x86_64</li><li>custom_tag=</li><li>whiteboard={**File Systems** RHEL-8.2.0  wolverine, spetrovi thesis}</li><li>tuned_profile=throughput-performance</li><li>firmware=linux-firmware-20191202-97.gite8a0f4c9.el8.noarch</li><li>microcode=microcode_ctl-20191115-4.el8.x86_64</li><li>selinux_status=enabled</li><li>selinux_mode=enforcing</li><li></li></td><td><li>storage_info=</li><li>benchmark=fs-drift</li><li>recipe=file-size_65536--report-interval_5--duration_100--bandwidth_out--blocksize_1024--workload-table_aging.csv--compression-ratio_2.0--fsync_0--fdatasync_0--rawdevice_/dev/mapper/testVDO--dedupe-percentage_1--threads_16--direct_1--iodepth_512</li><li>build=</li><li>kernel=4.18.0-193.el8.x86_64</li><li>jobid=00000</li><li>taskid=</li><li>hostname=wolverine</li><li>result_time=May-15-2020_18:25:33</li><li>filesystem=rawdevice</li><li>rpm=kernel-4.18.0-193.el8.x86_64</li><li>custom_tag=</li><li>whiteboard={**File Systems** RHEL-8.2.0  wolverine, spetrovi thesis}</li><li>tuned_profile=throughput-performance</li><li>firmware=linux-firmware-20191202-97.gite8a0f4c9.el8.noarch</li><li>microcode=microcode_ctl-20191115-4.el8.x86_64</li><li>selinux_status=enabled</li><li>selinux_mode=enforcing</li><li></li></td><td><li>storage_info=</li><li>benchmark=fs-drift</li><li>recipe=file-size_65536--report-interval_5--duration_100--bandwidth_out--blocksize_1024--workload-table_aging.csv--compression-ratio_2.0--fsync_0--fdatasync_0--rawdevice_/dev/mapper/testVDO--dedupe-percentage_1--threads_16--direct_1--iodepth_512</li><li>build=</li><li>kernel=4.18.0-193.el8.x86_64</li><li>jobid=00000</li><li>taskid=</li><li>hostname=wolverine</li><li>result_time=May-15-2020_18:27:29</li><li>filesystem=rawdevice</li><li>rpm=kernel-4.18.0-193.el8.x86_64</li><li>custom_tag=</li><li>whiteboard={**File Systems** RHEL-8.2.0  wolverine spetrovi thesis}</li><li>tuned_profile=throughput-performance</li><li>firmware=linux-firmware-20191202-97.gite8a0f4c9.el8.noarch</li><li>microcode=microcode_ctl-20191115-4.el8.x86_64</li><li>selinux_status=enabled</li><li>selinux_mode=enforcing</li><li></li></td><td><li>storage_info=</li><li>benchmark=fs-drift</li><li>recipe=file-size_65536--report-interval_5--duration_100--bandwidth_out--blocksize_1024--workload-table_aging.csv--compression-ratio_2.0--fsync_0--fdatasync_0--rawdevice_/dev/mapper/testVDO--dedupe-percentage_1--threads_16--direct_1--iodepth_512</li><li>build=</li><li>kernel=4.18.0-193.el8.x86_64</li><li>jobid=00000</li><li>taskid=</li><li>hostname=wolverine</li><li>result_time=May-15-2020_18:29:20</li><li>filesystem=rawdevice</li><li>rpm=kernel-4.18.0-193.el8.x86_64</li><li>custom_tag=</li><li>whiteboard={**File Systems** RHEL-8.2.0  wolverine, spetrovi thesis}</li><li>tuned_profile=throughput-performance</li><li>firmware=linux-firmware-20191202-97.gite8a0f4c9.el8.noarch</li><li>microcode=microcode_ctl-20191115-4.el8.x86_64</li><li>selinux_status=enabled</li><li>selinux_mode=enforcing</li><li></li></td><td><li>storage_info=</li><li>benchmark=fs-drift</li><li>recipe=file-size_65536--report-interval_5--duration_100--bandwidth_out--blocksize_1024--workload-table_aging.csv--compression-ratio_2.0--fsync_0--fdatasync_0--rawdevice_/dev/mapper/testVDO--dedupe-percentage_1--threads_16--direct_1--iodepth_512</li><li>build=</li><li>kernel=4.18.0-193.el8.x86_64</li><li>jobid=00000</li><li>taskid=</li><li>hostname=wolverine</li><li>result_time=May-15-2020_18:31:12</li><li>filesystem=rawdevice</li><li>rpm=kernel-4.18.0-193.el8.x86_64</li><li>custom_tag=</li><li>whiteboard={**File Systems** RHEL-8.2.0  wolverine, spetrovi thesis}</li><li>tuned_profile=throughput-performance</li><li>firmware=linux-firmware-20191202-97.gite8a0f4c9.el8.noarch</li><li>microcode=microcode_ctl-20191115-4.el8.x86_64</li><li>selinux_status=enabled</li><li>selinux_mode=enforcing</li><li></li></td><td><li>storage_info=</li><li>benchmark=fs-drift</li><li>recipe=file-size_65536--report-interval_5--duration_100--bandwidth_out--blocksize_1024--workload-table_aging.csv--compression-ratio_2.0--fsync_0--fdatasync_0--rawdevice_/dev/mapper/testVDO--dedupe-percentage_1--threads_16--direct_1--iodepth_512</li><li>build=</li><li>kernel=4.18.0-193.el8.x86_64</li><li>jobid=00000</li><li>taskid=</li><li>hostname=wolverine</li><li>result_time=May-15-2020_18:47:57</li><li>filesystem=rawdevice</li><li>rpm=kernel-4.18.0-193.el8.x86_64</li><li>custom_tag=</li><li>whiteboard={**File Systems** RHEL-8.2.0  wolverine, spetrovi thesis}</li><li>tuned_profile=throughput-performance</li><li>firmware=linux-firmware-20191202-97.gite8a0f4c9.el8.noarch</li><li>microcode=microcode_ctl-20191115-4.el8.x86_64</li><li>selinux_status=enabled</li><li>selinux_mode=enforcing</li><li></li></td><td></tr>
+<tr><td><li>config: !Configuration</li><li>  vdos:</li><li>    testVDO: !VDOService</li><li>      _operationState: finished</li><li>      ackThreads: 1</li><li>      activated: enabled</li><li>      bioRotationInterval: 64</li><li>      bioThreads: 4</li><li>      blockMapCacheSize: 128M</li><li>      blockMapPeriod: 16380</li><li>      compression: enabled</li><li>      cpuThreads: 2</li><li>      deduplication: enabled</li><li>      device: /dev/disk/by-id/dm-uuid-LVM-IdAdY5ChH6KYDtYtiO7rkdtGm5BcHS5Yk32cOZ4GZeELdaqNdj2gC3WUJFzE6DNy</li><li>      hashZoneThreads: 1</li><li>      indexCfreq: 0</li><li>      indexMemory: 0.25</li><li>      indexSparse: disabled</li><li>      indexThreads: 0</li><li>      logicalBlockSize: 4096</li><li>      logicalSize: 20G</li><li>      logicalThreads: 1</li><li>      maxDiscardSize: 4K</li><li>      name: testVDO</li><li>      physicalSize: 15G</li><li>      physicalThreads: 1</li><li>      slabSize: 2G</li><li>      uuid: null</li><li>      writePolicy: async</li><li>  version: 538380551</li><li>filename: /etc/vdoconf.yml</li><li></li><li></li></td><td><li>config: !Configuration</li><li>  vdos:</li><li>    testVDO: !VDOService</li><li>      _operationState: finished</li><li>      ackThreads: 1</li><li>      activated: enabled</li><li>      bioRotationInterval: 64</li><li>      bioThreads: 1</li><li>      blockMapCacheSize: 128M</li><li>      blockMapPeriod: 16380</li><li>      compression: enabled</li><li>      cpuThreads: 1</li><li>      deduplication: enabled</li><li>      device: /dev/disk/by-id/dm-uuid-LVM-5Qry3QnhuKOpczLfj7tuNi9u16h2nHENh7nsgm2RSHeFRvVnq3dJiuMVFYJT4mDs</li><li>      hashZoneThreads: 1</li><li>      indexCfreq: 0</li><li>      indexMemory: 0.25</li><li>      indexSparse: disabled</li><li>      indexThreads: 0</li><li>      logicalBlockSize: 4096</li><li>      logicalSize: 20G</li><li>      logicalThreads: 1</li><li>      maxDiscardSize: 4K</li><li>      name: testVDO</li><li>      physicalSize: 15G</li><li>      physicalThreads: 1</li><li>      slabSize: 2G</li><li>      uuid: null</li><li>      writePolicy: async</li><li>  version: 538380551</li><li>filename: /etc/vdoconf.yml</li><li></li><li></li></td><td><li>config: !Configuration</li><li>  vdos:</li><li>    testVDO: !VDOService</li><li>      _operationState: finished</li><li>      ackThreads: 4</li><li>      activated: enabled</li><li>      bioRotationInterval: 64</li><li>      bioThreads: 2</li><li>      blockMapCacheSize: 128M</li><li>      blockMapPeriod: 16380</li><li>      compression: enabled</li><li>      cpuThreads: 2</li><li>      deduplication: enabled</li><li>      device: /dev/disk/by-id/dm-uuid-LVM-4WhmNKZvK2yBpPTOnQpqXZ0M4ht5K4h5VS0IW1njnIE1F1eIZqS84fmhFgH1zLd4</li><li>      hashZoneThreads: 2</li><li>      indexCfreq: 0</li><li>      indexMemory: 0.25</li><li>      indexSparse: disabled</li><li>      indexThreads: 0</li><li>      logicalBlockSize: 4096</li><li>      logicalSize: 20G</li><li>      logicalThreads: 2</li><li>      maxDiscardSize: 4K</li><li>      name: testVDO</li><li>      physicalSize: 15G</li><li>      physicalThreads: 2</li><li>      slabSize: 2G</li><li>      uuid: null</li><li>      writePolicy: async</li><li>  version: 538380551</li><li>filename: /etc/vdoconf.yml</li><li></li><li></li></td><td><li>config: !Configuration</li><li>  vdos:</li><li>    testVDO: !VDOService</li><li>      _operationState: finished</li><li>      ackThreads: 6</li><li>      activated: enabled</li><li>      bioRotationInterval: 64</li><li>      bioThreads: 4</li><li>      blockMapCacheSize: 128M</li><li>      blockMapPeriod: 16380</li><li>      compression: enabled</li><li>      cpuThreads: 3</li><li>      deduplication: enabled</li><li>      device: /dev/disk/by-id/dm-uuid-LVM-WHjOIQbomEeCu0k36G1pwF4IUH0Z6ukJ81tfCgJefH1bfMiYkWifdBtiLa1XWGoK</li><li>      hashZoneThreads: 3</li><li>      indexCfreq: 0</li><li>      indexMemory: 0.25</li><li>      indexSparse: disabled</li><li>      indexThreads: 0</li><li>      logicalBlockSize: 4096</li><li>      logicalSize: 20G</li><li>      logicalThreads: 4</li><li>      maxDiscardSize: 4K</li><li>      name: testVDO</li><li>      physicalSize: 15G</li><li>      physicalThreads: 3</li><li>      slabSize: 2G</li><li>      uuid: null</li><li>      writePolicy: async</li><li>  version: 538380551</li><li>filename: /etc/vdoconf.yml</li><li></li><li></li></td><td><li>config: !Configuration</li><li>  vdos:</li><li>    testVDO: !VDOService</li><li>      _operationState: finished</li><li>      ackThreads: 8</li><li>      activated: enabled</li><li>      bioRotationInterval: 64</li><li>      bioThreads: 6</li><li>      blockMapCacheSize: 128M</li><li>      blockMapPeriod: 16380</li><li>      compression: enabled</li><li>      cpuThreads: 4</li><li>      deduplication: enabled</li><li>      device: /dev/disk/by-id/dm-uuid-LVM-BQM8NnxCfKRWtO12P90F069sGAMScmK1I8HLYVV4wTGMX0ULCgdwNcDGjf7jg2Dt</li><li>      hashZoneThreads: 3</li><li>      indexCfreq: 0</li><li>      indexMemory: 0.25</li><li>      indexSparse: disabled</li><li>      indexThreads: 0</li><li>      logicalBlockSize: 4096</li><li>      logicalSize: 20G</li><li>      logicalThreads: 6</li><li>      maxDiscardSize: 4K</li><li>      name: testVDO</li><li>      physicalSize: 15G</li><li>      physicalThreads: 3</li><li>      slabSize: 2G</li><li>      uuid: null</li><li>      writePolicy: async</li><li>  version: 538380551</li><li>filename: /etc/vdoconf.yml</li><li></li><li></li></td><td><li>config: !Configuration</li><li>  vdos:</li><li>    testVDO: !VDOService</li><li>      _operationState: finished</li><li>      ackThreads: 8</li><li>      activated: enabled</li><li>      bioRotationInterval: 64</li><li>      bioThreads: 6</li><li>      blockMapCacheSize: 128M</li><li>      blockMapPeriod: 16380</li><li>      compression: enabled</li><li>      cpuThreads: 6</li><li>      deduplication: enabled</li><li>      device: /dev/disk/by-id/dm-uuid-LVM-VDPsPH9z3BlkkD19QeP6nwXzSBv03Iz1na9hcX99HAZiewgodUE58sBdbg6tC9OC</li><li>      hashZoneThreads: 3</li><li>      indexCfreq: 0</li><li>      indexMemory: 0.25</li><li>      indexSparse: disabled</li><li>      indexThreads: 0</li><li>      logicalBlockSize: 4096</li><li>      logicalSize: 20G</li><li>      logicalThreads: 8</li><li>      maxDiscardSize: 4K</li><li>      name: testVDO</li><li>      physicalSize: 15G</li><li>      physicalThreads: 6</li><li>      slabSize: 2G</li><li>      uuid: null</li><li>      writePolicy: async</li><li>  version: 538380551</li><li>filename: /etc/vdoconf.yml</li><li></li><li></li></td><td></tr>
+<tr><td><img src="tar_695_vdostats.png" align="left"></td><td><img src="tar_399_vdostats.png" align="left"></td><td><img src="tar_753_vdostats.png" align="left"></td><td><img src="tar_840_vdostats.png" align="left"></td><td><img src="tar_922_vdostats.png" align="left"></td><td><img src="tar_770_vdostats.png" align="left"></td></tr>
+<tr><td><img src="tar_695_vdostats_queue.png" align="left"></td><td><img src="tar_399_vdostats_queue.png" align="left"></td><td><img src="tar_753_vdostats_queue.png" align="left"></td><td><img src="tar_840_vdostats_queue.png" align="left"></td><td><img src="tar_922_vdostats_queue.png" align="left"></td><td><img src="tar_770_vdostats_queue.png" align="left"></td></tr>
+<tr><td><li>Thread: dedupeQ,Usage: 6.0% LOW</li><li>Thread: journal,Usage: 53.3% HIGH</li><li>Thread: packerQ,Usage: 7.0% LOW</li><li>Thread: logQ0,Usage: 88.7% HIGH</li><li>Thread: physQ0,Usage: 23.0% LOW</li><li>Thread: hashQ0,Usage: 14.1% LOW</li><li>Thread: bioQ0,Usage: 2.0% LOW</li><li>Thread: bioQ1,Usage: 1.9% LOW</li><li>Thread: bioQ2,Usage: 1.9% LOW</li><li>Thread: bioQ3,Usage: 1.9% LOW</li><li>Thread: ackQ,Usage: 5.8% LOW</li><li>Thread: cpuQ0,Usage: 31.4% OK</li><li>Thread: cpuQ1,Usage: 31.4% OK</li><li></li></td><td><li>Thread: dedupeQ,Usage: 6.4% LOW</li><li>Thread: journal,Usage: 55.5% HIGH</li><li>Thread: packerQ,Usage: 10.0% LOW</li><li>Thread: logQ0,Usage: 90.9% HIGH</li><li>Thread: physQ0,Usage: 25.2% LOW</li><li>Thread: hashQ0,Usage: 15.9% LOW</li><li>Thread: bioQ0,Usage: 6.2% LOW</li><li>Thread: ackQ,Usage: 6.2% LOW</li><li>Thread: cpuQ,Usage: 59.0% HIGH</li><li></li></td><td><li>Thread: dedupeQ,Usage: 8.1% LOW</li><li>Thread: journal,Usage: 66.7% HIGH</li><li>Thread: packerQ,Usage: 9.8% LOW</li><li>Thread: logQ0,Usage: 65.2% HIGH</li><li>Thread: logQ1,Usage: 65.2% HIGH</li><li>Thread: physQ0,Usage: 18.6% LOW</li><li>Thread: physQ1,Usage: 18.5% LOW</li><li>Thread: hashQ0,Usage: 12.3% LOW</li><li>Thread: hashQ1,Usage: 12.3% LOW</li><li>Thread: bioQ0,Usage: 4.1% LOW</li><li>Thread: bioQ1,Usage: 3.9% LOW</li><li>Thread: ackQ0,Usage: 3.1% LOW</li><li>Thread: ackQ1,Usage: 3.0% LOW</li><li>Thread: ackQ2,Usage: 3.1% LOW</li><li>Thread: ackQ3,Usage: 3.1% LOW</li><li>Thread: cpuQ0,Usage: 36.9% OK</li><li>Thread: cpuQ1,Usage: 37.2% OK</li><li></li></td><td><li>Thread: dedupeQ,Usage: 7.2% LOW</li><li>Thread: journal,Usage: 69.8% HIGH</li><li>Thread: packerQ,Usage: 7.2% LOW</li><li>Thread: logQ0,Usage: 47.3% OK</li><li>Thread: logQ1,Usage: 47.2% OK</li><li>Thread: logQ2,Usage: 45.7% OK</li><li>Thread: logQ3,Usage: 46.0% OK</li><li>Thread: physQ0,Usage: 12.4% LOW</li><li>Thread: physQ1,Usage: 12.3% LOW</li><li>Thread: physQ2,Usage: 12.3% LOW</li><li>Thread: hashQ0,Usage: 8.7% LOW</li><li>Thread: hashQ1,Usage: 8.7% LOW</li><li>Thread: hashQ2,Usage: 8.7% LOW</li><li>Thread: bioQ0,Usage: 2.4% LOW</li><li>Thread: bioQ1,Usage: 2.2% LOW</li><li>Thread: bioQ2,Usage: 2.2% LOW</li><li>Thread: bioQ3,Usage: 2.3% LOW</li><li>Thread: ackQ0,Usage: 2.0% LOW</li><li>Thread: ackQ1,Usage: 1.9% LOW</li><li>Thread: ackQ2,Usage: 1.9% LOW</li><li>Thread: ackQ3,Usage: 1.9% LOW</li><li>Thread: ackQ4,Usage: 1.9% LOW</li><li>Thread: ackQ5,Usage: 1.9% LOW</li><li>Thread: cpuQ0,Usage: 24.8% LOW</li><li>Thread: cpuQ1,Usage: 24.9% LOW</li><li>Thread: cpuQ2,Usage: 25.1% LOW</li><li></li></td><td><li>Thread: dedupeQ,Usage: 7.9% LOW</li><li>Thread: journal,Usage: 68.7% HIGH</li><li>Thread: packerQ,Usage: 7.2% LOW</li><li>Thread: logQ0,Usage: 30.5% OK</li><li>Thread: logQ1,Usage: 30.8% OK</li><li>Thread: logQ2,Usage: 30.6% OK</li><li>Thread: logQ3,Usage: 31.0% OK</li><li>Thread: logQ4,Usage: 30.7% OK</li><li>Thread: logQ5,Usage: 30.8% OK</li><li>Thread: physQ0,Usage: 13.9% LOW</li><li>Thread: physQ1,Usage: 13.8% LOW</li><li>Thread: physQ2,Usage: 13.8% LOW</li><li>Thread: hashQ0,Usage: 9.6% LOW</li><li>Thread: hashQ1,Usage: 9.5% LOW</li><li>Thread: hashQ2,Usage: 9.5% LOW</li><li>Thread: bioQ0,Usage: 2.2% LOW</li><li>Thread: bioQ1,Usage: 2.0% LOW</li><li>Thread: bioQ2,Usage: 2.0% LOW</li><li>Thread: bioQ3,Usage: 2.0% LOW</li><li>Thread: bioQ4,Usage: 2.1% LOW</li><li>Thread: bioQ5,Usage: 2.1% LOW</li><li>Thread: ackQ0,Usage: 1.7% LOW</li><li>Thread: ackQ1,Usage: 1.7% LOW</li><li>Thread: ackQ2,Usage: 1.6% LOW</li><li>Thread: ackQ3,Usage: 1.6% LOW</li><li>Thread: ackQ4,Usage: 1.7% LOW</li><li>Thread: ackQ5,Usage: 1.7% LOW</li><li>Thread: ackQ6,Usage: 1.7% LOW</li><li>Thread: ackQ7,Usage: 1.7% LOW</li><li>Thread: cpuQ0,Usage: 18.8% LOW</li><li>Thread: cpuQ1,Usage: 19.1% LOW</li><li>Thread: cpuQ2,Usage: 19.0% LOW</li><li>Thread: cpuQ3,Usage: 18.9% LOW</li><li></li></td><td><li>Thread: dedupeQ,Usage: 9.0% LOW</li><li>Thread: journal,Usage: 70.7% HIGH</li><li>Thread: packerQ,Usage: 8.3% LOW</li><li>Thread: logQ0,Usage: 24.6% LOW</li><li>Thread: logQ1,Usage: 24.2% LOW</li><li>Thread: logQ2,Usage: 23.7% LOW</li><li>Thread: logQ3,Usage: 23.9% LOW</li><li>Thread: logQ4,Usage: 21.9% LOW</li><li>Thread: logQ5,Usage: 22.0% LOW</li><li>Thread: logQ6,Usage: 21.6% LOW</li><li>Thread: logQ7,Usage: 21.6% LOW</li><li>Thread: physQ0,Usage: 8.9% LOW</li><li>Thread: physQ1,Usage: 8.9% LOW</li><li>Thread: physQ2,Usage: 8.9% LOW</li><li>Thread: physQ3,Usage: 8.8% LOW</li><li>Thread: physQ4,Usage: 8.9% LOW</li><li>Thread: physQ5,Usage: 9.0% LOW</li><li>Thread: hashQ0,Usage: 11.9% LOW</li><li>Thread: hashQ1,Usage: 11.8% LOW</li><li>Thread: hashQ2,Usage: 11.8% LOW</li><li>Thread: bioQ0,Usage: 2.5% LOW</li><li>Thread: bioQ1,Usage: 2.2% LOW</li><li>Thread: bioQ2,Usage: 2.3% LOW</li><li>Thread: bioQ3,Usage: 2.2% LOW</li><li>Thread: bioQ4,Usage: 2.2% LOW</li><li>Thread: bioQ5,Usage: 2.3% LOW</li><li>Thread: ackQ0,Usage: 2.0% LOW</li><li>Thread: ackQ1,Usage: 2.0% LOW</li><li>Thread: ackQ2,Usage: 1.9% LOW</li><li>Thread: ackQ3,Usage: 1.9% LOW</li><li>Thread: ackQ4,Usage: 1.9% LOW</li><li>Thread: ackQ5,Usage: 1.9% LOW</li><li>Thread: ackQ6,Usage: 1.9% LOW</li><li>Thread: ackQ7,Usage: 2.0% LOW</li><li>Thread: cpuQ0,Usage: 13.8% LOW</li><li>Thread: cpuQ1,Usage: 13.7% LOW</li><li>Thread: cpuQ2,Usage: 13.7% LOW</li><li>Thread: cpuQ3,Usage: 13.7% LOW</li><li>Thread: cpuQ4,Usage: 13.8% LOW</li><li>Thread: cpuQ5,Usage: 13.8% LOW</li><li></li></td><td></tr>
+<tr><td><img src="tar_695_threads.png" align="left"></td><td><img src="tar_399_threads.png" align="left"></td><td><img src="tar_753_threads.png" align="left"></td><td><img src="tar_840_threads.png" align="left"></td><td><img src="tar_922_threads.png" align="left"></td><td><img src="tar_770_threads.png" align="left"></td></tr>
+<tr><td><img src="tar_695_bw.png" align="left"></td><td><img src="tar_399_bw.png" align="left"></td><td><img src="tar_753_bw.png" align="left"></td><td><img src="tar_840_bw.png" align="left"></td><td><img src="tar_922_bw.png" align="left"></td><td><img src="tar_770_bw.png" align="left"></td></tr>
+</table>
+<br>
+<table>
+
+<br>
+<table>
+<tr><td><img src="tar_695_histogram_random_discard.png" align="left"></td><td><img src="tar_399_histogram_random_discard.png" align="left"></td><td><img src="tar_753_histogram_random_discard.png" align="left"></td><td><img src="tar_840_histogram_random_discard.png" align="left"></td><td><img src="tar_922_histogram_random_discard.png" align="left"></td><td><img src="tar_770_histogram_random_discard.png" align="left"></td></tr>
+<tr><td><img src="tar_695_histogram_random_write.png" align="left"></td><td><img src="tar_399_histogram_random_write.png" align="left"></td><td><img src="tar_753_histogram_random_write.png" align="left"></td><td><img src="tar_840_histogram_random_write.png" align="left"></td><td><img src="tar_922_histogram_random_write.png" align="left"></td><td><img src="tar_770_histogram_random_write.png" align="left"></td></tr>
+<tr><td><img src="tar_695_boxplot.png" align="left"></td><td><img src="tar_399_boxplot.png" align="left"></td><td><img src="tar_753_boxplot.png" align="left"></td><td><img src="tar_840_boxplot.png" align="left"></td><td><img src="tar_922_boxplot.png" align="left"></td><td><img src="tar_770_boxplot.png" align="left"></td></tr>
+</table>
+<table>
+<tr><td><img src="random_discard1_compare_boxplots.png" align="left"></td><td><img src="random_write1_compare_boxplots.png" align="left"></td></tr>
+</table>
+<table id="t01">
+<tr><th>random_discard</th><th><th><th><th><th><th></tr>
+<tr><th>test name</th><th>median</th><th>first quartile</th><th>third quartile</th><th>min</th><th>max</th><th>standard deviation</th></tr>
+<tr>
+<tr><td>default</td><td>812.9MB/s</td><td>769.08MB/s</td><td>902.03MB/s</td><td>230.02MB/s</td><td>1184.67MB/s</td><td>122MB/s</td></tr>
+<tr><td>1</td><td>761.61MB/s</td><td>696.1MB/s</td><td>847.4MB/s</td><td>90.49MB/s</td><td>1438.11MB/s</td><td>131MB/s</td></tr>
+<tr><td>2</td><td>1074.84MB/s</td><td>902.4MB/s</td><td>1214.67MB/s</td><td>175.99MB/s</td><td>1739.94MB/s</td><td>236MB/s</td></tr>
+<tr><td>3</td><td>1214.61MB/s</td><td>1024.35MB/s</td><td>1353.09MB/s</td><td>172.02MB/s</td><td>1905.29MB/s</td><td>273MB/s</td></tr>
+<tr><td>4</td><td>1230.05MB/s</td><td>968.68MB/s</td><td>1374.26MB/s</td><td>176.9MB/s</td><td>2090.99MB/s</td><td>314MB/s</td></tr>
+<tr><td>5</td><td>1074.44MB/s</td><td>805.61MB/s</td><td>1257.22MB/s</td><td>210.57MB/s</td><td>2080.64MB/s</td><td>347MB/s</td></tr>
+</table>
+<table id="t01">
+<tr><th>random_write</th><th><th><th><th><th><th></tr>
+<tr><th>test name</th><th>median</th><th>first quartile</th><th>third quartile</th><th>min</th><th>max</th><th>standard deviation</th></tr>
+<tr>
+<tr><td>default</td><td>166.24MB/s</td><td>116.82MB/s</td><td>229.1MB/s</td><td>6.99MB/s</td><td>953.87MB/s</td><td>89MB/s</td></tr>
+<tr><td>1</td><td>149.48MB/s</td><td>107.79MB/s</td><td>221.91MB/s</td><td>9.08MB/s</td><td>1130.06MB/s</td><td>94MB/s</td></tr>
+<tr><td>2</td><td>239.78MB/s</td><td>164.48MB/s</td><td>281.05MB/s</td><td>6.48MB/s</td><td>1241.21MB/s</td><td>125MB/s</td></tr>
+<tr><td>3</td><td>247.74MB/s</td><td>181.42MB/s</td><td>287.65MB/s</td><td>11.74MB/s</td><td>1366.39MB/s</td><td>125MB/s</td></tr>
+<tr><td>4</td><td>256.41MB/s</td><td>189.02MB/s</td><td>306.05MB/s</td><td>4.12MB/s</td><td>1664.54MB/s</td><td>141MB/s</td></tr>
+<tr><td>5</td><td>267.29MB/s</td><td>163.87MB/s</td><td>321.38MB/s</td><td>4.89MB/s</td><td>1400.84MB/s</td><td>153MB/s</td></tr>
+</table>
+<!-- 
+\begin{tabular}{|l|l|l|l|l|l|l|}
+        \hline
+        \multicolumn{7}{|l|}{Throughput of random_write (MB/s)} \\ \hline
+        test name & median & 1st q. & 3rd q. & min & max & stdev \\ \hline 
+default & 166.24 & 116.82 & 229.1 & 6.99 & 953.87 & 89 \\ \hline
+1 & 149.48 & 107.79 & 221.91 & 9.08 & 1130.06 & 94 \\ \hline
+2 & 239.78 & 164.48 & 281.05 & 6.48 & 1241.21 & 125 \\ \hline
+3 & 247.74 & 181.42 & 287.65 & 11.74 & 1366.39 & 125 \\ \hline
+4 & 256.41 & 189.02 & 306.05 & 4.12 & 1664.54 & 141 \\ \hline
+5 & 267.29 & 163.87 & 321.38 & 4.89 & 1400.84 & 153 \\ \hline
+\end{tabular}
+-->
