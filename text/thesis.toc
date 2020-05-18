@@ -8,20 +8,20 @@
 \contentsline {subsection}{\numberline {2.1.2}\rmfamily Compression}{5}{subsection.2.1.2}
 \contentsline {subsection}{\numberline {2.1.3}\rmfamily Zero-block elimination}{5}{subsection.2.1.3}
 \contentsline {section}{\numberline {2.2}\slshape Constrains and requirements}{5}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}\rmfamily Physical Size}{5}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.1}\rmfamily Physical Size}{6}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}\rmfamily Logical Size}{6}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}\rmfamily Memory}{6}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.3}\rmfamily Memory}{7}{subsection.2.2.3}
 \contentsline {section}{\numberline {2.3}\slshape Internal supporting structures}{7}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}\rmfamily Recovery journal}{7}{subsection.2.3.1}
 \contentsline {subsection}{\numberline {2.3.2}\rmfamily Block map}{8}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}\rmfamily UDS index}{8}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.3}\rmfamily UDS index}{9}{subsection.2.3.3}
 \contentsline {section}{\numberline {2.4}\slshape Tunables}{9}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}\rmfamily VDO threads}{9}{subsection.2.4.1}
-\contentsline {subsubsection}{\rmfamily Logical zones thread}{9}{section*.8}
+\contentsline {subsubsection}{\rmfamily Logical zones thread}{10}{section*.8}
 \contentsline {subsubsection}{\rmfamily Physical zones thread}{10}{section*.9}
 \contentsline {subsubsection}{\rmfamily I/O submission threads}{10}{section*.10}
 \contentsline {subsubsection}{\rmfamily CPU and Hash zone threads}{10}{section*.11}
-\contentsline {subsubsection}{\rmfamily I/O acknowledgment threads}{10}{section*.12}
+\contentsline {subsubsection}{\rmfamily I/O acknowledgment threads}{11}{section*.12}
 \contentsline {subsection}{\numberline {2.4.2}\rmfamily VDO write policies}{13}{subsection.2.4.2}
 \contentsline {subsubsection}{\rmfamily Synchronous mode}{13}{section*.13}
 \contentsline {subsubsection}{\rmfamily Asynchronous mode}{14}{section*.14}

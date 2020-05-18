@@ -60,7 +60,8 @@
 assignment = {}
 }
 \thesislong{abstract}{
-Abstrakt sa pise nakoniec
+The purpose of this thesis is to lay foundation in VDO performance testing. Theoretical overview of VDO and it's components is presented with special emphasis on performance related structures. Opens source benchmark fs-drift was augmented with many features making it possible to test a block layer, specifically a VDO driver. Automated testing package and data processing tools were implemented to gather and process results from performance testing. Finally, many tests were conducted exploring performance of VDO while offering recommendation for VDO usage and performance testing.
+
 }
 \thesislong{thanks}{
 I would like to express my deepest gratitude to Tea Dorminy for excellent and constant aid he provided during the time of writing this thesis.
@@ -167,7 +168,7 @@ Chapter~\ref{methodology} describes testing workflow design, methodology of meas
 
 Chapter~\ref{testing} is focused on a performance testing of VDO, including testing of different VDO components as well as more complex deployment cases. Results demonstrate maximizing VDO performance in different storage stacks, providing an example of testing and potential benefits from tuning VDO to a user's own hardware and workload.
 
-In Chapter~\ref{conclusion}, high-level insight into performance testing of VDO is given with recommendation for further work.
+In Chapter~\ref{conclusion}, high-level insight into performance testing of VDO is given with conclusion to the thesis.
 
 \chapter{Virtual Data Optimiser}
 \label{VDO}
@@ -205,7 +206,7 @@ Another part of VDO optimization techniques is compression. By compressing alrea
 
 %In VDO, lossless compression, based on a parallelized packaging algorithm is used to handle many compression operations at once. Compressed blocks are stored in a way that allows the most logical blocks to be stored in one physical block.
 
-VDO uses standard LZ4 algorithm, for its compression, as it offers a good balance of speed and compression ratio. Compression work is distributed across the same threads which calculate hashes. Multiple compressed blocks are stored in a single physical block on a device.
+VDO uses standard LZ4~\cite{github:lz4} algorithm, for its compression, as it offers a good balance of speed and compression ratio. Compression work is distributed across the same threads which calculate hashes. Multiple compressed blocks are stored in a single physical block on a device.
 
 
 \subsection{Zero-block elimination}
@@ -1201,7 +1202,7 @@ Discard operation is important for additional reclaiming of unused, but inaccess
 
 Last set of tests demonstrates advanced method of VDO performance tuning. In case a user will identify a journaling mechanism as bottleneck of VDO performance, possible remedy was introduced and explained along with example of exact commands for achieving it. This testing was an exciting way to show many possibilities of performance tuning and working with LVM.
 
-The results from these tests were processed into easy-to-view reports available in Appendix~\ref{virtual}. The data processing script and testing package along with latest instance of fs-drift is also provided. All the new features developed for fs-drift are openly accessible by community.
+All the results from the conducter tests were discussed with VDO developers. The developed tools and testing packages will be incorporated to the Kernel Performance testing workflow, so regular, high-quality tests can be conducted automatically on a scheduled basis.
 
 
 

@@ -17,6 +17,28 @@
 \endgroup
 
 \sortlist[entry]{none/global/}
+  \entry{github:lz4}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=CY}{%
+         family={Collet},
+         familyi={C\bibinitperiod},
+         given={Yann},
+         giveni={Y\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {GitHub}%
+    }
+    \strng{namehash}{CY1}
+    \strng{fullhash}{CY1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://github.com/lz4/lz4/releases/tag/v1.9.2}}
+    \field{title}{LZ4 compression algorithm}
+    \field{journaltitle}{GitHub repository}
+    \field{year}{2019}
+  \endentry
+
   \entry{man:requierements}{misc}{}
     \field{labeltitlesource}{title}
   \field{howpublished}{\url{https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/deduplicating_and_compressing_storage/deploying-vdo_deduplicating-and-compressing-storage\#vdo-requirements_deploying-vdo}}

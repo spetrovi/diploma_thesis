@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2019.9.30)  18 MAY 2020 10:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2019.9.30)  18 MAY 2020 11:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1874,13 +1874,13 @@ File: fithesis/style/mu/fithesis-12.clo 2016/05/15
 is-fi.sty
 Package: fithesis/style/mu/fithesis-fi 2016/04/18
 )
-Package hyperref Info: Option `unicode' set `true' on input line 101.
+Package hyperref Info: Option `unicode' set `true' on input line 102.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2016/05/21 v6.83p Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `unicode' set `true' on input line 101.
+Package hyperref Info: Option `unicode' set `true' on input line 102.
 
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/stringenc.sty
 Package: stringenc 2016/05/16 v1.11 Convert strings between diff. encodings (HO
@@ -1902,22 +1902,22 @@ File: english.lbx 2016/09/17 v3.6 biblatex localization (PK/JW/AB)
 (./thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -2047,11 +2047,11 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'thesis.bbl' found.
 
 (./thesis.bbl)
-Package biblatex Info: Reference section=0 on input line 101.
-Package biblatex Info: Reference segment=0 on input line 101.
+Package biblatex Info: Reference section=0 on input line 102.
+Package biblatex Info: Reference segment=0 on input line 102.
  ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box73
-LaTeX Info: Redefining \microtypecontext on input line 101.
+LaTeX Info: Redefining \microtypecontext on input line 102.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -2066,7 +2066,7 @@ Package microtype Info: Redefining babel's language switching commands.
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
-Package hyperref Info: Link coloring OFF on input line 101.
+Package hyperref Info: Link coloring OFF on input line 102.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -2076,9 +2076,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count416
 )
-LaTeX Info: Redefining \ref on input line 101.
-LaTeX Info: Redefining \pageref on input line 101.
-LaTeX Info: Redefining \nameref on input line 101.
+LaTeX Info: Redefining \ref on input line 102.
+LaTeX Info: Redefining \pageref on input line 102.
+LaTeX Info: Redefining \nameref on input line 102.
 
 (./thesis.out) (./thesis.out)
 \@outlinefile=\write7
@@ -2099,7 +2099,7 @@ File: fithesis/logo/mu/fithesis-fi-color.pdf Graphic file (type pdf)
 
 <use fithesis/logo/mu/fithesis-fi-color.pdf>
 Package pdftex.def Info: fithesis/logo/mu/fithesis-fi-color.pdf used on input l
-ine 101.
+ine 102.
 (pdftex.def)             Requested size: 113.81102pt x 113.80792pt.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/qpl/m/sc/14.4'.
@@ -2113,7 +2113,7 @@ df>]pdfTeX warning (ext4): destination with the same identifier (name{page.}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.101 \begin{document}
+l.102 \begin{document}
                        [2
 
 ] [1
@@ -2123,7 +2123,13 @@ l.101 \begin{document}
 
 ] [3
 
-] [4
+]
+Overfull \hbox (1.21169pt too wide) in paragraph at lines 102--102
+\T1/qpl/m/n/12 (-20) with spe-cial em-pha-sis on per-for-mance re-lated struc-t
+ures. Opens source
+ []
+
+[4
 
 
 ] [5
@@ -2207,7 +2213,7 @@ Package microtype Info: Loading generic settings for font family
 
 ]
 \c__siunitx_mathsf_int=\count417
-LaTeX Font Info:    Try loading font information for OT1+lmss on input line 101
+LaTeX Font Info:    Try loading font information for OT1+lmss on input line 102
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/lm/ot1lmss.fd
@@ -2218,7 +2224,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 \c__siunitx_mathtt_int=\count418
-LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 101
+LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 102
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/lm/ot1lmtt.fd
@@ -2236,7 +2242,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [1
 
 ]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 164.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 165.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/lm/t1lmtt.fd
@@ -2253,7 +2259,7 @@ File: graphics/diagrams/space_saving.png Graphic file (type png)
 
 <use graphics/diagrams/space_saving.png>
 Package pdftex.def Info: graphics/diagrams/space_saving.png used on input line 
-179.
+180.
 (pdftex.def)             Requested size: 361.34999pt x 323.87767pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -2264,37 +2270,46 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 2119) has occurred while \output is active []
 
  [4]
-[5] [6] [7] [8] [9]
-Overfull \hbox (5.8901pt too wide) in paragraph at lines 335--336
+Underfull \vbox (badness 2818) has occurred while \output is active []
+
+ [5]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+[7]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [8]
+[9] [10]
+Overfull \hbox (5.8901pt too wide) in paragraph at lines 336--337
 []\T1/qpl/m/n/12 (-20) The num-ber of ac-knowl-edg-ment threads can be tuned us
 -ing vdoAck-
  []
 
-[10] [11]
-<graphics/diagrams/vdo_internal.png, id=578, 1049.9225pt x 471.7625pt>
+[11] <graphics/diagrams/vdo_internal.png, id=580, 1049.9225pt x 471.7625pt>
 File: graphics/diagrams/vdo_internal.png Graphic file (type png)
 
 <use graphics/diagrams/vdo_internal.png>
 Package pdftex.def Info: graphics/diagrams/vdo_internal.png used on input line 
-345.
+346.
 (pdftex.def)             Requested size: 672.97249pt x 302.39487pt.
  [12
 
- <./graphics/diagrams/vdo_internal.png>] <graphics/diagrams/sync.png, id=585, 4
+ <./graphics/diagrams/vdo_internal.png>] <graphics/diagrams/sync.png, id=587, 4
 02.50375pt x 412.54124pt>
 File: graphics/diagrams/sync.png Graphic file (type png)
 
 <use graphics/diagrams/sync.png>
-Package pdftex.def Info: graphics/diagrams/sync.png used on input line 362.
+Package pdftex.def Info: graphics/diagrams/sync.png used on input line 363.
 (pdftex.def)             Requested size: 361.34999pt x 370.35834pt.
  [13
 
  <./graphics/diagrams/sync.png>]
-<graphics/diagrams/async.png, id=593, 402.50375pt x 407.5225pt>
+<graphics/diagrams/async.png, id=595, 402.50375pt x 407.5225pt>
 File: graphics/diagrams/async.png Graphic file (type png)
 
 <use graphics/diagrams/async.png>
-Package pdftex.def Info: graphics/diagrams/async.png used on input line 372.
+Package pdftex.def Info: graphics/diagrams/async.png used on input line 373.
 (pdftex.def)             Requested size: 361.34999pt x 365.85277pt.
 
 Underfull \vbox (badness 1014) has occurred while \output is active []
@@ -2302,18 +2317,18 @@ Underfull \vbox (badness 1014) has occurred while \output is active []
  [14 <./graphics/diagrams/async.png>] [15] [16]
 Chapter 3.
 
-Overfull \hbox (0.4478pt too wide) in paragraph at lines 465--466
+Overfull \hbox (0.4478pt too wide) in paragraph at lines 466--467
 []\T1/qpl/m/n/12 (-20) For per-for-mance test-ing of VDO, new fea-tures and be-
 hav-ior needed
  []
 
-LaTeX Font Info:    Try loading font information for OMS+qpl on input line 481.
+LaTeX Font Info:    Try loading font information for OMS+qpl on input line 482.
 
-LaTeX Font Info:    No file OMSqpl.fd. on input line 481.
+LaTeX Font Info:    No file OMSqpl.fd. on input line 482.
 
 LaTeX Font Warning: Font shape `OMS/qpl/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 481.
+(Font)              for symbol `textbullet' on input line 482.
 
 [17
 
@@ -2321,19 +2336,19 @@ LaTeX Font Warning: Font shape `OMS/qpl/m/n' undefined
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00043pt
-(hyperref)                removed on input line 498.
+(hyperref)                removed on input line 499.
 
 [18] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 ) [19]
 
-Package Listings Warning: Text dropped after begin of listing on input line 563
+Package Listings Warning: Text dropped after begin of listing on input line 564
 .
 
 [20
 
 ]
-Overfull \hbox (3.97325pt too wide) in paragraph at lines 600--601
+Overfull \hbox (3.97325pt too wide) in paragraph at lines 601--602
 \T1/qpl/m/n/12 (-20) Multithreaded work-loads are es-sen-tial for re-search-ing
  high-performing
  []
@@ -2345,29 +2360,29 @@ Chapter 4.
 [23
 
 ]
-Overfull \hbox (4.95164pt too wide) in paragraph at lines 670--671
+Overfull \hbox (4.95164pt too wide) in paragraph at lines 671--672
 []\T1/qpl/m/n/12 (-20) We can achieve the al-lo-ca-tion f.e. by writ-ing zero b
 yte ev-ery 812*4096
  []
 
-[24] <../results/empty_VDO/HDD/tar_467_bw.png, id=682, 518.1759pt x 411.939pt>
+[24] <../results/empty_VDO/HDD/tar_467_bw.png, id=684, 518.1759pt x 411.939pt>
 File: ../results/empty_VDO/HDD/tar_467_bw.png Graphic file (type png)
 
 <use ../results/empty_VDO/HDD/tar_467_bw.png>
 Package pdftex.def Info: ../results/empty_VDO/HDD/tar_467_bw.png used on input 
-line 677.
+line 678.
 (pdftex.def)             Requested size: 361.34999pt x 287.27419pt.
 
-<../results/empty_VDO/HDD/tar_224_bw.png, id=683, 518.1759pt x 411.939pt>
+<../results/empty_VDO/HDD/tar_224_bw.png, id=685, 518.1759pt x 411.939pt>
 File: ../results/empty_VDO/HDD/tar_224_bw.png Graphic file (type png)
 
 <use ../results/empty_VDO/HDD/tar_224_bw.png>
 Package pdftex.def Info: ../results/empty_VDO/HDD/tar_224_bw.png used on input 
-line 681.
+line 682.
 (pdftex.def)             Requested size: 361.34999pt x 287.27419pt.
 
 
-LaTeX Warning: Float too large for page by 113.81635pt on input line 684.
+LaTeX Warning: Float too large for page by 113.81635pt on input line 685.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -2377,7 +2392,7 @@ _bw.png>] [26
 
 
 ] [27]
-Overfull \hbox (4.54938pt too wide) in paragraph at lines 726--727
+Overfull \hbox (4.54938pt too wide) in paragraph at lines 727--728
 \T1/qpl/m/n/12 (-20) VDO is a high per-form-ing layer aimed to serve in-ten-siv
 e, multi threaded
  []
@@ -2386,44 +2401,44 @@ e, multi threaded
 
 ]
 Chapter 5.
-[33] <../results/half/start.png, id=737, 578.16pt x 433.62pt>
+[33] <../results/half/start.png, id=739, 578.16pt x 433.62pt>
 File: ../results/half/start.png Graphic file (type png)
 
 <use ../results/half/start.png>
-Package pdftex.def Info: ../results/half/start.png used on input line 824.
+Package pdftex.def Info: ../results/half/start.png used on input line 825.
 (pdftex.def)             Requested size: 361.34999pt x 271.01183pt.
 
-<../results/half/end.png, id=738, 578.16pt x 433.62pt>
+<../results/half/end.png, id=740, 578.16pt x 433.62pt>
 File: ../results/half/end.png Graphic file (type png)
 
 <use ../results/half/end.png>
-Package pdftex.def Info: ../results/half/end.png used on input line 828.
+Package pdftex.def Info: ../results/half/end.png used on input line 829.
 (pdftex.def)             Requested size: 361.34999pt x 271.01183pt.
 
 
-LaTeX Warning: Float too large for page by 81.29163pt on input line 831.
+LaTeX Warning: Float too large for page by 81.29163pt on input line 832.
 
 
-<../results/steady/korben/nice/report/tar_829_bw.png, id=739, 518.1759pt x 411.
+<../results/steady/korben/nice/report/tar_829_bw.png, id=741, 518.1759pt x 411.
 939pt>
 File: ../results/steady/korben/nice/report/tar_829_bw.png Graphic file (type pn
 g)
  <use ../results/steady/korben/nice/report/tar_829_bw.png>
 Package pdftex.def Info: ../results/steady/korben/nice/report/tar_829_bw.png us
-ed on input line 836.
+ed on input line 837.
 (pdftex.def)             Requested size: 361.34999pt x 287.27419pt.
 
-<../results/steady/korben/nice/report/tar_829_vdostats.png, id=740, 502.9992pt 
+<../results/steady/korben/nice/report/tar_829_vdostats.png, id=742, 502.9992pt 
 x 411.939pt>
 File: ../results/steady/korben/nice/report/tar_829_vdostats.png Graphic file (t
 ype png)
  <use ../results/steady/korben/nice/report/tar_829_vdostats.png>
 Package pdftex.def Info: ../results/steady/korben/nice/report/tar_829_vdostats.
-png used on input line 840.
+png used on input line 841.
 (pdftex.def)             Requested size: 361.34999pt x 295.94841pt.
 
 
-LaTeX Warning: Float too large for page by 122.49057pt on input line 843.
+LaTeX Warning: Float too large for page by 122.49057pt on input line 844.
 
 [34
 
@@ -2432,37 +2447,37 @@ eady/korben/nice/report/tar_829_bw.png> <../results/steady/korben/nice/report/t
 ar_829_vdostats.png>] [37
 
 ]
-<../results/threads/direct/low_res/tar_695_threads.png, id=768, 294.1389pt x 23
+<../results/threads/direct/low_res/tar_695_threads.png, id=770, 294.1389pt x 23
 8.491pt>
 File: ../results/threads/direct/low_res/tar_695_threads.png Graphic file (type 
 png)
  <use ../results/threads/direct/low_res/tar_695_threads.png>
 Package pdftex.def Info: ../results/threads/direct/low_res/tar_695_threads.png 
-used on input line 889.
+used on input line 890.
 (pdftex.def)             Requested size: 180.67499pt x 146.49823pt.
 
-<../results/threads/direct/low_res/tar_770_threads.png, id=769, 294.1389pt x 23
+<../results/threads/direct/low_res/tar_770_threads.png, id=771, 294.1389pt x 23
 8.491pt>
 File: ../results/threads/direct/low_res/tar_770_threads.png Graphic file (type 
 png)
  <use ../results/threads/direct/low_res/tar_770_threads.png>
 Package pdftex.def Info: ../results/threads/direct/low_res/tar_770_threads.png 
-used on input line 894.
+used on input line 895.
 (pdftex.def)             Requested size: 180.67499pt x 146.49823pt.
 
-Overfull \hbox (2.00398pt too wide) in paragraph at lines 888--899
+Overfull \hbox (2.00398pt too wide) in paragraph at lines 889--900
 []$[]$ $[]$ 
  []
 
 
-<../results/threads/direct/low_res/random_write1_compare_boxplots.png, id=770, 
+<../results/threads/direct/low_res/random_write1_compare_boxplots.png, id=772, 
 507.3354pt x 411.939pt>
 File: ../results/threads/direct/low_res/random_write1_compare_boxplots.png Grap
 hic file (type png)
 
 <use ../results/threads/direct/low_res/random_write1_compare_boxplots.png>
 Package pdftex.def Info: ../results/threads/direct/low_res/random_write1_compar
-e_boxplots.png used on input line 903.
+e_boxplots.png used on input line 904.
 (pdftex.def)             Requested size: 361.34999pt x 293.41528pt.
 
 [38
@@ -2473,102 +2488,102 @@ Underfull \vbox (badness 4713) has occurred while \output is active []
  [39 <../results/threads/direct/low_res/tar_695_threads.png> <../results/thread
 s/direct/low_res/tar_770_threads.png>] [40 <../results/threads/direct/low_res/r
 andom_write1_compare_boxplots.png>]
-<../results/block_map_cache/report/random_write1_compare_boxplots.png, id=788, 
+<../results/block_map_cache/report/random_write1_compare_boxplots.png, id=790, 
 507.3354pt x 411.939pt>
 File: ../results/block_map_cache/report/random_write1_compare_boxplots.png Grap
 hic file (type png)
 
 <use ../results/block_map_cache/report/random_write1_compare_boxplots.png>
 Package pdftex.def Info: ../results/block_map_cache/report/random_write1_compar
-e_boxplots.png used on input line 960.
+e_boxplots.png used on input line 961.
 (pdftex.def)             Requested size: 361.34999pt x 293.41528pt.
 
-Overfull \hbox (27.87787pt too wide) in paragraph at lines 967--975
+Overfull \hbox (27.87787pt too wide) in paragraph at lines 968--976
  [][] 
  []
 
 [41] [42 <../results/block_map_cache/report/random_write1_compare_boxplots.png>
 ]
-<../results/discards/full_VDO/report/tar_184_vdostats.png, id=799, 507.3354pt x
+<../results/discards/full_VDO/report/tar_184_vdostats.png, id=801, 507.3354pt x
  411.939pt>
 File: ../results/discards/full_VDO/report/tar_184_vdostats.png Graphic file (ty
 pe png)
  <use ../results/discards/full_VDO/report/tar_184_vdostats.png>
 Package pdftex.def Info: ../results/discards/full_VDO/report/tar_184_vdostats.p
-ng used on input line 995.
+ng used on input line 996.
 (pdftex.def)             Requested size: 361.34999pt x 293.41528pt.
 
-<../results/discards/full_VDO/report/tar_184_bw.png, id=800, 522.5121pt x 411.9
+<../results/discards/full_VDO/report/tar_184_bw.png, id=802, 522.5121pt x 411.9
 39pt>
 File: ../results/discards/full_VDO/report/tar_184_bw.png Graphic file (type png
 )
  <use ../results/discards/full_VDO/report/tar_184_bw.png>
 Package pdftex.def Info: ../results/discards/full_VDO/report/tar_184_bw.png use
-d on input line 999.
+d on input line 1000.
 (pdftex.def)             Requested size: 361.34999pt x 284.88562pt.
 
 
-LaTeX Warning: Float too large for page by 88.56888pt on input line 1002.
+LaTeX Warning: Float too large for page by 88.56888pt on input line 1003.
 
 
-LaTeX Warning: Reference `discard' on page 43 undefined on input line 1004.
+LaTeX Warning: Reference `discard' on page 43 undefined on input line 1005.
 
 
 LaTeX Warning: Reference `discard-unalloc' on page 43 undefined on input line 1
-006.
+007.
 
 
 <../results/discards/full_VDO/report/random_discard1_compare_boxplots.png, id=8
-01, 514.5624pt x 411.939pt>
+03, 514.5624pt x 411.939pt>
 File: ../results/discards/full_VDO/report/random_discard1_compare_boxplots.png 
 Graphic file (type png)
 
 <use ../results/discards/full_VDO/report/random_discard1_compare_boxplots.png>
 Package pdftex.def Info: ../results/discards/full_VDO/report/random_discard1_co
-mpare_boxplots.png used on input line 1013.
+mpare_boxplots.png used on input line 1014.
 (pdftex.def)             Requested size: 361.34999pt x 289.29817pt.
 
 <../results/discards/empty_VDO/report/random_discard1_compare_boxplots.png, id=
-802, 514.5624pt x 411.939pt>
+804, 514.5624pt x 411.939pt>
 File: ../results/discards/empty_VDO/report/random_discard1_compare_boxplots.png
  Graphic file (type png)
 
 <use ../results/discards/empty_VDO/report/random_discard1_compare_boxplots.png>
 Package pdftex.def Info: ../results/discards/empty_VDO/report/random_discard1_c
-ompare_boxplots.png used on input line 1017.
+ompare_boxplots.png used on input line 1018.
 (pdftex.def)             Requested size: 361.34999pt x 289.29817pt.
 
-LaTeX Warning: Float too large for page by 140.09634pt on input line 1020.
+LaTeX Warning: Float too large for page by 140.09634pt on input line 1021.
 
 
-Overfull \hbox (41.88187pt too wide) in paragraph at lines 1024--1040
+Overfull \hbox (41.88187pt too wide) in paragraph at lines 1025--1041
  [][] 
  []
 
 
 <../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots.png, i
-d=803, 514.5624pt x 411.939pt>
+d=805, 514.5624pt x 411.939pt>
 File: ../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots.p
 ng Graphic file (type png)
 
 <use ../results/discards/unalloc_VDO/report/random_discard1_compare_boxplots.pn
 g>
 Package pdftex.def Info: ../results/discards/unalloc_VDO/report/random_discard1
-_compare_boxplots.png used on input line 1046.
+_compare_boxplots.png used on input line 1047.
 (pdftex.def)             Requested size: 361.34999pt x 289.29817pt.
  [43] [44] [45 <../results/discards/full_VDO/report/tar_184_vdostats.png> <../r
 esults/discards/full_VDO/report/tar_184_bw.png>] [46 <../results/discards/full_
 VDO/report/random_discard1_compare_boxplots.png> <../results/discards/empty_VDO
 /report/random_discard1_compare_boxplots.png>] [47 <../results/discards/unalloc
 _VDO/report/random_discard1_compare_boxplots.png>]
-<../results/write_policies/report/random_write1_compare_boxplots.png, id=832, 5
+<../results/write_policies/report/random_write1_compare_boxplots.png, id=834, 5
 07.3354pt x 411.939pt>
 File: ../results/write_policies/report/random_write1_compare_boxplots.png Graph
 ic file (type png)
 
 <use ../results/write_policies/report/random_write1_compare_boxplots.png>
 Package pdftex.def Info: ../results/write_policies/report/random_write1_compare
-_boxplots.png used on input line 1071.
+_boxplots.png used on input line 1072.
 (pdftex.def)             Requested size: 361.34999pt x 293.41528pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -2590,39 +2605,39 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
 
 Package Listings Warning: Text dropped after begin of listing on input line 112
-7.
+8.
 
-<../results/journal/seeks/snaps/ssd_testlv.png, id=849, 578.16pt x 433.62pt>
+<../results/journal/seeks/snaps/ssd_testlv.png, id=851, 578.16pt x 433.62pt>
 File: ../results/journal/seeks/snaps/ssd_testlv.png Graphic file (type png)
 
 <use ../results/journal/seeks/snaps/ssd_testlv.png>
 Package pdftex.def Info: ../results/journal/seeks/snaps/ssd_testlv.png used on 
-input line 1138.
+input line 1139.
 (pdftex.def)             Requested size: 361.34999pt x 271.01183pt.
 
-<../results/journal/seeks/snaps/ssd.png, id=850, 578.16pt x 433.62pt>
+<../results/journal/seeks/snaps/ssd.png, id=852, 578.16pt x 433.62pt>
 File: ../results/journal/seeks/snaps/ssd.png Graphic file (type png)
 
 <use ../results/journal/seeks/snaps/ssd.png>
 Package pdftex.def Info: ../results/journal/seeks/snaps/ssd.png used on input l
-ine 1142.
+ine 1143.
 (pdftex.def)             Requested size: 361.34999pt x 271.01183pt.
 
 
-LaTeX Warning: Float too large for page by 77.90764pt on input line 1145.
+LaTeX Warning: Float too large for page by 77.90764pt on input line 1146.
 
 
-<../results/journal/report/random_write1_compare_boxplots.png, id=851, 499.3857
+<../results/journal/report/random_write1_compare_boxplots.png, id=853, 499.3857
 pt x 411.939pt>
 File: ../results/journal/report/random_write1_compare_boxplots.png Graphic file
  (type png)
 
 <use ../results/journal/report/random_write1_compare_boxplots.png>
 Package pdftex.def Info: ../results/journal/report/random_write1_compare_boxplo
-ts.png used on input line 1149.
+ts.png used on input line 1150.
 (pdftex.def)             Requested size: 361.34999pt x 298.07925pt.
 
-Overfull \hbox (4.28587pt too wide) in paragraph at lines 1156--1164
+Overfull \hbox (4.28587pt too wide) in paragraph at lines 1157--1165
  [][] 
  []
 
@@ -2642,61 +2657,61 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [57] [58
 
 ]
-Overfull \hbox (34.04094pt too wide) in paragraph at lines 1330--1330
+Overfull \hbox (34.04094pt too wide) in paragraph at lines 1331--1331
 \T1/lmtt/m/n/12 vdo _ deduplicating -[] and -[] compressing -[] storage # vdo -
 [] requirements _
  []
 
 
-Overfull \hbox (12.82578pt too wide) in paragraph at lines 1330--1330
+Overfull \hbox (12.82578pt too wide) in paragraph at lines 1331--1331
 []\T1/qpl/m/it/12 (-20) UDS in-dex in VDO\T1/qpl/m/n/12 (-20) . []$\T1/lmtt/m/n
 /12 https : / / access . redhat . com / documentation /
  []
 
 
-Overfull \hbox (9.58458pt too wide) in paragraph at lines 1330--1330
+Overfull \hbox (9.58458pt too wide) in paragraph at lines 1331--1331
 []\T1/qpl/m/it/12 (-20) VDO write poli-cies\T1/qpl/m/n/12 (-20) . []$\T1/lmtt/m
 /n/12 https : / / access . redhat . com / documentation /
  []
 
 
-Overfull \hbox (28.34758pt too wide) in paragraph at lines 1330--1330
+Overfull \hbox (28.34758pt too wide) in paragraph at lines 1331--1331
 []\T1/qpl/m/it/12 (-20) RHEL-8.1 re-lease notes\T1/qpl/m/n/12 (-20) . []$\T1/lm
 tt/m/n/12 https : / / access . redhat . com / documentation /
  []
 
 
-Overfull \hbox (28.34758pt too wide) in paragraph at lines 1330--1330
+Overfull \hbox (28.34758pt too wide) in paragraph at lines 1331--1331
 []\T1/qpl/m/it/12 (-20) RHEL-8.2 re-lease notes\T1/qpl/m/n/12 (-20) . []$\T1/lm
 tt/m/n/12 https : / / access . redhat . com / documentation /
  []
 
-[59] [60
-
-]
+[59] [60]
 Appendix A.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 1339.
+(hyperref)                than one, level fixed on input line 1340.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00043pt
-(hyperref)                removed on input line 1339.
+(hyperref)                removed on input line 1340.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.00043pt
-(hyperref)                removed on input line 1409.
+(hyperref)                removed on input line 1410.
 
-[61] [62] [63] [64
+[61
+
+] [62] [63] [64
 
 
 ]
 Appendix B.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 1515.
+(hyperref)                than one, level fixed on input line 1516.
 
 [65]
 
@@ -2705,11 +2720,11 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1542.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1542.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1543.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1543.
 (./thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1542.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1542.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1543.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1543.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
 (rerunfilecheck)             Checksum: A1ADF7821D02895BA6DE3561D6D44858;4531.
@@ -2725,10 +2740,10 @@ Package logreq Info: Writing requests to 'thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45646 strings out of 494946
- 846851 string characters out of 6180981
- 1286947 words of memory out of 5000000
- 47840 multiletter control sequences out of 15000+600000
+ 45649 strings out of 494946
+ 846940 string characters out of 6180981
+ 1287508 words of memory out of 5000000
+ 47842 multiletter control sequences out of 15000+600000
  86706 words of font info for 132 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  62i,16n,93p,10379b,2411s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2743,10 +2758,10 @@ ist/fonts/type1/public/tex-gyre/qplb.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/tex-gyre/qplr.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /tex-gyre/qplri.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/upl
 r8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (79 pages, 1105169 bytes).
+Output written on thesis.pdf (79 pages, 1106509 bytes).
 PDF statistics:
- 1045 PDF objects out of 1200 (max. 8388607)
- 880 compressed objects within 9 object streams
- 231 named destinations out of 1000 (max. 500000)
+ 1048 PDF objects out of 1200 (max. 8388607)
+ 883 compressed objects within 9 object streams
+ 232 named destinations out of 1000 (max. 500000)
  30969 words of extra memory for PDF output out of 35830 (max. 10000000)
 
