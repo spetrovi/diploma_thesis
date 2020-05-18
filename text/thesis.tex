@@ -1189,11 +1189,11 @@ Using the created testing package, data processing library and explained methodo
 
 Testing of VDO with unallocated mapping tree demonstrated the importance to set the right preconditions prior to the testing. By performing a simple preallocation operation, the test can achieve stable results much sooner, which saves the testing time.
 
-Demonstration of a steady state test design represents a valuable advice to potential VDO users. It is important that anyone looking to deploy VDO know about it's behavior under loaded conditions. The performance of VDO observably decreases after a critical point of utilization and it's mapping space becomes fragmented.
+Demonstration of a steady state test design represents a valuable advice to potential VDO users. It is important that anyone looking to deploy VDO know about its behavior under loaded conditions. The performance of VDO observably decreases after a critical point of utilization and its mapping space becomes fragmented.
 
-Number of VDO threads is the main parameter users will use in attempts to increase performance. In the text, purpose of all tunable VDO threads is explained as well as their relationship with internal structures and performance. Testing the VDO under heavy load with various thread counts shows how increasing number of VDO threads can have positive effect on it's performance.
+Number of VDO threads is the main parameter users will use in attempts to increase performance. In the text, purpose of all tunable VDO threads is explained as well as their relationship with internal structures and performance. Testing the VDO under heavy load with various thread counts shows how increasing number of VDO threads can have positive effect on its performance.
 
-Users can also run into problems with overloading VDO's block map cache. Problem of small block map cache was demonstrated along with thorough explanation of it's cause and recommendation for additional tuning.
+Users can also run into problems with overloading VDO's block map cache. Problem of small block map cache was demonstrated along with thorough explanation of its cause and recommendation for additional tuning.
 
 Testing of various writing policies can help users to decide which option to employ and what could be the expected consequences. Moreover, some users could be worried that re-engineering asynchronous writing policy to be ACID-compliant can decrease the performance of VDO. From the obtained test results, it appears not to be a problem, which was the aim of developers after all.
 
